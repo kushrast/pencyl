@@ -10,7 +10,7 @@
 }
 
 .icon-image {
-	width: : 8uv;
+	width: : 8vh;
 }
 
 .thought-card-container {
@@ -48,7 +48,7 @@
 
 .thought-content {
 	margin-top: 15px;
-	
+
 	font-family: Roboto;
 	font-weight: 400;
 	font-size: 30px;
