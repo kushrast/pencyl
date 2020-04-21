@@ -10,11 +10,11 @@
 }
 
 .icon-image {
-	height: 240px;
+	height: 120px;
 }
 
 .thought-card-container {
-	width: 100%
+	width: 100%;
 	display: flex;
 }
 
