@@ -1,3 +1,5 @@
+import React from 'react';
+
 <svg width="228" height="228" viewBox="0 0 228 228" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M6 222C6 219.791 7.79086 218 10 218H221C223.209 218 225 219.791 225 222C225 224.209 223.209 226 221 226H6V222Z" fill="#835151"/>
 <path d="M2.18168 227.466L23.6484 180.684L48.2116 204.43L2.18168 227.466Z" fill="#FF8E8E"/>

@@ -1,5 +1,6 @@
 .container {
 	display: flex;
+	font-family: Roboto;
 }
 
 .icon {
@@ -9,6 +10,19 @@
 
 .icon-image {
 	height: 240px;
+}
+
+.top-row {
+	display: flex;
+}
+
+.title {
+	font-family: Roboto;
+	font-style: normal;
+	font-weight: 500;
+	font-size: 45px;
+
+	color: #8C8C8C;
 }
 
 .thought-box {
