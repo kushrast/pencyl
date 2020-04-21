@@ -2,6 +2,15 @@
 	display: flex;
 }
 
+.icon {
+	margin-top: 50px;
+	justify-content: center;
+}
+
+.icon-image {
+	height: 240px;
+}
+
 .thought-box {
 	justify-content: center;
 }
