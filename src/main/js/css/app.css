@@ -12,5 +12,12 @@
 }
 
 .thought-box {
+	width: 1450px;
 	justify-content: center;
+
+	border: 2px solid #F8F8F8;
+	box-shadow: 0px 0px 30px 0px #858585;
+	box-sizing: border-box;
+	border-radius: 15px;
+
 }

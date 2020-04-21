@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Icon from '.Icon.jsx';
+import Icon from './Icon.jsx';
 import ThoughtCard from './ThoughtCard.jsx';
 import ReactDOM from 'react-dom';
 import "./css/app.css";
