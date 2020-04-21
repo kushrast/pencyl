@@ -2,10 +2,7 @@ package com.kushrastogi.thoughtbank.schema;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Version;
+import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,6 +21,7 @@ public class Thought {
     private String title;
     private String content;
     private long creation_timestamp_ms;
+
     private List<String> tags;
     private int category;
 
@@ -32,6 +30,7 @@ public class Thought {
         private long reply_timestamp_ms;
     }
 
+    @ElementCollection
     private List<Reply> replies;
     private int stars;
     private long last_edited_timestamp_ms;
