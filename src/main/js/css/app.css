@@ -1,16 +1,16 @@
 .container {
 	display: flex;
 	font-family: Roboto;
+	justify-content: center;
 }
 
 .icon {
 	width: 100%;
 	margin-top: 50px;
-	justify-content: center;
 }
 
 .icon-image {
-	height: 120px;
+	width: : 8uv;
 }
 
 .thought-card-container {
@@ -23,11 +23,12 @@
 }
 
 .thought-card {
-	width: 1450px;
-	justify-content: center;
+	min-width: 600px;
+	max-width: 1453px;
+	width: 60%
 
 	border: 2px solid #F8F8F8;
-	box-shadow: 0px 0px 10px 0px #858585;
+	box-shadow: 0px 0px 5px 0px #858585;
 	box-sizing: border-box;
 	border-radius: 8px;
 	padding: 20px;
@@ -39,18 +40,18 @@
 
 .thought-title {
 	font-family: Roboto;
-	font-style: normal;
 	font-weight: 500;
-	font-size: 20px;
+	font-size: 30px;
 
 	color: #8C8C8C;
 }
 
 .thought-content {
+	margin-top: 15px;
+	
 	font-family: Roboto;
-	font-style: normal;
-	font-weight: normal;
-	font-size: 20px;
+	font-weight: 400;
+	font-size: 30px;
 
 	color: #8C8C8C;
 }
