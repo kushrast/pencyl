@@ -1,6 +1,6 @@
-const React = require('react');
 const ReactDOM = require('react-dom');
 const client = require('./client');
+const ThoughtCard = require('./ThoughtCard');
 
 class App extends React.Component {
 
@@ -19,16 +19,6 @@ class App extends React.Component {
 		return (
 			// <EmployeeList employees={this.state.employees}/>
 			<ThoughtCard />
-		);
-	}
-}
-
-class ThoughtCard extends React.Component {
-	render() {
-		return (
-			<div>
-				<button> click me </button>
-			</div>
 		);
 	}
 }
