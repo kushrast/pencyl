@@ -25,9 +25,40 @@ public class Thought {
     private List<String> tags;
     private int category;
 
+    @Entity
     class Reply {
         private String reply_content;
         private long reply_timestamp_ms;
+
+        public String getReply_content() {
+            return reply_content;
+        }
+
+        public void setReply_content(String reply_content) {
+            this.reply_content = reply_content;
+        }
+
+        public long getReply_timestamp_ms() {
+            return reply_timestamp_ms;
+        }
+
+        public void setReply_timestamp_ms(long reply_timestamp_ms) {
+            this.reply_timestamp_ms = reply_timestamp_ms;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Reply reply = (Reply) o;
+            return reply_timestamp_ms == reply.reply_timestamp_ms &&
+                    reply_content.equals(reply.reply_content);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(reply_content, reply_timestamp_ms);
+        }
     }
 
     @ElementCollection
