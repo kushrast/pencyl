@@ -1,0 +1,7 @@
+.container {
+	display: flex;
+}
+
+.thought-box {
+	justify-content: center;
+}

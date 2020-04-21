@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import "./css/app.css";
 
 class ThoughtCard extends Component {
   render() {
