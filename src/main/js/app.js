@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import ThoughtCard from './ThoughtCard.jsx';
+// import ThoughtCard from './ThoughtCard.jsx';
 import "./css/app.css";
 
 const ReactDOM = require('react-dom');
@@ -14,7 +14,7 @@ class App extends Component {
 	render() {
 		return (
 			<div className="container">
-				<ThoughtCard />
+				Hiro
 			</div>
 		);
 	}
