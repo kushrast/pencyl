@@ -29,8 +29,25 @@ public class Thought {
     class Reply {
         private String reply_content;
         private long reply_timestamp_ms;
+
+        public String getReply_content() {
+            return reply_content;
+        }
+
+        public void setReply_content(String reply_content) {
+            this.reply_content = reply_content;
+        }
+
+        public long getReply_timestamp_ms() {
+            return reply_timestamp_ms;
+        }
+
+        public void setReply_timestamp_ms(long reply_timestamp_ms) {
+            this.reply_timestamp_ms = reply_timestamp_ms;
+        }
     }
 
+    @ElementCollection
     private List<Reply> replies;
     private int stars;
     private long last_edited_timestamp_ms;
