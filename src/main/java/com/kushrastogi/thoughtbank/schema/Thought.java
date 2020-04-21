@@ -22,6 +22,7 @@ public class Thought {
     private String content;
     private long creation_timestamp_ms;
 
+    @ElementCollection
     private List<String> tags;
     private int category;
 
