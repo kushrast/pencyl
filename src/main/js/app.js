@@ -36,4 +36,4 @@ class ThoughtCard extends React.Component {
 ReactDOM.render(
 	<App />,
 	document.getElementById('react')
-)COPY
+);
