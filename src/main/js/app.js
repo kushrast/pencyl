@@ -1,8 +1,10 @@
+import { Component } from 'react';
+import ThoughtCard from './ThoughtCard';
+
 const ReactDOM = require('react-dom');
 const client = require('./client');
-const ThoughtCard = require('./ThoughtCard');
 
-class App extends React.Component {
+class App extends Component {
 
 	constructor(props) {
 		super(props);
