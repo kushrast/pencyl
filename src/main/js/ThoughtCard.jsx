@@ -3,7 +3,7 @@ import "./css/app.css";
 
 class ThoughtCard extends Component {
   render() {
-  	<div class="thought-card">
+  	<div className="thought-card">
   		my thought
   	</div>
   }
