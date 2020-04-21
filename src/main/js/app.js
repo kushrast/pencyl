@@ -1,9 +1,8 @@
-import { Component } from 'react';
-// import ThoughtCard from './ThoughtCard.jsx';
+import React, { Component } from 'react';
+import ThoughtCard from './ThoughtCard.jsx';
+import ReactDOM from 'react-dom';
 import "./css/app.css";
-
-const ReactDOM = require('react-dom');
-const client = require('./client');
+import client from './client';
 
 class App extends Component {
 
