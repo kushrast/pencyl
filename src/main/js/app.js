@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import ThoughtCard from './ThoughtCard';
+import ThoughtCard from './ThoughtCard.jsx';
 
 const ReactDOM = require('react-dom');
 const client = require('./client');
