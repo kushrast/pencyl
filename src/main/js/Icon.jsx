@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Pen from '.img/pen.svg';
+import Pen from './img/pen.svg';
 
 class Icon extends Component {
   render() {
