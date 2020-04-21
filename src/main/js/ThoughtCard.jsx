@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class ThoughtCard extends Component {
   render() {
   	return (
-  		<div className="thought-card">
+  		<div className="thought-card margin-add">
   			<div className="top-row">
   				<div className="title">
   					Title

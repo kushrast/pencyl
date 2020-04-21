@@ -15,7 +15,7 @@ class App extends Component {
 		return (
 			<div className="container">
 				<Icon />
-				<ThoughtCard />
+				<ThoughtCard/>
 			</div>
 		);
 	}
