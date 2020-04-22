@@ -3,6 +3,8 @@ import Icon from './Icon.jsx';
 import ThoughtCard from './ThoughtCard.jsx';
 import ReactDOM from 'react-dom';
 import client from './client';
+import Modal from 'react-modal';
+
 import "./css/app.css";
 
 class App extends Component {
@@ -20,6 +22,8 @@ class App extends Component {
 		);
 	}
 }
+
+Modal.setAppElement('#react');
 
 ReactDOM.render(
 	<App />,

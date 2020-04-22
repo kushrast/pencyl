@@ -46,18 +46,6 @@
 	outline: 0;
 }
 
-.thought-delete {
-	font-family: Roboto;
-	font-weight: 400;
-	font-size: 15px;
-
-	color: #E15151;
-}
-
-.thought-delete-disabled {
-	color: rgba(225, 81, 81, .37);
-}
-
 .thought-content-box {
 	min-height: 100px;
 	margin-top: 15px;
@@ -150,13 +138,13 @@
 	font-size: 17px;
 	width: 150px;
 	border: none;
-	border-bottom: 1.5px solid #ffffff;
+	border-bottom: 1.5px solid #EDEDED;
 }
 
 .thought-tag-input::placeholder {
 	color: #EDEDED;
 	border: none;
-	border-bottom: 1.5px solid #ffffff;
+	border-bottom: 1.5px solid #EDEDED;
 }
 
 input:focus::placeholder { color: transparent; }
@@ -174,18 +162,117 @@ input:focus:-ms-input-placeholder { color:transparent; } /* IE 10+ */
 	border-bottom: 1.5px solid #EDEDED;
 }
 
-.thought-tag-underline {
-	border-bottom: 1.5px solid #EDEDED;
-}
-
 .thought-update {
 	margin-left: auto;
 	font-family: Roboto;
-	font-weight: 400;
+	font-weight: 500;
 	font-size: 20px;
 	color: rgba(255, 142, 142);
 }
 
 .thought-update-disabled {
 	color: rgba(255, 142, 142, .37);
+}
+
+.thought-delete-enabled {
+	font-family: Roboto;
+	font-weight: 400;
+	font-size: 15px;
+
+	color: #E15151;
+}
+
+.thought-delete-disabled {
+	font-family: Roboto;
+	font-weight: 400;
+	font-size: 15px;
+
+	color: rgba(225, 81, 81, .37);
+}
+
+.thought-delete-overlay {
+	background-color: rgba(196, 196, 196, 0.41);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.thought-delete-modal-container {
+	height: 100%;
+	width: 100%;
+	display: flex;
+}
+
+.thought-delete-modal {
+	background-color: white;
+	border-radius: 10px;
+	max-width: 400px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 200px;
+	padding: 25px 20px 25px 20px;
+	outline: 0;
+	display: flex;
+	height: 200px;
+	flex-direction: column;
+}
+
+.thought-delete-modal-title {
+	font-family: Roboto;
+	font-weight: 400;
+	font-size: 25px;
+	color: #959595;
+}
+
+.thought-delete-modal-content {
+	display: flex;
+	flex-wrap: nowrap;
+	margin-top: 20px;
+}
+
+.thought-delete-modal-subtitle {
+	font-family: Roboto;
+	font-weight: 300;
+	font-size: 20px;
+	color: #ACACAC;
+}
+
+.thought-delete-trash-can {
+	width: 75px;
+	margin: 0px 20px 0px 20px
+}
+
+.thought-delete-modal-buttons {
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+
+}
+
+.thought-delete-cancel {
+	font-family: Roboto;
+	font-weight: 400;
+	font-size: 20px;
+	color: #959595;
+}
+
+.thought-delete-separator {
+	margin-left: 10px;
+	margin-right: 10px;
+	width: 1px;
+	background-color: #EDEDED;
+	height: 20px;
+}
+
+.thought-delete-confirm {
+	font-family: Roboto;
+	font-weight: 400;
+	font-size: 20px;
+	color: #E15151;
+}
+
+.pointer {
+	cursor: pointer;
 }

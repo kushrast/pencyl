@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
-import "./css/CategoryComponent.css";
 
 class CategoryComponent extends Component {
 
@@ -15,12 +14,14 @@ class CategoryComponent extends Component {
 		control: (provided, state) => ({
 			...provided,
 			border: 'none',
+			borderColor: "#FFFFFF",
 			color: '#8C8C8C',
 			fontFamily: 'Roboto',
 			fontWeight: '400',
 			fontSize: '20px',
 			paddingRight: '0px',
-			outline: 0
+			outline: 0,
+			cursor: 'pointer'
 		}),
 		singleValue: (provided, state) => ({
 			color: '#8C8C8C',
@@ -48,7 +49,8 @@ class CategoryComponent extends Component {
 			fontWeight: '400',
 			fontSize: '20px',
 			background: state.isFocused ? '#F5F5F5' : '#FFFFFF',
-			width: 'auto'
+			width: 'auto',
+			cursor: 'pointer'
 		})
 	}
 

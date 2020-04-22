@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import CategoryComponent from './CategoryComponent.jsx';
 import TextareaAutosize from 'react-autosize-textarea';
+import DeleteModal from './DeleteModal.jsx';
 import "./css/ThoughtCard.css";
 
 class ThoughtCard extends Component {
@@ -9,23 +10,21 @@ class ThoughtCard extends Component {
 		this.state = {
 			hasTitle: false,
 			hasContent: false,
-			hasTagUnderline: false,
 			hasTagContent: false,
-
+			hasTypedInfo: false,
 			tags: [],
 		}
 
 		this.onTitleUpdate = this.onTitleUpdate.bind(this);
 		this.onContentUpdate = this.onContentUpdate.bind(this);
 		this.onTagUpdate = this.onTagUpdate.bind(this);
-		this.onTagBlur = this.onTagBlur.bind(this);
-		this.onTagFocusOrClick = this.onTagFocusOrClick.bind(this);
-		this.getTagClasses = this.getTagClasses.bind(this);
-		this.setTagUnderline = this.setTagUnderline.bind(this);
 		this.onTagKeyUp = this.onTagKeyUp.bind(this);
 		this.onTagSubmit = this.onTagSubmit.bind(this);
 		this.getTagHash = this.getTagHash.bind(this);
 		this.deleteTag = this.deleteTag.bind(this);
+		this.checkIfTitleOrContentPresent = this.checkIfTitleOrContentPresent.bind(this);
+		this.deleteUnsavedThought = this.deleteUnsavedThought.bind(this);
+		this.returnFocusToContent = this.returnFocusToContent.bind(this);
 	}
 
 	componentDidMount() {
@@ -38,10 +37,22 @@ class ThoughtCard extends Component {
 		if (title != "") {
 			this.setState({
 				hasTitle: true
-			});
+			}, this.checkIfTitleOrContentPresent);
 		} else {
 			this.setState({
 				hasTitle: false
+			}, this.checkIfTitleOrContentPresent);
+		}
+	}
+
+	checkIfTitleOrContentPresent() {
+		if (this.state.hasContent || this.state.hasTitle) {
+			this.setState({
+				hasTypedInfo: true
+			});
+		} else {
+			this.setState({
+				hasTypedInfo: false
 			});
 		}
 	}
@@ -52,11 +63,11 @@ class ThoughtCard extends Component {
 		if (content != "") {
 			this.setState({
 				hasContent: true
-			});
+			}, this.checkIfTitleOrContentPresent);
 		} else {
 			this.setState({
 				hasContent: false
-			});
+			}, this.checkIfTitleOrContentPresent);
 		}
 	}
 
@@ -64,37 +75,13 @@ class ThoughtCard extends Component {
 		var tagContent = e.target.value;
 
 		if (tagContent == "") {
-			this.setTagUnderline(false);
 			this.setState({
 				hasTagContent: false,
 			});
 		} else {
-			this.setTagUnderline(true);
 			this.setState({
 				hasTagContent: true,
 			});
-		}
-	}
-
-	onTagFocusOrClick() {
-		this.setTagUnderline(true);
-	}
-
-	onTagBlur(e) {
-		this.setTagUnderline(false);
-	}
-
-	setTagUnderline(tagState) {
-		this.setState({
-			hasTagUnderline: tagState,
-		});
-	}
-
-	getTagClasses() {
-		if (this.state.hasTagUnderline) {
-			return "thought-tag-input thought-tag-underline";
-		} else {
-			return "thought-tag-input";
 		}
 	}
 
@@ -137,7 +124,6 @@ class ThoughtCard extends Component {
 
 			if (uniqueString) {
 				this.setState({
-					hasTagUnderline: false,
 					hasTagContent: false,
 					tags: [
 						...this.state.tags,
@@ -164,10 +150,25 @@ class ThoughtCard extends Component {
 		});
 	}
 
+	deleteUnsavedThought() {
+		this.setState({
+			hasTitle: false,
+			hasContent: false,
+			hasTagContent: false,
+			hasTypedInfo: false,
+			tags: [],
+		});
+		document.getElementById("tag-input").value = "";
+		document.getElementById("thought-title-area").value = "";
+		document.getElementById("thought-content-area").value = "";
+		this.returnFocusToContent();
+	}
+
+	returnFocusToContent() {
+		document.getElementById("thought-content-area").focus();
+	}
+
 	  render() {
-	  	const hasTypedInfo = this.state.hasTitle || this.state.hasContent;
-
-
 	  	const tagItems = this.state.tags.map((tag) => 
 	  		<div className="thought-tag-bubble" key={tag.key} style={this.getTagColor(tag.key)}>
 	  			{tag.value} <img src="/img/crosshairs.svg" className="thought-tag-bubble-delete"  onClick={this.deleteTag.bind(this, tag.key)}/>
@@ -178,13 +179,8 @@ class ThoughtCard extends Component {
 	  		<div className="thought-card-container thought-card-margin-add">
 		  		<div className="thought-card">
 		  			<div className="thought-top-row">
-		  				<TextareaAutosize className="thought-title" placeholder="Title" onChange={this.onTitleUpdate} maxRows={2}/>
-		  				{hasTypedInfo ?
-		  					<div className="thought-delete">Delete</div> : 
-		  					<div className="thought-delete thought-delete-disabled">Delete</div>
-		  				}
-		  				
-		  				
+		  				<TextareaAutosize className="thought-title" placeholder="Title" onChange={this.onTitleUpdate} maxRows={2} id="thought-title-area"/>
+		  				<DeleteModal hasTypedInfo={this.state.hasTypedInfo} deleteThought={this.deleteUnsavedThought} returnFocus={this.returnFocusToContent}/>
 		  			</div>
 		  			<div className="thought-content-box"><TextareaAutosize className="thought-content" placeholder="What's on your mind?" onChange={this.onContentUpdate} maxRows={15} id="thought-content-area"/></div>
 		  			<div className="thought-bottom-box">
@@ -196,13 +192,13 @@ class ThoughtCard extends Component {
 		  				<div className="thought-bottom-row">
 			  				<div className="thought-add-tags">
 			  					<img src="/img/tag.svg" className="thought-tag-icon"/>
-			  					<input type="text" className={this.getTagClasses()} placeholder="Add New Tag..." onChange={this.onTagUpdate} onKeyUp={this.onTagKeyUp} id="tag-input" maxLength="25"/>
+			  					<input type="text" className="thought-tag-input" placeholder="Add New Tag..." onChange={this.onTagUpdate} onKeyUp={this.onTagKeyUp} id="tag-input" maxLength="25"/>
 			  					{ this.state.hasTagContent ? <img src="/img/checkmark.svg" className="thought-tag-checkmark" onClick={this.onTagSubmit}/> : null}
 			  				</div>
 			  				<CategoryComponent />
 			  				<div className="thought-update">
-				  				{hasTypedInfo ?
-				  					<div className="thought-update">Finish Thought</div> : 
+				  				{this.state.hasTypedInfo ?
+				  					<div className="thought-update pointer">Finish Thought</div> : 
 				  					<div className="thought-update thought-update-disabled">Finish Thought</div>
 				  				}
 			  				</div>
