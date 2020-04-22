@@ -171,7 +171,7 @@ class ThoughtCard extends Component {
 	  render() {
 	  	const tagItems = this.state.tags.map((tag) => 
 	  		<div className="thought-tag-bubble" key={tag.key} style={this.getTagColor(tag.key)}>
-	  			{tag.value} <img src="/img/crosshairs.svg" className="thought-tag-bubble-delete"  onClick={this.deleteTag.bind(this, tag.key)}/>
+	  			{tag.value} <img src="/img/crosshairs.svg" className="thought-tag-bubble-delete pointer"  onClick={this.deleteTag.bind(this, tag.key)}/>
 	  		</div>
 	  	);
 

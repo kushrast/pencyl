@@ -30,7 +30,7 @@ class DeleteModal extends Component {
   render() {
   	return (
   		<div className="thought-delete">
-	  		{this.props.hasTypedInfo ? <div className="thought-delete-enabled" onClick={this.handleOpenModal}>Delete</div> : <div className="thought-delete-disabled">Delete</div>}
+	  		{this.props.hasTypedInfo ? <div className="thought-delete-enabled pointer" onClick={this.handleOpenModal}>Delete</div> : <div className="thought-delete-disabled">Delete</div>}
 	        <Modal 
 	           isOpen={this.state.showModal}
              onRequestClose={this.handleCloseModal}
