@@ -54,10 +54,10 @@ class CategoryComponent extends Component {
 		})
 	}
 
-  	const dropdownOptions = [{label:"Just a thought"}, {label:"Action Item"}];
+  	const dropdownOptions = [{label:"Just a thought", value:0}, {label:"Action Item", value: 1}];
   	const defaultOption = dropdownOptions[0];
   	return (
-  		<Select options={dropdownOptions} defaultValue={defaultOption} styles={customStyles} isSearchable={false}/>
+  		<Select options={dropdownOptions} defaultValue={defaultOption} styles={customStyles} isSearchable={false} onChange={this.props.updateCategory}/>
   		);
   }
 }

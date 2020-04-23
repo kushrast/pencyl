@@ -1,18 +1,92 @@
 body {
 	z-index: 0;
+	margin: 0;
+	padding: 0;
 }
 .container {
 	font-family: Roboto;
 }
 
-.icon {
+.navbar {
 	width: 100%;
+	display: flex;
+}
+
+.menu-container {
+	flex: 1;
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-start;
+}
+
+.menu-overlay {
+	background-color: #FF8E8E;
+}
+
+.bm-burger-button {
+	margin-top: 25px;
+	position: fixed;
+	height: 60px;
+	width: 120px;
+	display: inline;
+	outline: 0;
+}
+
+.bm-burger-button-inverted {
+	margin-left:40px;
+	background-image: url(/img/logo_color_filled_inverted.svg);
+	background-repeat: no-repeat;
+	justify-self: flex-start;
+	margin-top: 25px;
+	margin-bottom: 15px;
+	background-size: contain;
+	height: 40px;
+	outline: 0;
+}
+
+/* Styling of overlay */
+.bm-overlay {
+}
+
+.list-item {
+	margin-left:auto;
+	margin-right: auto;
+	margin-top: 5px;
+	color: #FFFFFF; 
+	font-family: Roboto;
+	font-weight: 400;
+	font-size: 17px;
+	width: 100px;
+	padding-bottom: 5px;
+	border-bottom: 1px solid white;
+	display: flex;
+	outline: 0;
+}
+
+.list-item-text {
+	justify-content: flex-start;
+}
+
+.bm-icon {
+	max-height: 40px;
+}
+
+.icon-container {
 	margin-top: 25px;
 	display: flex;
+	align-items: center;
 	justify-content: center;
 }
 
 .icon-image {
-	justify-self: center; 
-	width: 80px;
+	height: 80px;
+}
+
+.search-bar-container {
+	visibility: hidden;
+	flex: 1;
+}
+
+.pointer {
+	cursor: pointer;
 }

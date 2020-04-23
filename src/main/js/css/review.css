@@ -1,0 +1,86 @@
+.review-container {
+	margin-top: 30px;
+	width: 100%;
+}
+.nav-dots {
+	margin-left: auto;
+	margin-right: auto;
+	width: 75px;
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 25px; 
+}
+
+.nav-dot {
+	width: 15px;
+	height: 15px;
+	border-radius: 10px;
+	border: 1px solid #E0E0E0;
+}
+
+.nav-dot:hover {
+	background: #FFB6B6;
+	border: 1px solid #FFB6B6;
+}
+
+.nav-active {
+	background: #FF8E8E;
+	border: 1px solid #FF8E8E;
+}
+
+.nav-active:hover {
+	background: #FF8E8E;
+	border: 1px solid #FF8E8E;
+}
+
+.nav-buttons {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 40px;
+	width: 400px;
+	display: flex;
+
+	font-family: Roboto;
+	font-weight: 400;
+	font-size: 15px;
+
+	color: #858585;
+}
+
+.prev-button-container {
+	width: 200px;
+	display: flex;
+	justify-content: flex-end;
+}
+
+.next-button-container {
+	width: 200px;
+	display: flex;
+	justify-content: flex-start;
+}
+
+.nav-button {
+	border-radius: 8px;
+	border: 2px solid #E0E0E0;
+	justify-content: center;
+	padding: 8px;
+	cursor: pointer;
+}
+
+.nav-button-active:hover {
+	background: #EDEDED;
+}
+
+.nav-button-disabled {
+	cursor: initial;
+	color: #EDEDED;
+	border: 2px solid #EDEDED;
+}
+
+.prev-button {
+	margin-right: 4px;
+}
+
+.next-button {
+	margin-left: 4px;
+}

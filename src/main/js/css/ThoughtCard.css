@@ -4,9 +4,9 @@
 	justify-content: center;
 }
 
-.thought-card-margin-add {
-	margin-top: 70px;
-}
+.thought-card-animated {
+  animation-duration: 0.5s;
+ }
 
 .thought-card {
 	max-width: 850px;
@@ -126,7 +126,7 @@
 	height: 30px;
 }
 
-.thought-tag-checkmark {
+.thought-checkmark {
 	height: 20px;
 }
 
@@ -172,6 +172,20 @@ input:focus:-ms-input-placeholder { color:transparent; } /* IE 10+ */
 
 .thought-update-disabled {
 	color: rgba(255, 142, 142, .37);
+}
+
+.thought-saving-loader {
+  border: 4px solid #f3f3f3; /* Light grey */
+  border-top: 4px solid #FF8E8E; /* Blue */
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .thought-delete-enabled {
@@ -273,6 +287,6 @@ input:focus:-ms-input-placeholder { color:transparent; } /* IE 10+ */
 	color: #E15151;
 }
 
-.pointer {
-	cursor: pointer;
+.thought-clear {
+	align-self: flex-start;
 }

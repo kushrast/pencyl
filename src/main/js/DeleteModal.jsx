@@ -24,7 +24,7 @@ class DeleteModal extends Component {
 
   deleteThought () {
     this.props.deleteThought();
-    this.props.handleCloseModal();
+    this.handleCloseModal();
   }
 
   render() {
