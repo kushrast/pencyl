@@ -1,27 +1,67 @@
 import React, { Component } from 'react';
+import Menu from './Menu.jsx';
 import Icon from './Icon.jsx';
-import ThoughtCard from './ThoughtCard.jsx';
+import HomeComponent from './HomeComponent.jsx';
+import ReviewComponent from './ReviewComponent.jsx';
 import ReactDOM from 'react-dom';
-import "./css/app.css";
 import client from './client';
+import Modal from 'react-modal';
+
+import "./css/app.css";
 
 class App extends Component {
-
 	constructor(props) {
 		super(props);
+
+		this.state = {
+			page: "home"
+		}
+	}
+
+	setPage = (page) => {
+		this.setState({
+			page: page
+		});
+	}
+
+	getPage = () => {
+		if (this.state.page == "home") {
+			return <HomeComponent />
+		} else {
+			return <ReviewComponent />
+		}
+	}
+
+	//TODO: Convert to numerical order
+	togglePage = () => {
+		if (this.state.page == "home") {
+			this.setState({
+				page: "review"
+			});
+		} else {
+			this.setState({
+				page: "home"
+			});
+		}
 	}
 
 	render() {
 		return (
 			<div className="container">
-				<Icon />
-				<ThoughtCard/>
+				<div className="navbar">
+					<Menu setPage={this.setPage}/>
+					<Icon page={this.state.page} togglePage={this.togglePage}/>
+					<div className="search-bar-container"></div>
+				</div>
+				{this.getPage()}
 			</div>
 		);
 	}
 }
 
+Modal.setAppElement('#app');
+
 ReactDOM.render(
 	<App />,
-	document.getElementById('react')
+	document.getElementById('app')
 );
