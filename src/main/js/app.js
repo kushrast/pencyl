@@ -18,6 +18,7 @@ class App extends Component {
 		}
 	}
 
+	//TODO: check that page is valid
 	setPage = (page) => {
 		this.setState({
 			page: page
@@ -26,9 +27,9 @@ class App extends Component {
 
 	getPage = () => {
 		if (this.state.page == "home") {
-			return <HomeComponent />
+			return <HomeComponent setPage={this.setPage}/>
 		} else {
-			return <ReviewComponent />
+			return <ReviewComponent setPage={this.setPage}/>
 		}
 	}
 

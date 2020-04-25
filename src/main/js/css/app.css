@@ -1,9 +1,21 @@
+#app {
+}
+html {
+	height: 100%;
+}
 body {
 	z-index: 0;
 	margin: 0;
 	padding: 0;
 }
+
+.noscroll {
+	height: 100%;
+	overflow: hidden;
+}
+
 .container {
+	height: 100%;
 	font-family: Roboto;
 }
 
@@ -88,5 +100,50 @@ body {
 }
 
 .pointer {
+	cursor: pointer;
+}
+
+.review-more-container {
+  margin-top: 150px;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.review-more-text {
+	width: 100%;
+	text-align: center;
+	font-family: Roboto;
+	font-weight: 400;
+	font-size: 35px;
+
+	color: #FF8E8E;
+}
+
+.review-more-buttons {
+	margin-top: 20px;
+	width: 400px;
+	display: flex;
+
+	justify-content: center;
+
+	font-family: Roboto;
+	font-weight: 400;
+	font-size: 15px;
+
+	color: #858585;
+}
+
+.home-button {
+	margin-left: 8px;
+	color: #FF8E8E;
+}
+
+.nav-button {
+	border-radius: 8px;
+	border: 2px solid #E0E0E0;
+	justify-content: center;
+	padding: 8px;
 	cursor: pointer;
 }

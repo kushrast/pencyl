@@ -14,10 +14,12 @@ class DeleteModal extends Component {
   }
 
   handleOpenModal () {
+    document.body.classList.add("noscroll");
     this.setState({ showModal: true });
   }
   
   handleCloseModal () {
+    document.body.classList.remove("noscroll");
     this.setState({ showModal: false });
     this.props.returnFocus();
   }
@@ -30,7 +32,7 @@ class DeleteModal extends Component {
   render() {
   	return (
   		<div className="thought-delete">
-	  		{this.props.hasTypedInfo ? <div className="thought-delete-enabled pointer" onClick={this.handleOpenModal}>Delete</div> : <div className="thought-delete-disabled">Delete</div>}
+	  		<div className="thought-delete-enabled pointer" onClick={this.handleOpenModal}>Delete</div>
 	        <Modal 
 	           isOpen={this.state.showModal}
              onRequestClose={this.handleCloseModal}

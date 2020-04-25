@@ -2506,7 +2506,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".thought-card-container {\n\twidth: 100%;\n\tdisplay: flex;\n\tjustify-content: center;\n}\n\n.thought-card-animated {\n  animation-duration: 0.5s;\n }\n\n.thought-card {\n\tmax-width: 850px;\n\tflex-basis: 100%;\n\tborder: 2px solid #E0E0E0;\n\tbox-shadow: 0px 0px 15px 0px #ededed;\n\tbox-sizing: border-box;\n\tborder-radius: 15px;\n\tpadding: 10px 20px 10px 20px;\n}\n\n.thought-top-row {\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: end;\n}\n\n.thought-title {\n\tresize: none;\n\tmax-width: 850px;\n\tflex-basis: 100%;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 25px;\n\n\tcolor: #8C8C8C;\n\tborder: none;\n\tmargin-bottom: none;\n}\n\n.thought-title::placeholder {\n\tcolor: #8C8C8C;\n\tborder: none;\n}\n\n.thought-title:focus {\n\toutline: 0;\n}\n\n.thought-content-box {\n\tmin-height: 100px;\n\tmargin-top: 15px;\n\twidth: 100%;\n}\n\n.thought-content {\n\tresize: none;\n\twidth: 100%;\n\tfont-family: Roboto;\n\tfont-weight: 300;\n\tfont-size: 25px;\n\tcolor: #8C8C8C;\n\tborder: none;\n}\n\n.thought-content::placeholder {\n\tcolor: #8C8C8C;\n\tborder: none;\n}\n\n.thought-content:focus {\n\toutline: 0;\n}\n\n.thought-bottom-box {\n\tmin-height: 20px;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\twidth: 100%;\n\tmargin-top: auto;\n\talign-items: center;\n}\n\n.thought-bottom-row {\n\tmargin-top: 5px;\n\tflex-shrink: 0;\n\twidth: 100%;\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: end;\n}\n\n.thought-tag-bubbles {\n\tflex-grow: 1;\n\tdisplay: flex;\n\tjustify-content: start;\n\tflex-wrap: wrap;\n\tpadding:5px;\n}\n\n.thought-tag-bubble {\n\tdisplay: flex;\n\talign-items: center;\n\tmargin: 5px;\n\tborder-radius: 15px;\n\tbackground: #FFF48E; \n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 17px;\n\tpadding: 2.5px 10px 5px 10px;\n\n\tcolor: #8C8C8C\n}\n\n.thought-tag-bubble-delete {\n\tmargin-left: 5px;\n\theight: 12px;\n}\n\n.thought-add-tags {\n\tmargin-left: 5px;\n\tdisplay: flex;\n\talign-items: center;\n}\n\n.thought-tag-icon {\n\theight: 30px;\n}\n\n.thought-checkmark {\n\theight: 20px;\n}\n\n.thought-tag-input {\n\tmargin-left: 5px;\n\tcolor: #8C8C8C;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 17px;\n\twidth: 150px;\n\tborder: none;\n\tborder-bottom: 1.5px solid #EDEDED;\n}\n\n.thought-tag-input::placeholder {\n\tcolor: #EDEDED;\n\tborder: none;\n\tborder-bottom: 1.5px solid #EDEDED;\n}\n\ninput:focus::placeholder { color: transparent; }\ninput:focus::-webkit-input-placeholder { color:transparent; }\ninput:focus:-moz-placeholder { color:transparent; } /* FF 4-18 */\ninput:focus::-moz-placeholder { color:transparent; } /* FF 19+ */\ninput:focus:-ms-input-placeholder { color:transparent; } /* IE 10+ */\n\n.thought-tag-input:focus {\n\toutline: 0;\n\tborder-bottom: 1.5px solid #EDEDED;\n}\n\n.thought-tag-input:hover {\n\tborder-bottom: 1.5px solid #EDEDED;\n}\n\n.thought-update {\n\tmargin-left: auto;\n\tfont-family: Roboto;\n\tfont-weight: 500;\n\tfont-size: 20px;\n\tcolor: rgba(255, 142, 142);\n}\n\n.thought-update-disabled {\n\tcolor: rgba(255, 142, 142, .37);\n}\n\n.thought-saving-loader {\n  border: 4px solid #f3f3f3; /* Light grey */\n  border-top: 4px solid #FF8E8E; /* Blue */\n  border-radius: 50%;\n  width: 20px;\n  height: 20px;\n  animation: spin 2s linear infinite;\n}\n\n@keyframes spin {\n  0% { transform: rotate(0deg); }\n  100% { transform: rotate(360deg); }\n}\n\n.thought-delete-enabled {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: #E15151;\n}\n\n.thought-delete-disabled {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: rgba(225, 81, 81, .37);\n}\n\n.thought-delete-overlay {\n\tbackground-color: rgba(196, 196, 196, 0.41);\n    position: fixed;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n}\n\n.thought-delete-modal-container {\n\theight: 100%;\n\twidth: 100%;\n\tdisplay: flex;\n}\n\n.thought-delete-modal {\n\tbackground-color: white;\n\tborder-radius: 10px;\n\tmax-width: 400px;\n\tmargin-left: auto;\n\tmargin-right: auto;\n\tmargin-top: 200px;\n\tpadding: 25px 20px 25px 20px;\n\toutline: 0;\n\tdisplay: flex;\n\theight: 200px;\n\tflex-direction: column;\n}\n\n.thought-delete-modal-title {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 25px;\n\tcolor: #959595;\n}\n\n.thought-delete-modal-content {\n\tdisplay: flex;\n\tflex-wrap: nowrap;\n\tmargin-top: 20px;\n}\n\n.thought-delete-modal-subtitle {\n\tfont-family: Roboto;\n\tfont-weight: 300;\n\tfont-size: 20px;\n\tcolor: #ACACAC;\n}\n\n.thought-delete-trash-can {\n\twidth: 75px;\n\tmargin: 0px 20px 0px 20px\n}\n\n.thought-delete-modal-buttons {\n\twidth: 100%;\n\tdisplay: flex;\n\tjustify-content: flex-end;\n\n}\n\n.thought-delete-cancel {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 20px;\n\tcolor: #959595;\n}\n\n.thought-delete-separator {\n\tmargin-left: 10px;\n\tmargin-right: 10px;\n\twidth: 1px;\n\tbackground-color: #EDEDED;\n\theight: 20px;\n}\n\n.thought-delete-confirm {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 20px;\n\tcolor: #E15151;\n}\n\n.thought-clear {\n\talign-self: flex-start;\n}", ""]);
+exports.push([module.i, ".thought-card-container {\n\tmargin-left: auto;\n\tmargin-right: auto;\n\tmax-width: 1050px;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tjustify-content: center;\n}\n\n.thought-card-animated {\n  animation-duration: 1.0s;\n }\n\n.thought-card {\n\tmax-width: 700px;\n\tflex-grow: 1;\n\tflex-basis:0;\n\tborder: 2px solid #E0E0E0;\n\tbox-shadow: 0px 0px 15px 0px #ededed;\n\tbox-sizing: border-box;\n\tborder-radius: 15px;\n\tpadding: 10px 20px 10px 20px;\n}\n\n.thought-top-box {\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: end;\n}\n\n.thought-review-addons {\n\tdisplay: flex;\n\tmargin-bottom: 5px;\n}\n\n.thought-created-at {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: #DDDDDD;\n}\n\n.thought-title-row {\n\tmax-width: 700px;\n\tflex-grow: 1;\n}\n\n.thought-title {\n\twidth: 100%;\n\tflex-grow: 1;\n\tresize: none;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 25px;\n\n\tcolor: #8C8C8C;\n\tborder: none;\n\tmargin-bottom: none;\n}\n\n.thought-title::placeholder {\n\tcolor: #8C8C8C;\n\tborder: none;\n}\n\n.thought-title:focus {\n\toutline: 0;\n}\n\n.thought-content-box {\n\tmin-height: 100px;\n\tmargin-top: 15px;\n\twidth: 100%;\n}\n\n.thought-content {\n\tresize: none;\n\twidth: 100%;\n\tfont-family: Roboto;\n\tfont-weight: 300;\n\tfont-size: 25px;\n\tcolor: #8C8C8C;\n\tborder: none;\n}\n\n.thought-content::placeholder {\n\tcolor: #8C8C8C;\n\tborder: none;\n}\n\n.thought-content:focus {\n\toutline: 0;\n}\n\n.thought-bottom-box {\n\tmin-height: 20px;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\twidth: 100%;\n\talign-items: center;\n}\n\n.thought-bottom-row {\n\tmargin-top: 5px;\n\tflex-shrink: 0;\n\twidth: 100%;\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: end;\n}\n\n.thought-tags-row {\n\tflex-shrink: 0;\n\twidth: 100%;\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: end;\n}\n\n.thought-tag-bubbles {\n\tflex-grow: 1;\n\tdisplay: flex;\n\tjustify-content: start;\n\tflex-wrap: wrap;\n\tpadding:5px;\n}\n\n.thought-tag-bubbles-limited {\n\tmax-width: 550px;\n}\n\n.thought-tag-bubble {\n\tdisplay: flex;\n\talign-items: center;\n\tmargin: 5px;\n\tborder-radius: 15px;\n\tbackground: #FAFAFA; \n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 17px;\n\tpadding: 2.5px 10px 5px 10px;\n\n\tcolor: #8C8C8C\n}\n\n.thought-tag-bubble-delete {\n\tmargin-left: 5px;\n\theight: 12px;\n}\n\n.thought-edited-at {\n\tdisplay: flex;\n\tflex-shrink: 0;\n\talign-self: flex-end;\n\twidth: auto;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\tjustify-content: flex-end;\n\n\tcolor: #DDDDDD;\n}\n\n.thought-edited-at-timestamp {\n}\n\n.thought-add-tags {\n\tmargin-left: 5px;\n\tdisplay: flex;\n\talign-items: center;\n}\n\n.thought-tag-icon {\n\theight: 30px;\n}\n\n.thought-checkmark {\n\theight: 20px;\n}\n\n.thought-checkmark-toggle {\n\tmargin-left: 10px;\n\theight: 15px;\n\twidth: 15px;\n\tborder-radius: 3px;\n\tborder: 2px solid #EDEDED;\n}\n\n.thought-completed {\n\tbackground-image: url(/img/checkmark.svg);\n\tbackground-size: contain;\n\tbackground-repeat: no-repeat;\n}\n\n.thought-tag-input {\n\tmargin-left: 5px;\n\tcolor: #8C8C8C;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 17px;\n\twidth: 150px;\n\tborder: none;\n\tborder-bottom: 1.5px solid #EDEDED;\n}\n\n.thought-tag-input::placeholder {\n\tcolor: #EDEDED;\n\tborder: none;\n\tborder-bottom: 1.5px solid #EDEDED;\n}\n\ninput:focus::placeholder { color: transparent; }\ninput:focus::-webkit-input-placeholder { color:transparent; }\ninput:focus:-moz-placeholder { color:transparent; } /* FF 4-18 */\ninput:focus::-moz-placeholder { color:transparent; } /* FF 19+ */\ninput:focus:-ms-input-placeholder { color:transparent; } /* IE 10+ */\n\n.thought-tag-input:focus {\n\toutline: 0;\n\tborder-bottom: 1.5px solid #EDEDED;\n}\n\n.thought-tag-input:hover {\n\tborder-bottom: 1.5px solid #EDEDED;\n}\n\n.thought-update {\n\tmargin-left: auto;\n\tfont-family: Roboto;\n\tfont-weight: 500;\n\tfont-size: 20px;\n\tcolor: rgba(255, 142, 142);\n}\n\n.thought-update-disabled {\n\tcolor: rgba(255, 142, 142, .37);\n}\n\n.thought-saving-loader {\n  border: 4px solid #f3f3f3; /* Light grey */\n  border-top: 4px solid #FF8E8E; /* Orange */\n  border-radius: 50%;\n  width: 20px;\n  height: 20px;\n  animation: spin 2s linear infinite;\n}\n\n@keyframes spin {\n  0% { transform: rotate(0deg); }\n  100% { transform: rotate(360deg); }\n}\n\n.thought-delete-enabled {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: #E15151;\n}\n\n.thought-delete-disabled {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: rgba(225, 81, 81, .37);\n}\n\n.thought-delete-overlay {\n\tbackground-color: rgba(196, 196, 196, 0.41);\n    position: fixed;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    overflow: scroll;\n}\n\n.thought-delete-modal-container {\n\tmargin-top: 200px;\n\twidth: 100%;\n\tdisplay: flex;\n\toutline: 0;\n}\n\n.thought-delete-modal {\n\tbackground-color: white;\n\tborder-radius: 10px;\n\tmax-width: 400px;\n\tmargin-left: auto;\n\tmargin-right: auto;\n\tpadding: 25px 20px 25px 20px;\n\toutline: 0;\n\tdisplay: flex;\n\theight: 200px;\n\tflex-direction: column;\n}\n\n.thought-delete-modal-title {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 25px;\n\tcolor: #959595;\n}\n\n.thought-delete-modal-content {\n\tdisplay: flex;\n\tflex-wrap: nowrap;\n\tmargin-top: 20px;\n}\n\n.thought-delete-modal-subtitle {\n\tfont-family: Roboto;\n\tfont-weight: 300;\n\tfont-size: 20px;\n\tcolor: #ACACAC;\n}\n\n.thought-delete-trash-can {\n\twidth: 75px;\n\tmargin: 0px 20px 0px 20px\n}\n\n.thought-delete-modal-buttons {\n\twidth: 100%;\n\tdisplay: flex;\n\tjustify-content: flex-end;\n\n}\n\n.thought-delete-cancel {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 20px;\n\tcolor: #959595;\n}\n\n.thought-delete-separator {\n\tmargin-left: 10px;\n\tmargin-right: 10px;\n\twidth: 1px;\n\tbackground-color: #EDEDED;\n\theight: 20px;\n}\n\n.thought-delete-confirm {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 20px;\n\tcolor: #E15151;\n}\n\n.thought-clear {\n\talign-self: flex-start;\n}\n\n.thought-replies {\n\twidth: 250px;\n\tdisplay: flex;\n\tmargin-left: 10px;\n\tmax-height: 300px;\n\toverflow: scroll;\n\talign-content: flex-end;\n\tflex-wrap: wrap;\n}\n\n.thought-reply-box {\n\twidth: 100%;\n\toutline: 0;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\tborder-radius: 8px;\n\tborder: 2px solid #E0E0E0;\n\toverflow: hidden;\n\tpadding: 5px;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n}\n\n.thought-reply-input {\n\tborder: none;\n\twidth: 100%;\n\toutline: 0;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\tcolor: #858585;\n\tresize: none;\n}\n\n.thought-reply-input::placeholder {\n\tcolor: #DDDDDD;\n}\n\n.thought-reply-delete {\n\tmargin-left: 2px;\n\tborder-radius: 5px;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\tcolor: #E15151;\n\tpadding: 5px;\n\tborder-radius: 8px;\n\tborder: 2px solid #E0E0E0;\n\tbackground-color: #FFFFFF;\n}\n\n.thought-reply-delete:hover {\n\tbackground-color: #F5F5F5;\n}\n\n.thought-reply-action {\n\twidth: 100%;\n\tjustify-content: flex-end;\n\tdisplay: flex;\n\tflex-wrap: nowrap;\n}\n\n.thought-reply-clear {\n\tcolor: #DDDDDD;\n\tmargin-right: 10px;\n}\n\n.thought-reply-submit {\n\tcolor: #FF8E8E;\n\tmargin-right: 5px;\n}\n\n.thought-reply-item {\n\tmargin-bottom: 10px;\n\twidth: 100%;\n\tcolor: #858585;\n}\n\n.thought-reply-timestamp {\n\twidth: 100%;\n\tcolor: #DDDDDD;\n\tdisplay: flex;\n\tjustify-content: space-between;\n}\n\n.thought-reply-options {\n\tbackground-image: url(/img/three_dots.svg);\n\tbackground-size: contain;\n\tbackground-repeat: no-repeat;\n\tcursor: pointer;\n\twidth: 3px;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -2524,7 +2524,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "body {\n\tz-index: 0;\n\tmargin: 0;\n\tpadding: 0;\n}\n.container {\n\tfont-family: Roboto;\n}\n\n.navbar {\n\twidth: 100%;\n\tdisplay: flex;\n}\n\n.menu-container {\n\tflex: 1;\n\tdisplay: flex;\n\talign-items: flex-start;\n\tjustify-content: flex-start;\n}\n\n.menu-overlay {\n\tbackground-color: #FF8E8E;\n}\n\n.bm-burger-button {\n\tmargin-top: 25px;\n\tposition: fixed;\n\theight: 60px;\n\twidth: 120px;\n\tdisplay: inline;\n\toutline: 0;\n}\n\n.bm-burger-button-inverted {\n\tmargin-left:40px;\n\tbackground-image: url(/img/logo_color_filled_inverted.svg);\n\tbackground-repeat: no-repeat;\n\tjustify-self: flex-start;\n\tmargin-top: 25px;\n\tmargin-bottom: 15px;\n\tbackground-size: contain;\n\theight: 40px;\n\toutline: 0;\n}\n\n/* Styling of overlay */\n.bm-overlay {\n}\n\n.list-item {\n\tmargin-left:auto;\n\tmargin-right: auto;\n\tmargin-top: 5px;\n\tcolor: #FFFFFF; \n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 17px;\n\twidth: 100px;\n\tpadding-bottom: 5px;\n\tborder-bottom: 1px solid white;\n\tdisplay: flex;\n\toutline: 0;\n}\n\n.list-item-text {\n\tjustify-content: flex-start;\n}\n\n.bm-icon {\n\tmax-height: 40px;\n}\n\n.icon-container {\n\tmargin-top: 25px;\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: center;\n}\n\n.icon-image {\n\theight: 80px;\n}\n\n.search-bar-container {\n\tvisibility: hidden;\n\tflex: 1;\n}\n\n.pointer {\n\tcursor: pointer;\n}\n", ""]);
+exports.push([module.i, "#app {\n}\nhtml {\n\theight: 100%;\n}\nbody {\n\tz-index: 0;\n\tmargin: 0;\n\tpadding: 0;\n}\n\n.noscroll {\n\theight: 100%;\n\toverflow: hidden;\n}\n\n.container {\n\theight: 100%;\n\tfont-family: Roboto;\n}\n\n.navbar {\n\twidth: 100%;\n\tdisplay: flex;\n}\n\n.menu-container {\n\tflex: 1;\n\tdisplay: flex;\n\talign-items: flex-start;\n\tjustify-content: flex-start;\n}\n\n.menu-overlay {\n\tbackground-color: #FF8E8E;\n}\n\n.bm-burger-button {\n\tmargin-top: 25px;\n\tposition: fixed;\n\theight: 60px;\n\twidth: 120px;\n\tdisplay: inline;\n\toutline: 0;\n}\n\n.bm-burger-button-inverted {\n\tmargin-left:40px;\n\tbackground-image: url(/img/logo_color_filled_inverted.svg);\n\tbackground-repeat: no-repeat;\n\tjustify-self: flex-start;\n\tmargin-top: 25px;\n\tmargin-bottom: 15px;\n\tbackground-size: contain;\n\theight: 40px;\n\toutline: 0;\n}\n\n/* Styling of overlay */\n.bm-overlay {\n}\n\n.list-item {\n\tmargin-left:auto;\n\tmargin-right: auto;\n\tmargin-top: 5px;\n\tcolor: #FFFFFF; \n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 17px;\n\twidth: 100px;\n\tpadding-bottom: 5px;\n\tborder-bottom: 1px solid white;\n\tdisplay: flex;\n\toutline: 0;\n}\n\n.list-item-text {\n\tjustify-content: flex-start;\n}\n\n.bm-icon {\n\tmax-height: 40px;\n}\n\n.icon-container {\n\tmargin-top: 25px;\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: center;\n}\n\n.icon-image {\n\theight: 80px;\n}\n\n.search-bar-container {\n\tvisibility: hidden;\n\tflex: 1;\n}\n\n.pointer {\n\tcursor: pointer;\n}\n\n.review-more-container {\n  margin-top: 150px;\n  display: flex;\n  align-content: center;\n  justify-content: center;\n  flex-wrap: wrap;\n}\n\n.review-more-text {\n\twidth: 100%;\n\ttext-align: center;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 35px;\n\n\tcolor: #FF8E8E;\n}\n\n.review-more-buttons {\n\tmargin-top: 20px;\n\twidth: 400px;\n\tdisplay: flex;\n\n\tjustify-content: center;\n\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: #858585;\n}\n\n.home-button {\n\tmargin-left: 8px;\n\tcolor: #FF8E8E;\n}\n\n.nav-button {\n\tborder-radius: 8px;\n\tborder: 2px solid #E0E0E0;\n\tjustify-content: center;\n\tpadding: 8px;\n\tcursor: pointer;\n}", ""]);
 // Exports
 module.exports = exports;
 
@@ -2560,7 +2560,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".review-container {\n\tmargin-top: 30px;\n\twidth: 100%;\n}\n.nav-dots {\n\tmargin-left: auto;\n\tmargin-right: auto;\n\twidth: 75px;\n\tdisplay: flex;\n\tjustify-content: space-between;\n\tmargin-bottom: 25px; \n}\n\n.nav-dot {\n\twidth: 15px;\n\theight: 15px;\n\tborder-radius: 10px;\n\tborder: 1px solid #E0E0E0;\n}\n\n.nav-dot:hover {\n\tbackground: #FFB6B6;\n\tborder: 1px solid #FFB6B6;\n}\n\n.nav-active {\n\tbackground: #FF8E8E;\n\tborder: 1px solid #FF8E8E;\n}\n\n.nav-active:hover {\n\tbackground: #FF8E8E;\n\tborder: 1px solid #FF8E8E;\n}\n\n.nav-buttons {\n\tmargin-left: auto;\n\tmargin-right: auto;\n\tmargin-top: 40px;\n\twidth: 400px;\n\tdisplay: flex;\n\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: #858585;\n}\n\n.prev-button-container {\n\twidth: 200px;\n\tdisplay: flex;\n\tjustify-content: flex-end;\n}\n\n.next-button-container {\n\twidth: 200px;\n\tdisplay: flex;\n\tjustify-content: flex-start;\n}\n\n.nav-button {\n\tborder-radius: 8px;\n\tborder: 2px solid #E0E0E0;\n\tjustify-content: center;\n\tpadding: 8px;\n\tcursor: pointer;\n}\n\n.nav-button-active:hover {\n\tbackground: #EDEDED;\n}\n\n.nav-button-disabled {\n\tcursor: initial;\n\tcolor: #EDEDED;\n\tborder: 2px solid #EDEDED;\n}\n\n.prev-button {\n\tmargin-right: 4px;\n}\n\n.next-button {\n\tmargin-left: 4px;\n}", ""]);
+exports.push([module.i, ".review-container {\n\theight: 100%;\n\tmargin-top: 30px;\n\twidth: 100%;\n}\n.nav-dots {\n\tmargin-left: auto;\n\tmargin-right: auto;\n\twidth: 75px;\n\tdisplay: flex;\n\tjustify-content: space-around;\n\tmargin-bottom: 25px; \n}\n\n.nav-dot {\n\twidth: 15px;\n\theight: 15px;\n\tborder-radius: 10px;\n\tborder: 1px solid #E0E0E0;\n}\n\n.nav-dot:hover {\n\tbackground: #FFB6B6;\n\tborder: 1px solid #FFB6B6;\n}\n\n.nav-active {\n\tbackground: #FF8E8E;\n\tborder: 1px solid #FF8E8E;\n}\n\n.nav-active:hover {\n\tbackground: #FF8E8E;\n\tborder: 1px solid #FF8E8E;\n}\n\n.nav-buttons {\n\tmargin-left: auto;\n\tmargin-right: auto;\n\tmargin-top: 40px;\n\twidth: 400px;\n\tdisplay: flex;\n\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: #858585;\n}\n\n.prev-button-container {\n\twidth: 200px;\n\tdisplay: flex;\n\tjustify-content: flex-end;\n}\n\n.next-button-container {\n\twidth: 200px;\n\tdisplay: flex;\n\tjustify-content: flex-start;\n}\n\n.nav-button {\n\tborder-radius: 8px;\n\tborder: 2px solid #E0E0E0;\n\tjustify-content: center;\n\tpadding: 8px;\n\tcursor: pointer;\n}\n\n.nav-button-active:hover {\n\tbackground: #EDEDED;\n}\n\n.nav-button-disabled {\n\tcursor: initial;\n\tcolor: #EDEDED;\n\tborder: 2px solid #EDEDED;\n}\n\n.prev-button {\n\tmargin-right: 4px;\n}\n\n.next-button {\n\tmargin-left: 4px;\n}\n\n.review-more-container {\n  margin-top: 150px;\n  display: flex;\n  align-content: center;\n  justify-content: center;\n  flex-wrap: wrap;\n}\n\n.review-more-text {\n\twidth: 100%;\n\ttext-align: center;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 35px;\n\n\tcolor: #FF8E8E;\n}\n\n.review-more-buttons {\n\tmargin-top: 20px;\n\twidth: 400px;\n\tdisplay: flex;\n\n\tjustify-content: center;\n\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: #858585;\n}\n\n.home-button {\n\tmargin-right: 8px;\n\tcolor: #FF8E8E;\n}", ""]);
 // Exports
 module.exports = exports;
 
@@ -38001,6 +38001,550 @@ function isMobileDevice() {
 
 /***/ }),
 
+/***/ "./node_modules/react-tiny-popover/dist/ArrowContainer.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/react-tiny-popover/dist/ArrowContainer.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var util_1 = __webpack_require__(/*! ./util */ "./node_modules/react-tiny-popover/dist/util.js");
+var ArrowContainer = function (_a) {
+    var position = _a.position, children = _a.children, style = _a.style, _b = _a.arrowColor, arrowColor = _b === void 0 ? util_1.Constants.DEFAULT_ARROW_COLOR : _b, _c = _a.arrowSize, arrowSize = _c === void 0 ? 10 : _c, arrowStyle = _a.arrowStyle, popoverRect = _a.popoverRect, targetRect = _a.targetRect;
+    return (React.createElement("div", { style: __assign({ paddingLeft: position === 'right' ? arrowSize : 0, paddingTop: position === 'bottom' ? arrowSize : 0, paddingBottom: position === 'top' ? arrowSize : 0, paddingRight: position === 'left' ? arrowSize : 0 }, style) },
+        React.createElement("div", { style: __assign(__assign({ position: 'absolute' }, (function () {
+                var arrowWidth = arrowSize * 2;
+                var top = (targetRect.top - popoverRect.top) + (targetRect.height / 2) - (arrowWidth / 2);
+                var left = (targetRect.left - popoverRect.left) + (targetRect.width / 2) - (arrowWidth / 2);
+                left = left < 0 ? 0 : left;
+                left = left + arrowWidth > popoverRect.width ? popoverRect.width - arrowWidth : left;
+                top = top < 0 ? 0 : top;
+                top = top + arrowWidth > popoverRect.height ? popoverRect.height - arrowWidth : top;
+                switch (position) {
+                    case 'right':
+                        return {
+                            borderTop: arrowSize + "px solid transparent",
+                            borderBottom: arrowSize + "px solid transparent",
+                            borderRight: arrowSize + "px solid " + arrowColor,
+                            left: 0,
+                            top: top,
+                        };
+                    case 'left':
+                        return {
+                            borderTop: arrowSize + "px solid transparent",
+                            borderBottom: arrowSize + "px solid transparent",
+                            borderLeft: arrowSize + "px solid " + arrowColor,
+                            right: 0,
+                            top: top,
+                        };
+                    case 'bottom':
+                        return {
+                            borderLeft: arrowSize + "px solid transparent",
+                            borderRight: arrowSize + "px solid transparent",
+                            borderBottom: arrowSize + "px solid " + arrowColor,
+                            top: 0,
+                            left: left,
+                        };
+                    case 'top':
+                    default:
+                        return {
+                            borderLeft: arrowSize + "px solid transparent",
+                            borderRight: arrowSize + "px solid transparent",
+                            borderTop: arrowSize + "px solid " + arrowColor,
+                            bottom: 0,
+                            left: left,
+                        };
+                }
+            })()), arrowStyle) }),
+        children));
+};
+exports.ArrowContainer = ArrowContainer;
+//# sourceMappingURL=ArrowContainer.js.map
+
+/***/ }),
+
+/***/ "./node_modules/react-tiny-popover/dist/Popover.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/react-tiny-popover/dist/Popover.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var react_dom_1 = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+var util_1 = __webpack_require__(/*! ./util */ "./node_modules/react-tiny-popover/dist/util.js");
+var ArrowContainer_1 = __webpack_require__(/*! ./ArrowContainer */ "./node_modules/react-tiny-popover/dist/ArrowContainer.js");
+exports.ArrowContainer = ArrowContainer_1.ArrowContainer;
+var PopoverPortal_1 = __webpack_require__(/*! ./PopoverPortal */ "./node_modules/react-tiny-popover/dist/PopoverPortal.js");
+var Popover = /** @class */ (function (_super) {
+    __extends(Popover, _super);
+    function Popover(props) {
+        var _this = _super.call(this, props) || this;
+        _this.target = null;
+        _this.targetRect = null;
+        _this.targetPositionIntervalHandler = null;
+        _this.popoverDiv = null; // TODO: potentially move this inside of PopoverPortal?
+        _this.positionOrder = null;
+        _this.willUnmount = false;
+        _this.willMount = false;
+        _this.onResize = function () {
+            _this.renderPopover();
+        };
+        _this.onClick = function (e) {
+            var _a = _this.props, onClickOutside = _a.onClickOutside, isOpen = _a.isOpen;
+            if (!_this.willUnmount && !_this.willMount && !_this.popoverDiv.contains(e.target) && !_this.target.contains(e.target) && onClickOutside && isOpen) {
+                onClickOutside(e);
+            }
+        };
+        _this.state = {
+            popoverInfo: null,
+            isTransitioningToClosed: false,
+            internalisOpen: false,
+        };
+        _this.willUnmount = false;
+        _this.willMount = true;
+        return _this;
+    }
+    Popover.getDerivedStateFromProps = function (props, state) {
+        var internalisOpen = state.internalisOpen, isTransitioningToClosed = state.isTransitioningToClosed;
+        var isOpen = props.isOpen;
+        if (internalisOpen === true && isOpen === false && !isTransitioningToClosed) {
+            return {
+                internalisOpen: false,
+                isTransitioningToClosed: true,
+            };
+        }
+        return null;
+    };
+    Popover.prototype.componentDidMount = function () {
+        var _this = this;
+        window.setTimeout(function () { return _this.willMount = false; });
+        var _a = this.props, position = _a.position, isOpen = _a.isOpen;
+        this.target = react_dom_1.findDOMNode(this);
+        this.positionOrder = this.getPositionPriorityOrder(position);
+        this.updatePopover(isOpen);
+    };
+    Popover.prototype.componentWillUnmount = function () {
+        this.willUnmount = true;
+        window.clearTimeout(this.removePopoverTimeout);
+        window.clearInterval(this.targetPositionIntervalHandler);
+        window.removeEventListener('resize', this.onResize);
+        window.removeEventListener('click', this.onClick);
+        this.removePopover();
+    };
+    Popover.prototype.componentDidUpdate = function (prevProps) {
+        if (this.target == null) {
+            this.target = react_dom_1.findDOMNode(this);
+        }
+        var prevIsOpen = prevProps.isOpen, prevAlign = prevProps.align, prevPosition = prevProps.position, prevTransitionDuration = prevProps.transitionDuration;
+        var _a = this.props, isOpen = _a.isOpen, position = _a.position, transitionDuration = _a.transitionDuration, align = _a.align;
+        this.positionOrder = this.getPositionPriorityOrder(this.props.position);
+        var hasNewDestination = prevProps.contentDestination !== this.props.contentDestination;
+        if (prevIsOpen !== isOpen ||
+            prevAlign !== align ||
+            prevPosition !== position ||
+            hasNewDestination) {
+            this.updatePopover(isOpen);
+        }
+        if (prevTransitionDuration !== transitionDuration) {
+            this.popoverDiv.style.transition = "opacity " + transitionDuration + "s";
+        }
+    };
+    Popover.prototype.render = function () {
+        var content = this.props.content;
+        var _a = this.state, popoverInfo = _a.popoverInfo, isTransitioningToClosed = _a.isTransitioningToClosed;
+        var popoverContent = null;
+        if ((this.props.isOpen || isTransitioningToClosed) && this.popoverDiv && popoverInfo) {
+            var getContent = function (args) {
+                return typeof content === 'function'
+                    ? content(args)
+                    : content;
+            };
+            popoverContent = (React.createElement(PopoverPortal_1.PopoverPortal, { element: this.popoverDiv, container: this.props.contentDestination || window.document.body, children: getContent(popoverInfo) }));
+        }
+        return (React.createElement(React.Fragment, null,
+            this.props.children,
+            popoverContent));
+    };
+    Popover.prototype.updatePopover = function (isOpen) {
+        if (isOpen && this.target != null) {
+            if (!this.popoverDiv || !this.popoverDiv.parentNode) {
+                var transitionDuration = this.props.transitionDuration;
+                this.popoverDiv = this.createContainer();
+                this.popoverDiv.style.opacity = '0';
+                this.popoverDiv.style.transition = "opacity " + transitionDuration + "s";
+            }
+            window.addEventListener('resize', this.onResize);
+            window.addEventListener('click', this.onClick);
+            this.renderPopover();
+        }
+        else {
+            this.removePopover();
+        }
+    };
+    Popover.prototype.renderPopover = function (positionIndex) {
+        var _this = this;
+        if (positionIndex === void 0) { positionIndex = 0; }
+        if (positionIndex >= this.positionOrder.length) {
+            return;
+        }
+        this.renderWithPosition({ position: this.positionOrder[positionIndex], targetRect: this.target.getBoundingClientRect() }, function (violation, rect) {
+            var _a;
+            var _b = _this.props, disableReposition = _b.disableReposition, contentLocation = _b.contentLocation;
+            if (violation && !disableReposition && !(typeof contentLocation === 'object')) {
+                _this.renderPopover(positionIndex + 1);
+            }
+            else {
+                var _c = _this.props, contentLocation_1 = _c.contentLocation, align = _c.align;
+                var _d = _this.getNudgedPopoverPosition(rect), nudgedTop = _d.top, nudgedLeft = _d.left;
+                var rectTop = rect.top, rectLeft = rect.left;
+                var position = _this.positionOrder[positionIndex];
+                var _e = disableReposition ? { top: rectTop, left: rectLeft } : { top: nudgedTop, left: nudgedLeft }, top_1 = _e.top, left = _e.left;
+                if (contentLocation_1) {
+                    var targetRect = _this.target.getBoundingClientRect();
+                    var popoverRect = _this.popoverDiv.getBoundingClientRect();
+                    (_a = typeof contentLocation_1 === 'function' ? contentLocation_1({ targetRect: targetRect, popoverRect: popoverRect, position: position, align: align, nudgedLeft: nudgedLeft, nudgedTop: nudgedTop }) : contentLocation_1, top_1 = _a.top, left = _a.left);
+                    _this.popoverDiv.style.left = left.toFixed() + "px";
+                    _this.popoverDiv.style.top = top_1.toFixed() + "px";
+                }
+                else {
+                    var destinationTopOffset = 0;
+                    var destinationLeftOffset = 0;
+                    if (_this.props.contentDestination) {
+                        var destRect = _this.props.contentDestination.getBoundingClientRect();
+                        destinationTopOffset = -destRect.top;
+                        destinationLeftOffset = -destRect.left;
+                    }
+                    var _f = [top_1 + window.pageYOffset, left + window.pageXOffset], absoluteTop = _f[0], absoluteLeft = _f[1];
+                    var finalLeft = absoluteLeft + destinationTopOffset;
+                    var finalTop = absoluteTop + destinationLeftOffset;
+                    _this.popoverDiv.style.left = finalLeft.toFixed() + "px";
+                    _this.popoverDiv.style.top = finalTop.toFixed() + "px";
+                }
+                _this.popoverDiv.style.width = null;
+                _this.popoverDiv.style.height = null;
+                _this.renderWithPosition({
+                    position: position,
+                    nudgedTop: nudgedTop - rect.top,
+                    nudgedLeft: nudgedLeft - rect.left,
+                    targetRect: _this.target.getBoundingClientRect(),
+                    popoverRect: _this.popoverDiv.getBoundingClientRect(),
+                }, function () {
+                    _this.startTargetPositionListener(10);
+                    if (_this.popoverDiv.style.opacity !== '1' && !_this.state.isTransitioningToClosed) {
+                        _this.popoverDiv.style.opacity = '1';
+                    }
+                });
+            }
+        });
+    };
+    Popover.prototype.renderWithPosition = function (_a, callback) {
+        var _this = this;
+        var position = _a.position, _b = _a.nudgedLeft, nudgedLeft = _b === void 0 ? 0 : _b, _c = _a.nudgedTop, nudgedTop = _c === void 0 ? 0 : _c, _d = _a.targetRect, targetRect = _d === void 0 ? util_1.Constants.EMPTY_CLIENT_RECT : _d, _e = _a.popoverRect, popoverRect = _e === void 0 ? util_1.Constants.EMPTY_CLIENT_RECT : _e;
+        var _f = this.props, padding = _f.windowBorderPadding, align = _f.align;
+        var popoverInfo = { position: position, nudgedLeft: nudgedLeft, nudgedTop: nudgedTop, targetRect: targetRect, popoverRect: popoverRect, align: align };
+        if (!util_1.popoverInfosAreEqual(this.state.popoverInfo, popoverInfo)) {
+            window.clearTimeout(this.removePopoverTimeout);
+            this.setState({ popoverInfo: popoverInfo, isTransitioningToClosed: false, internalisOpen: true }, function () {
+                if (_this.willUnmount) {
+                    return;
+                }
+                targetRect = _this.target.getBoundingClientRect();
+                popoverRect = _this.popoverDiv.getBoundingClientRect();
+                var _a = _this.getLocationForPosition(position, targetRect, popoverRect), top = _a.top, left = _a.left;
+                callback(position === 'top' && top < padding ||
+                    position === 'left' && left < padding ||
+                    position === 'right' && left + popoverRect.width > window.innerWidth - padding ||
+                    position === 'bottom' && top + popoverRect.height > window.innerHeight - padding, { width: popoverRect.width, height: popoverRect.height, top: top, left: left });
+            });
+        }
+    };
+    Popover.prototype.startTargetPositionListener = function (checkInterval) {
+        var _this = this;
+        if (this.targetPositionIntervalHandler === null) {
+            this.targetPositionIntervalHandler = window.setInterval(function () {
+                var newTargetRect = _this.target.getBoundingClientRect();
+                if (util_1.targetPositionHasChanged(_this.targetRect, newTargetRect)) {
+                    _this.renderPopover();
+                }
+                _this.targetRect = newTargetRect;
+            }, checkInterval);
+        }
+    };
+    Popover.prototype.getNudgedPopoverPosition = function (_a) {
+        var top = _a.top, left = _a.left, width = _a.width, height = _a.height;
+        var padding = this.props.windowBorderPadding;
+        top = top < padding ? padding : top;
+        top = top + height > window.innerHeight - padding ? window.innerHeight - padding - height : top;
+        left = left < padding ? padding : left;
+        left = left + width > window.innerWidth - padding ? window.innerWidth - padding - width : left;
+        return { top: top, left: left };
+    };
+    Popover.prototype.removePopover = function () {
+        var _this = this;
+        var transitionDuration = this.props.transitionDuration;
+        if (this.popoverDiv != null) {
+            this.popoverDiv.style.opacity = '0';
+        }
+        var remove = function () {
+            if (_this.willUnmount || !_this.props.isOpen || !_this.popoverDiv.parentNode) {
+                window.clearInterval(_this.targetPositionIntervalHandler);
+                window.removeEventListener('resize', _this.onResize);
+                window.removeEventListener('click', _this.onClick);
+                _this.targetPositionIntervalHandler = null;
+                _this.setState({ isTransitioningToClosed: false });
+            }
+        };
+        if (!this.willUnmount) {
+            this.removePopoverTimeout = window.setTimeout(remove, (transitionDuration || util_1.Constants.FADE_TRANSITION) * 1000);
+        }
+        else {
+            remove();
+        }
+    };
+    Popover.prototype.getPositionPriorityOrder = function (position) {
+        if (position && typeof position !== 'string') {
+            if (util_1.Constants.DEFAULT_POSITIONS.every(function (defaultPosition) { return position.find(function (p) { return p === defaultPosition; }) !== undefined; })) {
+                return util_1.arrayUnique(position);
+            }
+            else {
+                var remainingPositions = util_1.Constants.DEFAULT_POSITIONS.filter(function (defaultPosition) { return position.find(function (p) { return p === defaultPosition; }) === undefined; });
+                return util_1.arrayUnique(__spreadArrays(position, remainingPositions));
+            }
+        }
+        else if (position && typeof position === 'string') {
+            var remainingPositions = util_1.Constants.DEFAULT_POSITIONS.filter(function (defaultPosition) { return defaultPosition !== position; });
+            return util_1.arrayUnique(__spreadArrays([position], remainingPositions));
+        }
+    };
+    Popover.prototype.createContainer = function () {
+        var _a = this.props, containerStyle = _a.containerStyle, containerClassName = _a.containerClassName;
+        var container = window.document.createElement('div');
+        container.style.overflow = 'hidden';
+        if (containerStyle) {
+            Object.keys(containerStyle).forEach(function (key) { return container.style[key] = containerStyle[key]; });
+        }
+        container.className = containerClassName;
+        container.style.position = 'absolute';
+        container.style.top = '0';
+        container.style.left = '0';
+        return container;
+    };
+    Popover.prototype.getLocationForPosition = function (position, newTargetRect, popoverRect) {
+        var _a = this.props, padding = _a.padding, align = _a.align;
+        var targetMidX = newTargetRect.left + (newTargetRect.width / 2);
+        var targetMidY = newTargetRect.top + (newTargetRect.height / 2);
+        var top;
+        var left;
+        switch (position) {
+            case 'top':
+                top = newTargetRect.top - popoverRect.height - padding;
+                left = targetMidX - (popoverRect.width / 2);
+                if (align === 'start') {
+                    left = newTargetRect.left;
+                }
+                if (align === 'end') {
+                    left = newTargetRect.right - popoverRect.width;
+                }
+                break;
+            case 'left':
+                top = targetMidY - (popoverRect.height / 2);
+                left = newTargetRect.left - padding - popoverRect.width;
+                if (align === 'start') {
+                    top = newTargetRect.top;
+                }
+                if (align === 'end') {
+                    top = newTargetRect.bottom - popoverRect.height;
+                }
+                break;
+            case 'bottom':
+                top = newTargetRect.bottom + padding;
+                left = targetMidX - (popoverRect.width / 2);
+                if (align === 'start') {
+                    left = newTargetRect.left;
+                }
+                if (align === 'end') {
+                    left = newTargetRect.right - popoverRect.width;
+                }
+                break;
+            case 'right':
+                top = targetMidY - (popoverRect.height / 2);
+                left = newTargetRect.right + padding;
+                if (align === 'start') {
+                    top = newTargetRect.top;
+                }
+                if (align === 'end') {
+                    top = newTargetRect.bottom - popoverRect.height;
+                }
+                break;
+        }
+        return { top: top, left: left };
+    };
+    Popover.defaultProps = {
+        padding: util_1.Constants.DEFAULT_PADDING,
+        windowBorderPadding: util_1.Constants.DEFAULT_WINDOW_PADDING,
+        position: ['top', 'right', 'left', 'bottom'],
+        align: 'center',
+        containerClassName: util_1.Constants.POPOVER_CONTAINER_CLASS_NAME,
+        transitionDuration: util_1.Constants.FADE_TRANSITION,
+    };
+    return Popover;
+}(React.Component));
+exports.default = Popover;
+//# sourceMappingURL=Popover.js.map
+
+/***/ }),
+
+/***/ "./node_modules/react-tiny-popover/dist/PopoverPortal.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/react-tiny-popover/dist/PopoverPortal.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var react_dom_1 = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+var PopoverPortal = /** @class */ (function (_super) {
+    __extends(PopoverPortal, _super);
+    function PopoverPortal() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    PopoverPortal.prototype.componentDidMount = function () {
+        this.props.container.appendChild(this.props.element);
+    };
+    PopoverPortal.prototype.componentWillUnmount = function () {
+        this.props.container.removeChild(this.props.element);
+    };
+    PopoverPortal.prototype.componentDidUpdate = function (prevProps) {
+        var prevContainer = prevProps.container;
+        var _a = this.props, container = _a.container, element = _a.element;
+        if (prevContainer !== container) {
+            prevContainer.removeChild(element);
+            container.appendChild(element);
+        }
+    };
+    PopoverPortal.prototype.render = function () {
+        return react_dom_1.createPortal(this.props.children, this.props.element);
+    };
+    return PopoverPortal;
+}(React.PureComponent));
+exports.PopoverPortal = PopoverPortal;
+//# sourceMappingURL=PopoverPortal.js.map
+
+/***/ }),
+
+/***/ "./node_modules/react-tiny-popover/dist/util.js":
+/*!******************************************************!*\
+  !*** ./node_modules/react-tiny-popover/dist/util.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Constants = {
+    POPOVER_CONTAINER_CLASS_NAME: 'react-tiny-popover-container',
+    DEFAULT_PADDING: 6,
+    DEFAULT_WINDOW_PADDING: 6,
+    FADE_TRANSITION: 0.35,
+    DEFAULT_ARROW_COLOR: 'black',
+    DEFAULT_POSITIONS: ['top', 'left', 'right', 'bottom'],
+    EMPTY_CLIENT_RECT: {
+        top: 0,
+        left: 0,
+        bottom: 0,
+        height: 0,
+        right: 0,
+        width: 0,
+    },
+};
+exports.arrayUnique = function (array) { return array.filter(function (value, index, self) { return self.indexOf(value) === index; }); };
+exports.rectsAreEqual = function (rectA, rectB) {
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
+    return rectA === rectB ||
+        ((_a = rectA) === null || _a === void 0 ? void 0 : _a.bottom) === ((_b = rectB) === null || _b === void 0 ? void 0 : _b.bottom) &&
+            ((_c = rectA) === null || _c === void 0 ? void 0 : _c.height) === ((_d = rectB) === null || _d === void 0 ? void 0 : _d.height) &&
+            ((_e = rectA) === null || _e === void 0 ? void 0 : _e.left) === ((_f = rectB) === null || _f === void 0 ? void 0 : _f.left) &&
+            ((_g = rectA) === null || _g === void 0 ? void 0 : _g.right) === ((_h = rectB) === null || _h === void 0 ? void 0 : _h.right) &&
+            ((_j = rectA) === null || _j === void 0 ? void 0 : _j.top) === ((_k = rectB) === null || _k === void 0 ? void 0 : _k.top) &&
+            ((_l = rectA) === null || _l === void 0 ? void 0 : _l.width) === ((_m = rectB) === null || _m === void 0 ? void 0 : _m.width);
+};
+exports.popoverInfosAreEqual = function (infoA, infoB) {
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
+    return infoA === infoB ||
+        ((_a = infoA) === null || _a === void 0 ? void 0 : _a.align) === ((_b = infoB) === null || _b === void 0 ? void 0 : _b.align) &&
+            ((_c = infoA) === null || _c === void 0 ? void 0 : _c.nudgedLeft) === ((_d = infoB) === null || _d === void 0 ? void 0 : _d.nudgedLeft) &&
+            ((_e = infoA) === null || _e === void 0 ? void 0 : _e.nudgedTop) === ((_f = infoB) === null || _f === void 0 ? void 0 : _f.nudgedTop) &&
+            exports.rectsAreEqual((_g = infoA) === null || _g === void 0 ? void 0 : _g.popoverRect, (_h = infoB) === null || _h === void 0 ? void 0 : _h.popoverRect) &&
+            exports.rectsAreEqual((_j = infoA) === null || _j === void 0 ? void 0 : _j.targetRect, (_k = infoB) === null || _k === void 0 ? void 0 : _k.targetRect) &&
+            ((_l = infoA) === null || _l === void 0 ? void 0 : _l.position) === ((_m = infoB) === null || _m === void 0 ? void 0 : _m.position);
+};
+exports.targetPositionHasChanged = function (oldTargetRect, newTargetRect) {
+    return oldTargetRect === null
+        || oldTargetRect.left !== newTargetRect.left
+        || oldTargetRect.top !== newTargetRect.top
+        || oldTargetRect.width !== newTargetRect.width
+        || oldTargetRect.height !== newTargetRect.height;
+};
+//# sourceMappingURL=util.js.map
+
+/***/ }),
+
 /***/ "./node_modules/react/cjs/react.development.js":
 /*!*****************************************************!*\
   !*** ./node_modules/react/cjs/react.development.js ***!
@@ -55720,10 +56264,10 @@ var CategoryComponent = /*#__PURE__*/function (_Component) {
         label: "Action Item",
         value: 1
       }];
-      var defaultOption = dropdownOptions[0];
+      var defaultOption = dropdownOptions[this.props.defaultCategory];
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_select__WEBPACK_IMPORTED_MODULE_1__["default"], {
         options: dropdownOptions,
-        defaultValue: defaultOption,
+        value: defaultOption,
         styles: customStyles,
         isSearchable: false,
         onChange: this.props.updateCategory
@@ -55799,6 +56343,7 @@ var DeleteModal = /*#__PURE__*/function (_Component) {
   _createClass(DeleteModal, [{
     key: "handleOpenModal",
     value: function handleOpenModal() {
+      document.body.classList.add("noscroll");
       this.setState({
         showModal: true
       });
@@ -55806,6 +56351,7 @@ var DeleteModal = /*#__PURE__*/function (_Component) {
   }, {
     key: "handleCloseModal",
     value: function handleCloseModal() {
+      document.body.classList.remove("noscroll");
       this.setState({
         showModal: false
       });
@@ -55822,11 +56368,9 @@ var DeleteModal = /*#__PURE__*/function (_Component) {
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "thought-delete"
-      }, this.props.hasTypedInfo ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "thought-delete-enabled pointer",
         onClick: this.handleOpenModal
-      }, "Delete") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "thought-delete-disabled"
       }, "Delete"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_modal__WEBPACK_IMPORTED_MODULE_1___default.a, {
         isOpen: this.state.showModal,
         onRequestClose: this.handleCloseModal,
@@ -55925,7 +56469,8 @@ var HomeComponent = /*#__PURE__*/function (_Component) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "home-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ThoughtCard_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
-        mode: "home"
+        mode: "home",
+        setPage: this.props.setPage
       }));
     }
   }]);
@@ -56167,8 +56712,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _ThoughtCard_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ThoughtCard.jsx */ "./src/main/js/ThoughtCard.jsx");
-/* harmony import */ var _css_review_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./css/review.css */ "./src/main/js/css/review.css");
-/* harmony import */ var _css_review_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_css_review_css__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _Storage_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Storage.js */ "./src/main/js/Storage.js");
+/* harmony import */ var _css_review_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./css/review.css */ "./src/main/js/css/review.css");
+/* harmony import */ var _css_review_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_css_review_css__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _css_ThoughtCard_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./css/ThoughtCard.css */ "./src/main/js/css/ThoughtCard.css");
+/* harmony import */ var _css_ThoughtCard_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_css_ThoughtCard_css__WEBPACK_IMPORTED_MODULE_4__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -56197,6 +56745,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
+
 var ReviewComponent = /*#__PURE__*/function (_Component) {
   _inherits(ReviewComponent, _Component);
 
@@ -56209,6 +56759,20 @@ var ReviewComponent = /*#__PURE__*/function (_Component) {
 
     _this = _super.call(this, props);
 
+    _defineProperty(_assertThisInitialized(_this), "loadMoreReviews", function () {
+      var component = _assertThisInitialized(_this);
+
+      Object(_Storage_js__WEBPACK_IMPORTED_MODULE_2__["getThoughtsToReview"])().then(function (result) {
+        component.setState({
+          reviewIds: result,
+          showReviewMoreScreen: false,
+          active: 1
+        }, function () {});
+      }, function (err) {
+        console.log(err);
+      });
+    });
+
     _defineProperty(_assertThisInitialized(_this), "getNavDotClasses", function (index) {
       if (index == _this.state.active) {
         return "pointer nav-dot nav-active";
@@ -56218,13 +56782,17 @@ var ReviewComponent = /*#__PURE__*/function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "switchActive", function (index) {
-      if (index < 1 || index > 3) {
+      if (index < 1) {
+        return;
+      } else if (index > _this.state.reviewIds.length) {
+        Object(_Storage_js__WEBPACK_IMPORTED_MODULE_2__["finishReviewingThoughts"])();
+
+        _this.setState({
+          showReviewMoreScreen: true
+        });
+
         return;
       }
-
-      _this.setState({
-        active: index
-      });
 
       var prevButton = document.getElementById("prevButton");
       var nextButton = document.getElementById("nextButton");
@@ -56232,42 +56800,90 @@ var ReviewComponent = /*#__PURE__*/function (_Component) {
       if (index == 1) {
         prevButton.classList.remove("nav-button-active");
         prevButton.classList.add("nav-button-disabled");
-        nextButton.innerHTML = "Review Another";
-      } else if (index == 2) {
-        prevButton.classList.remove("nav-button-disabled");
-        prevButton.classList.add("nav-button-active");
-        nextButton.innerHTML = "Review Another";
       } else {
         prevButton.classList.remove("nav-button-disabled");
         prevButton.classList.add("nav-button-active");
-        nextButton.innerHTML = "Finish Reviewing";
       }
+
+      var firstAnimation = "fadeOutLeft";
+      var secondAnimation = "fadeInRight";
+
+      if (_this.state.active > index) {
+        firstAnimation = "fadeOutRight";
+        secondAnimation = "fadeInLeft";
+      }
+
+      var thoughtContainer = document.getElementById("thought-container");
+      thoughtContainer.classList.add("animated");
+      thoughtContainer.classList.add(firstAnimation);
+      thoughtContainer.classList.add("faster");
+      setTimeout(function () {
+        thoughtContainer.classList.remove("animated");
+        thoughtContainer.classList.remove(firstAnimation);
+        thoughtContainer.classList.add("animated");
+        thoughtContainer.classList.add(secondAnimation);
+
+        _this.setState({
+          active: index
+        }, function () {
+          setTimeout(function () {
+            thoughtContainer.classList.remove("animated");
+            thoughtContainer.classList.remove(secondAnimation);
+            thoughtContainer.classList.remove("faster");
+          }, 500);
+        });
+      }, 500);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "getNavDots", function () {
+      var navDots = [];
+
+      for (var i = 0; i < _this.state.reviewIds.length; i++) {
+        navDots.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          key: i,
+          onClick: _this.switchActive.bind(_assertThisInitialized(_this), i + 1),
+          className: _this.getNavDotClasses(i + 1)
+        }));
+      }
+
+      return navDots;
     });
 
     _this.state = {
-      active: 1
+      active: 1,
+      reviewIds: [],
+      showReviewMoreScreen: false
     };
     return _this;
   }
 
   _createClass(ReviewComponent, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.loadMoreReviews();
+    }
+  }, {
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "review-container"
+      }, this.state.showReviewMoreScreen ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "review-more-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "review-more-text"
+      }, "\uD83C\uDF89  You reviewed ", this.state.reviewIds.length, " entries!  \uD83C\uDF89"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "review-more-buttons"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "nav-button home-button",
+        onClick: this.props.setPage.bind(this, "home")
+      }, "Back to home "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "nav-button",
+        onClick: this.loadMoreReviews
+      }, " Review More "))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.reviewIds.length > 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "nav-dots"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        onClick: this.switchActive.bind(this, 1),
-        className: this.getNavDotClasses(1)
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        onClick: this.switchActive.bind(this, 2),
-        className: this.getNavDotClasses(2)
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        onClick: this.switchActive.bind(this, 3),
-        className: this.getNavDotClasses(3)
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ThoughtCard_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
-        mode: "review"
+      }, this.getNavDots()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ThoughtCard_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        mode: "review",
+        thoughtId: this.state.reviewIds[this.state.active - 1]
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "nav-buttons"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -56282,7 +56898,16 @@ var ReviewComponent = /*#__PURE__*/function (_Component) {
         className: "nav-button next-button nav-button-active",
         id: "nextButton",
         onClick: this.switchActive.bind(this, this.state.active + 1)
-      }, "Review Another"))));
+      }, this.state.reviewIds.length === this.state.active ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Finish Reviewing") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Review Another"))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "review-more-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "review-more-text"
+      }, "You have no thoughts to review"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "review-more-buttons"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "nav-button",
+        onClick: this.props.setPage.bind(this, "home")
+      }, "Make some thoughts")))));
     }
   }]);
 
@@ -56297,12 +56922,16 @@ var ReviewComponent = /*#__PURE__*/function (_Component) {
 /*!********************************!*\
   !*** ./src/main/js/Storage.js ***!
   \********************************/
-/*! exports provided: saveThought */
+/*! exports provided: saveThought, getThought, getThoughtsToReview, finishReviewingThoughts, updateThought */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveThought", function() { return saveThought; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getThought", function() { return getThought; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getThoughtsToReview", function() { return getThoughtsToReview; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "finishReviewingThoughts", function() { return finishReviewingThoughts; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateThought", function() { return updateThought; });
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid */ "./node_modules/uuid/dist/esm-browser/index.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -56337,7 +56966,19 @@ var StorageClient = /*#__PURE__*/function () {
 
   _createClass(StorageClient, [{
     key: "saveThought",
-    value: function saveThought() {}
+    value: function saveThought(newThought) {}
+  }, {
+    key: "updateThought",
+    value: function updateThought(updatedThought) {}
+  }, {
+    key: "getThought",
+    value: function getThought(thoughtId) {}
+  }, {
+    key: "getThoughtsToReview",
+    value: function getThoughtsToReview() {}
+  }, {
+    key: "finishReviewingThoughts",
+    value: function finishReviewingThoughts() {}
   }]);
 
   return StorageClient;
@@ -56360,6 +57001,7 @@ var SessionStorageClient = /*#__PURE__*/function (_StorageClient) {
       return new Promise(function (resolve, reject) {
         if (newThought == null) {
           reject(Error("Cannot save empty thought"));
+          return;
         }
 
         if (localStorageSupported) {
@@ -56369,6 +57011,10 @@ var SessionStorageClient = /*#__PURE__*/function (_StorageClient) {
             thoughtsDictionary = JSON.parse(localStorage.getItem("thoughts"));
           }
 
+          newThought.replies = Array.from(newThought.replies);
+          newThought.tags = Array.from(newThought.tags);
+          newThought.creationTimestampMs = new Date().getTime();
+          newThought.lastEditedTimestampMs = newThought.creationTimestampMs;
           var id;
 
           if (!(id in newThought)) {
@@ -56379,12 +57025,138 @@ var SessionStorageClient = /*#__PURE__*/function (_StorageClient) {
           }
 
           thoughtsDictionary[id] = newThought;
+          console.log(newThought);
           localStorage.thoughts = JSON.stringify(thoughtsDictionary);
           setTimeout(function () {
-            resolve("Success");
+            resolve({
+              showSuggestReviewScreen: true
+            });
           }, 1000);
+          return;
         } else {
           reject(Error("Browser does not support local storage."));
+          return;
+        }
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "getThought", function (thoughtId) {
+      var localStorageSupported = _this.localStorageSupported;
+      return new Promise(function (resolve, reject) {
+        if (!localStorageSupported) {
+          reject(Error("Cannot pull thought in review. Browser does not support local storage. "));
+          return;
+        }
+
+        if (localStorage.getItem("thoughts") !== null) {
+          var thoughtsDictionary = JSON.parse(localStorage.getItem("thoughts"));
+
+          if (thoughtId in thoughtsDictionary) {
+            var thought = thoughtsDictionary[thoughtId];
+            thought.tags = new Map(thought.tags);
+            thought.replies = new Map(thought.replies);
+            resolve(thought);
+          } else {
+            reject(Error("Invalid thought. Could not find."));
+          }
+        } else {
+          reject(Error("Invalid thought. Could not find"));
+        }
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "getThoughtsToReview", function () {
+      var localStorageSupported = _this.localStorageSupported;
+      return new Promise(function (resolve, reject) {
+        if (!localStorageSupported) {
+          reject(Error("Cannot pull thoughts in review. Browser does not support local storage. "));
+          return;
+        }
+
+        var thoughtIdsToReview = [];
+        var numNewThoughtsToFindForReview = 3; //TODO: Replace DB keys with static variables
+
+        if (localStorage.getItem("thoughtsInReview") !== null) {
+          thoughtIdsToReview = JSON.parse(localStorage.getItem("thoughtsInReview"));
+          numNewThoughtsToFindForReview -= thoughtIdsToReview.length;
+
+          if (numNewThoughtsToFindForReview == 0) {
+            resolve(thoughtIdsToReview);
+            return;
+          }
+        }
+
+        if (localStorage.getItem("thoughts") !== null) {
+          var thoughtsDictionary = JSON.parse(localStorage.getItem("thoughts"));
+          var thoughtIds = Object.keys(thoughtsDictionary);
+
+          if (thoughtIds.length <= 3) {
+            thoughtIdsToReview = thoughtIds;
+          } else {
+            var i = 0;
+
+            while (i < numNewThoughtsToFindForReview) {
+              var randomThoughtKeyIndex = Math.floor(Math.random() * thoughtIds.length);
+
+              if (!thoughtIdsToReview.includes(thoughtIds[randomThoughtKeyIndex])) {
+                thoughtIdsToReview.push(thoughtIds[randomThoughtKeyIndex]);
+                i += 1;
+              }
+            }
+          }
+        }
+
+        localStorage.thoughtsInReview = JSON.stringify(thoughtIdsToReview);
+        resolve(thoughtIdsToReview);
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "finishReviewingThoughts", function () {
+      var localStorageSupported = _this.localStorageSupported;
+      return new Promise(function (resolve, reject) {
+        if (!localStorageSupported) {
+          reject(Error("Cannot finish reviewing thoughts. Browser does not support local storage."));
+          return;
+        }
+
+        var thoughtIdsToReview = [];
+        var numNewThoughtsToFindForReview = 3; //TODO: Replace DB keys with static variables
+
+        if (localStorage.getItem("thoughtsInReview") !== null) {
+          localStorage.thoughtsInReview = JSON.stringify([]);
+          resolve("Success");
+        } else {
+          reject(Error("No thoughts to finish reviewing."));
+        }
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "updateThought", function (updatedThought) {
+      updatedThought = Object.assign({}, updatedThought);
+      var localStorageSupported = _this.localStorageSupported;
+      return new Promise(function (resolve, reject) {
+        if (!localStorageSupported) {
+          reject(Error("Cannot update thought. Browser does not support local storage."));
+          return;
+        }
+
+        if (localStorage.getItem("thoughts") !== null) {
+          var thoughtsDictionary = JSON.parse(localStorage.getItem("thoughts"));
+
+          if (updatedThought.id in thoughtsDictionary) {
+            updatedThought.replies = Array.from(updatedThought.replies);
+            updatedThought.tags = Array.from(updatedThought.tags);
+            updatedThought.lastEditedTimestampMs = new Date().getTime();
+            thoughtsDictionary[updatedThought.id] = updatedThought;
+            localStorage.thoughts = JSON.stringify(thoughtsDictionary);
+            setTimeout(function () {
+              resolve(updatedThought.lastEditedTimestampMs);
+            }, 1500);
+          } else {
+            reject(Error("Error while updating thought. Could not find original thought."));
+          }
+        } else {
+          reject(Error("Error while updating thought. Could not find original thought."));
         }
       });
     });
@@ -56404,6 +57176,10 @@ var SessionStorageClient = /*#__PURE__*/function (_StorageClient) {
 
 var storageClient = new SessionStorageClient();
 var saveThought = storageClient.saveThought;
+var getThought = storageClient.getThought;
+var getThoughtsToReview = storageClient.getThoughtsToReview;
+var finishReviewingThoughts = storageClient.finishReviewingThoughts;
+var updateThought = storageClient.updateThought;
 
 /***/ }),
 
@@ -56424,16 +57200,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _DeleteModal_jsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./DeleteModal.jsx */ "./src/main/js/DeleteModal.jsx");
 /* harmony import */ var immutability_helper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! immutability-helper */ "./node_modules/immutability-helper/index.js");
 /* harmony import */ var immutability_helper__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(immutability_helper__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _Storage_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Storage.js */ "./src/main/js/Storage.js");
-/* harmony import */ var animate_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! animate.css */ "./node_modules/animate.css/animate.css");
-/* harmony import */ var animate_css__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(animate_css__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _css_ThoughtCard_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./css/ThoughtCard.css */ "./src/main/js/css/ThoughtCard.css");
-/* harmony import */ var _css_ThoughtCard_css__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_css_ThoughtCard_css__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var react_tiny_popover__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-tiny-popover */ "./node_modules/react-tiny-popover/dist/Popover.js");
+/* harmony import */ var react_tiny_popover__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_tiny_popover__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _Storage_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Storage.js */ "./src/main/js/Storage.js");
+/* harmony import */ var _TimeFormatUtils_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./TimeFormatUtils.js */ "./src/main/js/TimeFormatUtils.js");
+/* harmony import */ var animate_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! animate.css */ "./node_modules/animate.css/animate.css");
+/* harmony import */ var animate_css__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(animate_css__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _css_ThoughtCard_css__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./css/ThoughtCard.css */ "./src/main/js/css/ThoughtCard.css");
+/* harmony import */ var _css_ThoughtCard_css__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_css_ThoughtCard_css__WEBPACK_IMPORTED_MODULE_9__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
@@ -56480,6 +57255,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
+
 var ThoughtCard = /*#__PURE__*/function (_Component) {
   _inherits(ThoughtCard, _Component);
 
@@ -56491,6 +57268,25 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
     _classCallCheck(this, ThoughtCard);
 
     _this = _super.call(this, props);
+
+    _defineProperty(_assertThisInitialized(_this), "loadThought", function () {
+      var component = _assertThisInitialized(_this);
+
+      Object(_Storage_js__WEBPACK_IMPORTED_MODULE_6__["getThought"])(_this.props.thoughtId).then(function (thought) {
+        console.log(thought);
+        component.setState({
+          currentThought: thought,
+          hasTitle: thought.title != "",
+          hasContent: thought.content != "",
+          hasTagContent: false,
+          hasTypedInfo: true
+        });
+        document.getElementById("thought-title-area").value = thought.title;
+        document.getElementById("thought-content-area").value = thought.content;
+      }, function (err) {
+        console.log(err);
+      });
+    });
 
     _defineProperty(_assertThisInitialized(_this), "onTitleUpdate", function (event) {
       var title = event.target.value;
@@ -56546,23 +57342,174 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
       }
     });
 
+    _defineProperty(_assertThisInitialized(_this), "onReplyUpdate", function (event) {
+      var replyContent = event.target.value;
+
+      if (replyContent == "") {
+        _this.setState({
+          hasReplyContent: false
+        });
+      } else {
+        _this.setState({
+          hasReplyContent: true
+        });
+      }
+    });
+
     _defineProperty(_assertThisInitialized(_this), "onTagKeyUp", function (event) {
       if (event.keyCode === 13) {
         _this.saveTag();
       }
     });
 
-    _defineProperty(_assertThisInitialized(_this), "getTags", function () {
-      var tagItems = [];
+    _defineProperty(_assertThisInitialized(_this), "onReplyKeyUp", function (event) {
+      if (event.keyCode === 13) {
+        _this.saveReply();
+      }
+    });
 
-      var _iterator = _createForOfIteratorHelper(_this.state.currentThought.tags),
+    _defineProperty(_assertThisInitialized(_this), "incrementPlusOnes", function () {
+      _this.setState({
+        currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_4___default()(_this.state.currentThought, {
+          plusOnes: {
+            $set: _this.state.currentThought.plusOnes + 1
+          }
+        })
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "resetPlusOnes", function () {
+      _this.setState({
+        currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_4___default()(_this.state.currentThought, {
+          plusOnes: {
+            $set: 0
+          }
+        })
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "getReplies", function () {
+      var replies = [];
+
+      var _iterator = _createForOfIteratorHelper(_this.state.currentThought.replies),
           _step;
 
       try {
-        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var _loop = function _loop() {
           var _step$value = _slicedToArray(_step.value, 2),
-              key = _step$value[0],
-              value = _step$value[1];
+              timestamp = _step$value[0],
+              content = _step$value[1];
+
+          replies.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            key: timestamp,
+            "class": "thought-reply-box thought-reply-item"
+          }, content, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            "class": "thought-reply-timestamp"
+          }, Object(_TimeFormatUtils_js__WEBPACK_IMPORTED_MODULE_7__["quickFormat"])(timestamp), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_tiny_popover__WEBPACK_IMPORTED_MODULE_5___default.a, {
+            isOpen: _this.state.showPopoverReplyId == timestamp,
+            position: 'right' // preferred position
+            ,
+            content: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              className: "thought-reply-delete",
+              onClick: _this.deleteReply.bind(_assertThisInitialized(_this), timestamp)
+            }, "Remove")
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "thought-reply-options",
+            onClick: function onClick() {
+              if (_this.state.showPopoverReplyId === timestamp) {
+                _this.setState({
+                  showPopoverReplyId: ""
+                });
+              } else {
+                _this.setState({
+                  showPopoverReplyId: timestamp
+                });
+              }
+            },
+            onClickOutside: function onClickOutside() {
+              return _this.setState({
+                showPopoverReplyId: ""
+              });
+            }
+          })))));
+        };
+
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          _loop();
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+
+      return replies;
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "clearReply", function () {
+      document.getElementById("thought-reply").value = "";
+
+      _this.setState({
+        hasReplyContent: false
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "deleteReply", function (key) {
+      _this.setState({
+        showPopoverReplyId: "",
+        currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_4___default()(_this.state.currentThought, {
+          replies: {
+            $remove: [key]
+          }
+        })
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "saveReply", function () {
+      var reply = document.getElementById("thought-reply").value;
+      var currTimestamp = new Date().getTime();
+
+      _this.setState({
+        isDeletePopoverOpen: false,
+        currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_4___default()(_this.state.currentThought, {
+          replies: {
+            $add: [[currTimestamp, reply]]
+          }
+        })
+      }, function () {
+        console.log(_this.state.currentThought.replies);
+      });
+
+      _this.clearReply();
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "getTags", function () {
+      var tagItems = [];
+
+      if (_this.props.mode === "review") {
+        tagItems.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "thought-tag-bubble",
+          style: {
+            background: "#E0E0E0"
+          }
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "pointer",
+          onClick: _this.incrementPlusOnes
+        }, "+", _this.state.currentThought.plusOnes), _this.state.currentThought.plusOnes > 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          src: "/img/crosshairs.svg",
+          onClick: _this.resetPlusOnes,
+          className: "thought-tag-bubble-delete pointer"
+        }) : null));
+      }
+
+      var _iterator2 = _createForOfIteratorHelper(_this.state.currentThought.tags),
+          _step2;
+
+      try {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var _step2$value = _slicedToArray(_step2.value, 2),
+              key = _step2$value[0],
+              value = _step2$value[1];
 
           tagItems.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "thought-tag-bubble",
@@ -56575,12 +57522,11 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
           })));
         }
       } catch (err) {
-        _iterator.e(err);
+        _iterator2.e(err);
       } finally {
-        _iterator.f();
+        _iterator2.f();
       }
 
-      console.log(tagItems);
       return tagItems;
     });
 
@@ -56624,9 +57570,28 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
       console.log(newCategory);
 
       _this.setState({
-        currentThought: _objectSpread({}, _this.state.currentThought, {
-          category: newCategory
+        currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_4___default()(_this.state.currentThought, {
+          completed: {
+            $set: false
+          },
+          category: {
+            $set: newCategory.value
+          }
         })
+      }, function () {
+        console.log(_this.state.currentThought.category);
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "toggleThoughtComplete", function () {
+      _this.setState({
+        currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_4___default()(_this.state.currentThought, {
+          completed: {
+            $set: !_this.state.currentThought.completed
+          }
+        })
+      }, function () {
+        console.log(_this.state.currentThought.completed);
       });
     });
 
@@ -56641,7 +57606,12 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
           src: "/img/checkmark.svg"
         });
       } else {
-        if (_this.state.hasTypedInfo) {
+        if (_this.props.mode === "review") {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "thought-update pointer",
+            onClick: _this.updateThought
+          }, "Update Thought");
+        } else if (_this.state.hasTypedInfo) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "thought-update pointer",
             onClick: _this.saveNewThought
@@ -56654,36 +57624,101 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
       }
     });
 
-    _defineProperty(_assertThisInitialized(_this), "saveNewThought", function () {
-      _this.setState({
-        currentlySaving: true
-      }, function () {
-        var _this2 = this;
+    _defineProperty(_assertThisInitialized(_this), "updateThought", function () {
+      var component = _assertThisInitialized(_this);
 
-        Object(_Storage_js__WEBPACK_IMPORTED_MODULE_5__["saveThought"])(this.state.currentThought).then(function (result) {
-          console.log(result);
+      var title = document.getElementById("thought-title-area").value;
+      var content = document.getElementById("thought-content-area").value;
+      component.setState({
+        currentlySaving: true,
+        currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_4___default()(component.state.currentThought, {
+          title: {
+            $set: title
+          },
+          content: {
+            $set: content
+          }
+        })
+      }, function () {
+        Object(_Storage_js__WEBPACK_IMPORTED_MODULE_6__["updateThought"])(component.state.currentThought).then(function (editTimestamp) {
+          component.setState({
+            currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_4___default()(component.state.currentThought, {
+              lastEditedTimestampMs: {
+                $set: editTimestamp
+              }
+            })
+          });
         }, function (err) {
           console.log(err);
         }).then(function () {
-          //Should take into account success or failure
-          _this2.setState({
+          //TODO: Should take into account success or failure
+          component.setState({
             currentlySaving: false,
             saveSuccess: true
           }, function () {
+            console.log("let it be");
             setTimeout(function () {
+              component.setState({
+                saveSuccess: false
+              });
+            }, 1000);
+          });
+        });
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "saveNewThought", function () {
+      var component = _assertThisInitialized(_this);
+
+      var title = document.getElementById("thought-title-area").value;
+      var content = document.getElementById("thought-content-area").value;
+
+      _this.setState({
+        currentlySaving: true,
+        currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_4___default()(_this.state.currentThought, {
+          title: {
+            $set: title
+          },
+          content: {
+            $set: content
+          }
+        })
+      }, function () {
+        Object(_Storage_js__WEBPACK_IMPORTED_MODULE_6__["saveThought"])(this.state.currentThought).then(function (result) {
+          if (result.showSuggestReviewScreen) {
+            component.setState({
+              currentlySaving: false,
+              saveSuccess: false,
+              showSuggestReviewScreen: true
+            });
+          } else {
+            //TODO: Should take into account success or failure
+            component.setState({
+              currentlySaving: false,
+              saveSuccess: true
+            }, function () {
               var thoughtContainer = document.getElementById("thought-container");
               thoughtContainer.classList.add("thought-card-animated");
               thoughtContainer.classList.add("animated");
-              thoughtContainer.classList.add("fadeOutLeft");
+              thoughtContainer.classList.add("fadeOutDown");
               setTimeout(function () {
-                _this2.clearThought();
-
+                component.clearThought();
                 thoughtContainer.classList.remove("thought-card-animated");
                 thoughtContainer.classList.remove("animated");
-                thoughtContainer.classList.remove("fadeOutLeft");
+                thoughtContainer.classList.remove("fadeOutDown");
+                thoughtContainer.classList.add("thought-card-animated");
+                thoughtContainer.classList.add("animated");
+                thoughtContainer.classList.add("fadeInDown");
+                setTimeout(function () {
+                  thoughtContainer.classList.remove("thought-card-animated");
+                  thoughtContainer.classList.remove("animated");
+                  thoughtContainer.classList.remove("fadeInDown");
+                }, 1000);
               }, 1000);
-            }, 1000);
-          });
+            });
+          }
+        }, function (err) {
+          console.log(err);
         });
       });
     });
@@ -56699,13 +57734,32 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
           creationTimestampMs: null,
           tags: new Map(),
           category: 0,
-          replies: {},
-          stars: 0,
+          replies: new Map(),
+          plusOnes: 1,
           lastEditedTimestampMs: null,
           lastReviewedTimestampMs: null,
           deleted: false
         }
       });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "getClearOrDelete", function () {
+      if (_this.props.mode === "home") {
+        if (_this.state.hasTypedInfo) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "thought-delete-enabled pointer",
+            onClick: _this.clearThought
+          }, "Clear");
+        } else {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "thought-delete-disabled"
+          }, "Clear");
+        }
+      } else {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_DeleteModal_jsx__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          deleteThought: _this.deleteThought
+        });
+      }
     });
 
     _defineProperty(_assertThisInitialized(_this), "clearThought", function () {
@@ -56725,6 +57779,29 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
       _this.setFocusToContent();
     });
 
+    _defineProperty(_assertThisInitialized(_this), "deleteThought", function () {
+      _this.resetThoughtData();
+
+      _this.setState({
+        hasTitle: false,
+        hasContent: false,
+        hasTagContent: false,
+        hasTypedInfo: false
+      });
+
+      document.getElementById("tag-input").value = "";
+      document.getElementById("thought-title-area").value = "";
+      document.getElementById("thought-content-area").value = "";
+
+      _this.setFocusToContent();
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "denyReviewScreen", function () {
+      _this.setState({
+        showSuggestReviewScreen: false
+      });
+    });
+
     _this.state = {
       currentThought: {
         id: null,
@@ -56733,8 +57810,9 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
         creationTimestampMs: null,
         tags: new Map(),
         category: 0,
-        replies: {},
-        stars: 0,
+        replies: new Map(),
+        plusOnes: 1,
+        completed: false,
         lastEditedTimestampMs: null,
         lastReviewedTimestampMs: null,
         deleted: false
@@ -56743,8 +57821,11 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
       hasContent: false,
       hasTagContent: false,
       hasTypedInfo: false,
+      hasReplyContent: false,
       currentlySaving: false,
-      saveSuccess: false
+      saveSuccess: false,
+      showPopoverReplyId: "",
+      showSuggestReviewScreen: false
     };
     return _this;
   }
@@ -56752,10 +57833,19 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
   _createClass(ThoughtCard, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.setFocusToContent();
+      if (this.props.mode === "review") {
+        this.loadThought();
+      } else {
+        this.setFocusToContent();
+      }
     }
-    /* Triggered when the Title textarea is updated. Helps us determine whether to show the delete/update buttons */
-
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      if (this.props.mode === "review" && prevProps.thoughtId != this.props.thoughtId) {
+        this.loadThought();
+      }
+    }
   }, {
     key: "stringHash",
 
@@ -56798,27 +57888,43 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      return this.state.showSuggestReviewScreen ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "review-more-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "review-more-text"
+      }, "Would you like to review some old thoughts?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "review-more-buttons"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "nav-button",
+        onClick: this.denyReviewScreen
+      }, "Not right now"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "nav-button home-button",
+        onClick: this.props.setPage.bind(this, "review")
+      }, " Sure, let's do it "))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "thought-card-container",
         id: "thought-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "thought-card"
+        className: "thought-card",
+        id: "thought-card"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "thought-top-row"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_autosize_textarea__WEBPACK_IMPORTED_MODULE_2___default.a, {
+        className: "thought-top-box"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "thought-title-row"
+      }, this.props.mode === "review" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "thought-review-addons"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "thought-created-at"
+      }, "Created at ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        id: "created-at-formatted"
+      }, Object(_TimeFormatUtils_js__WEBPACK_IMPORTED_MODULE_7__["prettyFormat"])(this.state.currentThought.creationTimestampMs)))) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_autosize_textarea__WEBPACK_IMPORTED_MODULE_2___default.a, {
         className: "thought-title",
         placeholder: "Title",
         onChange: this.onTitleUpdate,
         maxRows: 3,
         id: "thought-title-area"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "thought-clear"
-      }, this.state.hasTypedInfo ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "thought-delete-enabled pointer",
-        onClick: this.clearThought
-      }, "Clear") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "thought-delete-disabled"
-      }, "Clear"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.getClearOrDelete())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "thought-content-box"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_autosize_textarea__WEBPACK_IMPORTED_MODULE_2___default.a, {
         className: "thought-content",
@@ -56832,8 +57938,14 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "thought-bottom-row"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "thought-tag-bubbles"
-      }, this.getTags())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: this.props.mode === "review" ? "thought-tag-bubbles thought-tag-bubbles-limited" : "thought-tag-bubbles"
+      }, this.getTags()), this.props.mode === "review" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "thought-edited-at"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "thought-edited-at-timestamp"
+      }, "Edited ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        id: "edited-at-formatted"
+      }, Object(_TimeFormatUtils_js__WEBPACK_IMPORTED_MODULE_7__["dateAwareFormat"])(this.state.currentThought.lastEditedTimestampMs)))) : null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "thought-bottom-row"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "thought-add-tags"
@@ -56853,10 +57965,35 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
         className: "thought-checkmark",
         onClick: this.saveTag
       }) : null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CategoryComponent_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
-        updateCategory: this.changeCategory
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        updateCategory: this.changeCategory,
+        defaultCategory: this.state.currentThought.category
+      }), this.props.mode === "review" && this.state.currentThought.category == 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "thought-complete",
+        onClick: this.toggleThoughtComplete
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: this.state.currentThought.completed ? "thought-checkmark-toggle thought-completed" : "thought-checkmark-toggle"
+      })) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "thought-update"
-      }, this.getFinishOrUpdateButton())))));
+      }, this.getFinishOrUpdateButton())))), this.props.mode === "review" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "thought-replies"
+      }, this.getReplies(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "thought-reply-box"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_autosize_textarea__WEBPACK_IMPORTED_MODULE_2___default.a, {
+        className: "thought-reply-input",
+        placeholder: "Reply",
+        maxRows: 3,
+        onChange: this.onReplyUpdate,
+        id: "thought-reply"
+      }), this.state.hasReplyContent ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "thought-reply-action"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "thought-reply-clear pointer",
+        onClick: this.clearReply
+      }, "Clear"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "thought-reply-submit pointer",
+        onClick: this.saveReply,
+        onKeyUp: this.onReplyKeyUp
+      }, "Reply")) : null)) : null);
     }
   }]);
 
@@ -56864,6 +58001,101 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 /* harmony default export */ __webpack_exports__["default"] = (ThoughtCard);
+
+/***/ }),
+
+/***/ "./src/main/js/TimeFormatUtils.js":
+/*!****************************************!*\
+  !*** ./src/main/js/TimeFormatUtils.js ***!
+  \****************************************/
+/*! exports provided: prettyFormat, dateAwareFormat, quickFormat */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "prettyFormat", function() { return prettyFormat; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dateAwareFormat", function() { return dateAwareFormat; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "quickFormat", function() { return quickFormat; });
+var getFormattedHour = function getFormattedHour(hour) {
+  if (hour == 0) {
+    return "12";
+  } else if (hour <= 12) {
+    return hour;
+  } else {
+    return hour % 12;
+  }
+};
+
+var addLeadingZero = function addLeadingZero(num) {
+  if (num < 10) {
+    return "0" + num;
+  } else {
+    return num;
+  }
+};
+
+var longMonths = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+var getLongMonth = function getLongMonth(month) {
+  return longMonths[month];
+};
+
+var getLongDay = function getLongDay(day) {
+  if (day > 3 && day < 21) return 'th';
+
+  switch (day % 10) {
+    case 1:
+      return 'st';
+
+    case 2:
+      return 'nd';
+
+    case 3:
+      return 'rd';
+
+    default:
+      return 'th';
+  }
+};
+
+var prettyFormat = function prettyFormat(timestamp) {
+  var date = new Date(timestamp);
+  var month = getLongMonth(date.getMonth());
+  var day = date.getDate() + getLongDay(date.getDate());
+  var year = date.getFullYear();
+  return "".concat(month, " ").concat(day, ", ").concat(year);
+};
+var dateAwareFormat = function dateAwareFormat(timestamp) {
+  var originalDate = new Date(timestamp);
+  var currDate = new Date();
+  var yesterday = new Date();
+  yesterday.setDate(currDate.getDate() - 1);
+  var month = originalDate.getMonth() + 1;
+  var day = originalDate.getDate();
+  var year = originalDate.getFullYear();
+  var hour = getFormattedHour(originalDate.getHours());
+  var minute = addLeadingZero(originalDate.getMinutes());
+  var amPm = originalDate.getHours() > 11 ? "PM" : "AM";
+
+  if (originalDate.getMonth() == currDate.getMonth() && originalDate.getDate() == currDate.getDate() && originalDate.getFullYear() == currDate.getFullYear()) {
+    return "today, ".concat(hour, ":").concat(minute, " ").concat(amPm);
+  } else if (originalDate.getMonth() == yesterday.getMonth() && originalDate.getDate() == yesterday.getDate() && originalDate.getFullYear() == yesterday.getFullYear()) {
+    return "yesterday, ".concat(hour, ":").concat(minute, " ").concat(amPm);
+  } else {
+    return "".concat(month, "/").concat(day, "/").concat(year, " ").concat(hour, ":").concat(minute, " ").concat(amPm);
+  }
+};
+var quickFormat = function quickFormat(timestamp) {
+  var date = new Date(timestamp); // The 0 there is the key, which sets the date to the epoch
+
+  var month = date.getMonth() + 1;
+  var day = date.getDate();
+  var year = date.getFullYear();
+  var hour = getFormattedHour(date.getHours());
+  var minute = addLeadingZero(date.getMinutes());
+  var amPm = date.getHours() > 11 ? "PM" : "AM";
+  return "".concat(month, "/").concat(day, "/").concat(year, " ").concat(hour, ":").concat(minute, " ").concat(amPm);
+};
 
 /***/ }),
 
@@ -57010,9 +58242,13 @@ var App = /*#__PURE__*/function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "getPage", function () {
       if (_this.state.page == "home") {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_HomeComponent_jsx__WEBPACK_IMPORTED_MODULE_3__["default"], null);
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_HomeComponent_jsx__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          setPage: _this.setPage
+        });
       } else {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ReviewComponent_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], null);
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ReviewComponent_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], {
+          setPage: _this.setPage
+        });
       }
     });
 
@@ -57032,7 +58268,8 @@ var App = /*#__PURE__*/function (_Component) {
       page: "home"
     };
     return _this;
-  }
+  } //TODO: check that page is valid
+
 
   _createClass(App, [{
     key: "render",

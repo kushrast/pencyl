@@ -3,7 +3,16 @@ import {v4 as uuidv4 } from 'uuid';
 class StorageClient {
 	constructor(){}
 
-	saveThought(){}
+	saveThought(newThought){}
+
+	updateThought(updatedThought){}
+
+	getThought(thoughtId){}
+
+	getThoughtsToReview(){}
+
+	finishReviewingThoughts(){}
+
 }
 
 class SessionStorageClient extends StorageClient {
@@ -22,6 +31,7 @@ class SessionStorageClient extends StorageClient {
 		return new Promise(function(resolve, reject) {
 			if (newThought == null) {
 				reject(Error("Cannot save empty thought"));
+				return;
 			}
 
 			if (localStorageSupported) {
@@ -29,6 +39,11 @@ class SessionStorageClient extends StorageClient {
 				if (localStorage.getItem("thoughts") !== null) {
 					thoughtsDictionary = JSON.parse(localStorage.getItem("thoughts"));
 				}
+
+				newThought.replies = Array.from(newThought.replies);
+				newThought.tags = Array.from(newThought.tags);
+				newThought.creationTimestampMs = new Date().getTime();
+				newThought.lastEditedTimestampMs = newThought.creationTimestampMs
 
 				var id;
 
@@ -41,12 +56,147 @@ class SessionStorageClient extends StorageClient {
 
 				thoughtsDictionary[id] = newThought;
 
+				console.log(newThought);
 				localStorage.thoughts = JSON.stringify(thoughtsDictionary);
 
-				setTimeout(() => {resolve("Success");}, 1000);
+				setTimeout(() => {resolve({showSuggestReviewScreen: true});}, 1000);
+				return;
 				
 			} else {
 				reject(Error("Browser does not support local storage."));
+				return;
+			}
+		});
+	}
+
+	getThought = (thoughtId) => {
+		var localStorageSupported = this.localStorageSupported;
+
+		return new Promise(function(resolve, reject) {
+
+			if (!localStorageSupported) {
+				reject(Error("Cannot pull thought in review. Browser does not support local storage. "));
+				return;
+			}
+
+			if (localStorage.getItem("thoughts") !== null) {
+				var thoughtsDictionary = JSON.parse(localStorage.getItem("thoughts"));
+
+				if (thoughtId in thoughtsDictionary) {
+					var thought = thoughtsDictionary[thoughtId];
+
+					thought.tags = new Map(thought.tags);
+					thought.replies = new Map(thought.replies);
+					resolve(thought);
+				} else {
+					reject(Error("Invalid thought. Could not find."));
+				}
+			} else {
+				reject(Error("Invalid thought. Could not find"));
+			}
+		});
+	}
+
+	getThoughtsToReview = () => {
+		var localStorageSupported = this.localStorageSupported;
+
+		return new Promise(function(resolve, reject) {
+
+			if (!localStorageSupported) {
+				reject(Error("Cannot pull thoughts in review. Browser does not support local storage. "));
+				return;
+			}
+
+			var thoughtIdsToReview = [];
+			var numNewThoughtsToFindForReview = 3;
+			//TODO: Replace DB keys with static variables
+			if (localStorage.getItem("thoughtsInReview") !== null) {
+				thoughtIdsToReview = JSON.parse(localStorage.getItem("thoughtsInReview"));
+				numNewThoughtsToFindForReview -= thoughtIdsToReview.length;
+
+				if (numNewThoughtsToFindForReview == 0) {
+					resolve(thoughtIdsToReview);
+					return;
+				}
+
+			}
+
+			if (localStorage.getItem("thoughts") !== null) {
+				var thoughtsDictionary = JSON.parse(localStorage.getItem("thoughts"));
+
+				var thoughtIds = Object.keys(thoughtsDictionary);
+
+				if (thoughtIds.length <= 3) {
+					thoughtIdsToReview = thoughtIds;
+				} else {
+					var i = 0;
+					while (i < numNewThoughtsToFindForReview) {
+						const randomThoughtKeyIndex = Math.floor(Math.random()*thoughtIds.length);
+						if (!thoughtIdsToReview.includes(thoughtIds[randomThoughtKeyIndex])) {
+							thoughtIdsToReview.push(thoughtIds[randomThoughtKeyIndex]);
+							i += 1;
+						}
+					}
+				}
+			}
+			localStorage.thoughtsInReview = JSON.stringify(thoughtIdsToReview);
+			resolve(thoughtIdsToReview);
+		});
+	}
+
+	finishReviewingThoughts = () => {
+		var localStorageSupported = this.localStorageSupported;
+
+		return new Promise(function(resolve, reject) {
+
+			if (!localStorageSupported) {
+				reject(Error("Cannot finish reviewing thoughts. Browser does not support local storage."));
+				return;
+			}
+
+			var thoughtIdsToReview = [];
+			var numNewThoughtsToFindForReview = 3;
+			//TODO: Replace DB keys with static variables
+			if (localStorage.getItem("thoughtsInReview") !== null) {
+				localStorage.thoughtsInReview = JSON.stringify([]);
+				resolve("Success");
+			} else {
+				reject(Error("No thoughts to finish reviewing."));
+			}
+		});
+	}
+
+	updateThought = (updatedThought) => {
+		updatedThought = Object.assign({}, updatedThought);
+		var localStorageSupported = this.localStorageSupported;
+
+		return new Promise(function(resolve, reject) {
+			if (!localStorageSupported) {
+				reject(Error("Cannot update thought. Browser does not support local storage."));
+				return;
+			}
+
+			if (localStorage.getItem("thoughts") !== null) {
+				var thoughtsDictionary = JSON.parse(localStorage.getItem("thoughts"));
+
+				if (updatedThought.id in thoughtsDictionary) {
+					updatedThought.replies = Array.from(updatedThought.replies);
+					updatedThought.tags = Array.from(updatedThought.tags);
+					updatedThought.lastEditedTimestampMs = new Date().getTime();
+
+					thoughtsDictionary[updatedThought.id] = updatedThought;
+
+					localStorage.thoughts = JSON.stringify(thoughtsDictionary);
+
+					setTimeout(
+						() => {
+							resolve(updatedThought.lastEditedTimestampMs);
+						}, 1500);
+				} else {
+					reject(Error("Error while updating thought. Could not find original thought."));
+				}
+			} else {
+				reject(Error("Error while updating thought. Could not find original thought."));
 			}
 		});
 	}
@@ -55,3 +205,7 @@ class SessionStorageClient extends StorageClient {
 var storageClient = new SessionStorageClient();
 
 export const saveThought = storageClient.saveThought;
+export const getThought = storageClient.getThought;
+export const getThoughtsToReview = storageClient.getThoughtsToReview;
+export const finishReviewingThoughts = storageClient.finishReviewingThoughts;
+export const updateThought = storageClient.updateThought;

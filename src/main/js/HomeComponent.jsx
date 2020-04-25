@@ -6,7 +6,7 @@ class HomeComponent extends Component {
   render() {
   	return (
 	  	<div className="home-container">
-	  		<ThoughtCard mode={"home"}/>
+	  		<ThoughtCard mode={"home"} setPage={this.props.setPage}/>
 	  	</div>
   	);
   }
