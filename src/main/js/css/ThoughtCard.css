@@ -1,16 +1,20 @@
 .thought-card-container {
-	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 1050px;
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: center;
 }
 
 .thought-card-animated {
-  animation-duration: 0.5s;
+  animation-duration: 1.0s;
  }
 
 .thought-card {
-	max-width: 850px;
-	flex-basis: 100%;
+	max-width: 700px;
+	flex-grow: 1;
+	flex-basis:0;
 	border: 2px solid #E0E0E0;
 	box-shadow: 0px 0px 15px 0px #ededed;
 	box-sizing: border-box;
@@ -18,16 +22,34 @@
 	padding: 10px 20px 10px 20px;
 }
 
-.thought-top-row {
+.thought-top-box {
 	display: flex;
 	align-items: center;
 	justify-content: end;
 }
 
+.thought-review-addons {
+	display: flex;
+	margin-bottom: 5px;
+}
+
+.thought-created-at {
+	font-family: Roboto;
+	font-weight: 400;
+	font-size: 15px;
+
+	color: #DDDDDD;
+}
+
+.thought-title-row {
+	max-width: 700px;
+	flex-grow: 1;
+}
+
 .thought-title {
+	width: 100%;
+	flex-grow: 1;
 	resize: none;
-	max-width: 850px;
-	flex-basis: 100%;
 	font-family: Roboto;
 	font-weight: 400;
 	font-size: 25px;
@@ -76,12 +98,19 @@
 	display: flex;
 	flex-wrap: wrap;
 	width: 100%;
-	margin-top: auto;
 	align-items: center;
 }
 
 .thought-bottom-row {
 	margin-top: 5px;
+	flex-shrink: 0;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: end;
+}
+
+.thought-tags-row {
 	flex-shrink: 0;
 	width: 100%;
 	display: flex;
@@ -97,12 +126,16 @@
 	padding:5px;
 }
 
+.thought-tag-bubbles-limited {
+	max-width: 550px;
+}
+
 .thought-tag-bubble {
 	display: flex;
 	align-items: center;
 	margin: 5px;
 	border-radius: 15px;
-	background: #FFF48E; 
+	background: #FAFAFA; 
 	font-family: Roboto;
 	font-weight: 400;
 	font-size: 17px;
@@ -114,6 +147,22 @@
 .thought-tag-bubble-delete {
 	margin-left: 5px;
 	height: 12px;
+}
+
+.thought-edited-at {
+	display: flex;
+	flex-shrink: 0;
+	align-self: flex-end;
+	width: auto;
+	font-family: Roboto;
+	font-weight: 400;
+	font-size: 15px;
+	justify-content: flex-end;
+
+	color: #DDDDDD;
+}
+
+.thought-edited-at-timestamp {
 }
 
 .thought-add-tags {
@@ -128,6 +177,20 @@
 
 .thought-checkmark {
 	height: 20px;
+}
+
+.thought-checkmark-toggle {
+	margin-left: 10px;
+	height: 15px;
+	width: 15px;
+	border-radius: 3px;
+	border: 2px solid #EDEDED;
+}
+
+.thought-completed {
+	background-image: url(/img/checkmark.svg);
+	background-size: contain;
+	background-repeat: no-repeat;
 }
 
 .thought-tag-input {
@@ -176,7 +239,7 @@ input:focus:-ms-input-placeholder { color:transparent; } /* IE 10+ */
 
 .thought-saving-loader {
   border: 4px solid #f3f3f3; /* Light grey */
-  border-top: 4px solid #FF8E8E; /* Blue */
+  border-top: 4px solid #FF8E8E; /* Orange */
   border-radius: 50%;
   width: 20px;
   height: 20px;
@@ -211,12 +274,14 @@ input:focus:-ms-input-placeholder { color:transparent; } /* IE 10+ */
     left: 0;
     right: 0;
     bottom: 0;
+    overflow: scroll;
 }
 
 .thought-delete-modal-container {
-	height: 100%;
+	margin-top: 200px;
 	width: 100%;
 	display: flex;
+	outline: 0;
 }
 
 .thought-delete-modal {
@@ -225,7 +290,6 @@ input:focus:-ms-input-placeholder { color:transparent; } /* IE 10+ */
 	max-width: 400px;
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 200px;
 	padding: 25px 20px 25px 20px;
 	outline: 0;
 	display: flex;
@@ -289,4 +353,98 @@ input:focus:-ms-input-placeholder { color:transparent; } /* IE 10+ */
 
 .thought-clear {
 	align-self: flex-start;
+}
+
+.thought-replies {
+	width: 250px;
+	display: flex;
+	margin-left: 10px;
+	max-height: 300px;
+	overflow: scroll;
+	align-content: flex-end;
+	flex-wrap: wrap;
+}
+
+.thought-reply-box {
+	width: 100%;
+	outline: 0;
+	font-family: Roboto;
+	font-weight: 400;
+	font-size: 15px;
+	border-radius: 8px;
+	border: 2px solid #E0E0E0;
+	overflow: hidden;
+	padding: 5px;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.thought-reply-input {
+	border: none;
+	width: 100%;
+	outline: 0;
+	font-family: Roboto;
+	font-weight: 400;
+	font-size: 15px;
+	color: #858585;
+	resize: none;
+}
+
+.thought-reply-input::placeholder {
+	color: #DDDDDD;
+}
+
+.thought-reply-delete {
+	margin-left: 2px;
+	border-radius: 5px;
+	font-family: Roboto;
+	font-weight: 400;
+	font-size: 15px;
+	color: #E15151;
+	padding: 5px;
+	border-radius: 8px;
+	border: 2px solid #E0E0E0;
+	background-color: #FFFFFF;
+}
+
+.thought-reply-delete:hover {
+	background-color: #F5F5F5;
+}
+
+.thought-reply-action {
+	width: 100%;
+	justify-content: flex-end;
+	display: flex;
+	flex-wrap: nowrap;
+}
+
+.thought-reply-clear {
+	color: #DDDDDD;
+	margin-right: 10px;
+}
+
+.thought-reply-submit {
+	color: #FF8E8E;
+	margin-right: 5px;
+}
+
+.thought-reply-item {
+	margin-bottom: 10px;
+	width: 100%;
+	color: #858585;
+}
+
+.thought-reply-timestamp {
+	width: 100%;
+	color: #DDDDDD;
+	display: flex;
+	justify-content: space-between;
+}
+
+.thought-reply-options {
+	background-image: url(/img/three_dots.svg);
+	background-size: contain;
+	background-repeat: no-repeat;
+	cursor: pointer;
+	width: 3px;
 }
