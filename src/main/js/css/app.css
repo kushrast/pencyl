@@ -147,3 +147,20 @@ body {
 	padding: 8px;
 	cursor: pointer;
 }
+
+.italic {
+	font-style: italic;
+}
+
+.entry-container {
+	margin-top: 60px;
+}
+
+.all-entries-button {
+	color: #FF8E8E;
+	width: 125px;
+}
+
+.back-button-container {
+	justify-self: flex-start;
+}

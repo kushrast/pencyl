@@ -2506,7 +2506,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".thought-card-container {\n\tmargin-left: auto;\n\tmargin-right: auto;\n\tmax-width: 1050px;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tjustify-content: center;\n}\n\n.thought-card-animated {\n  animation-duration: 1.0s;\n }\n\n.thought-card {\n\tmax-width: 700px;\n\tflex-grow: 1;\n\tflex-basis:0;\n\tborder: 2px solid #E0E0E0;\n\tbox-shadow: 0px 0px 15px 0px #ededed;\n\tbox-sizing: border-box;\n\tborder-radius: 15px;\n\tpadding: 10px 20px 10px 20px;\n}\n\n.thought-top-box {\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: end;\n}\n\n.thought-review-addons {\n\tdisplay: flex;\n\tmargin-bottom: 5px;\n}\n\n.thought-created-at {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: #DDDDDD;\n}\n\n.thought-title-row {\n\tmax-width: 700px;\n\tflex-grow: 1;\n}\n\n.thought-title {\n\twidth: 100%;\n\tflex-grow: 1;\n\tresize: none;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 25px;\n\n\tcolor: #8C8C8C;\n\tborder: none;\n\tmargin-bottom: none;\n}\n\n.thought-title::placeholder {\n\tcolor: #8C8C8C;\n\tborder: none;\n}\n\n.thought-title:focus {\n\toutline: 0;\n}\n\n.thought-content-box {\n\tmin-height: 100px;\n\tmargin-top: 15px;\n\twidth: 100%;\n}\n\n.thought-content {\n\tresize: none;\n\twidth: 100%;\n\tfont-family: Roboto;\n\tfont-weight: 300;\n\tfont-size: 25px;\n\tcolor: #8C8C8C;\n\tborder: none;\n}\n\n.thought-content::placeholder {\n\tcolor: #8C8C8C;\n\tborder: none;\n}\n\n.thought-content:focus {\n\toutline: 0;\n}\n\n.thought-bottom-box {\n\tmin-height: 20px;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\twidth: 100%;\n\talign-items: center;\n}\n\n.thought-bottom-row {\n\tmargin-top: 5px;\n\tflex-shrink: 0;\n\twidth: 100%;\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: end;\n}\n\n.thought-tags-row {\n\tflex-shrink: 0;\n\twidth: 100%;\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: end;\n}\n\n.thought-tag-bubbles {\n\tflex-grow: 1;\n\tdisplay: flex;\n\tjustify-content: start;\n\tflex-wrap: wrap;\n\tpadding:5px;\n}\n\n.thought-tag-bubbles-limited {\n\tmax-width: 550px;\n}\n\n.thought-tag-bubble {\n\tdisplay: flex;\n\talign-items: center;\n\tmargin: 5px;\n\tborder-radius: 15px;\n\tbackground: #FAFAFA; \n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 17px;\n\tpadding: 2.5px 10px 5px 10px;\n\n\tcolor: #8C8C8C\n}\n\n.thought-tag-bubble-delete {\n\tmargin-left: 5px;\n\theight: 12px;\n}\n\n.thought-edited-at {\n\tdisplay: flex;\n\tflex-shrink: 0;\n\talign-self: flex-end;\n\twidth: auto;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\tjustify-content: flex-end;\n\n\tcolor: #DDDDDD;\n}\n\n.thought-edited-at-timestamp {\n}\n\n.thought-add-tags {\n\tmargin-left: 5px;\n\tdisplay: flex;\n\talign-items: center;\n}\n\n.thought-tag-icon {\n\theight: 30px;\n}\n\n.thought-checkmark {\n\theight: 20px;\n}\n\n.thought-checkmark-toggle {\n\tmargin-left: 10px;\n\theight: 15px;\n\twidth: 15px;\n\tborder-radius: 3px;\n\tborder: 2px solid #EDEDED;\n}\n\n.thought-completed {\n\tbackground-image: url(/img/checkmark.svg);\n\tbackground-size: contain;\n\tbackground-repeat: no-repeat;\n}\n\n.thought-tag-input {\n\tmargin-left: 5px;\n\tcolor: #8C8C8C;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 17px;\n\twidth: 150px;\n\tborder: none;\n\tborder-bottom: 1.5px solid #EDEDED;\n}\n\n.thought-tag-input::placeholder {\n\tcolor: #EDEDED;\n\tborder: none;\n\tborder-bottom: 1.5px solid #EDEDED;\n}\n\ninput:focus::placeholder { color: transparent; }\ninput:focus::-webkit-input-placeholder { color:transparent; }\ninput:focus:-moz-placeholder { color:transparent; } /* FF 4-18 */\ninput:focus::-moz-placeholder { color:transparent; } /* FF 19+ */\ninput:focus:-ms-input-placeholder { color:transparent; } /* IE 10+ */\n\n.thought-tag-input:focus {\n\toutline: 0;\n\tborder-bottom: 1.5px solid #EDEDED;\n}\n\n.thought-tag-input:hover {\n\tborder-bottom: 1.5px solid #EDEDED;\n}\n\n.thought-update {\n\tmargin-left: auto;\n\tfont-family: Roboto;\n\tfont-weight: 500;\n\tfont-size: 20px;\n\tcolor: rgba(255, 142, 142);\n}\n\n.thought-update-disabled {\n\tcolor: rgba(255, 142, 142, .37);\n}\n\n.thought-saving-loader {\n  border: 4px solid #f3f3f3; /* Light grey */\n  border-top: 4px solid #FF8E8E; /* Orange */\n  border-radius: 50%;\n  width: 20px;\n  height: 20px;\n  animation: spin 2s linear infinite;\n}\n\n@keyframes spin {\n  0% { transform: rotate(0deg); }\n  100% { transform: rotate(360deg); }\n}\n\n.thought-delete-enabled {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: #E15151;\n}\n\n.thought-delete-disabled {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: rgba(225, 81, 81, .37);\n}\n\n.thought-delete-overlay {\n\tbackground-color: rgba(196, 196, 196, 0.41);\n    position: fixed;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    overflow: scroll;\n}\n\n.thought-delete-modal-container {\n\tmargin-top: 200px;\n\twidth: 100%;\n\tdisplay: flex;\n\toutline: 0;\n}\n\n.thought-delete-modal {\n\tbackground-color: white;\n\tborder-radius: 10px;\n\tmax-width: 400px;\n\tmargin-left: auto;\n\tmargin-right: auto;\n\tpadding: 25px 20px 25px 20px;\n\toutline: 0;\n\tdisplay: flex;\n\theight: 200px;\n\tflex-direction: column;\n}\n\n.thought-delete-modal-title {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 25px;\n\tcolor: #959595;\n}\n\n.thought-delete-modal-content {\n\tdisplay: flex;\n\tflex-wrap: nowrap;\n\tmargin-top: 20px;\n}\n\n.thought-delete-modal-subtitle {\n\tfont-family: Roboto;\n\tfont-weight: 300;\n\tfont-size: 20px;\n\tcolor: #ACACAC;\n}\n\n.thought-delete-trash-can {\n\twidth: 75px;\n\tmargin: 0px 20px 0px 20px\n}\n\n.thought-delete-modal-buttons {\n\twidth: 100%;\n\tdisplay: flex;\n\tjustify-content: flex-end;\n\n}\n\n.thought-delete-cancel {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 20px;\n\tcolor: #959595;\n}\n\n.thought-delete-separator {\n\tmargin-left: 10px;\n\tmargin-right: 10px;\n\twidth: 1px;\n\tbackground-color: #EDEDED;\n\theight: 20px;\n}\n\n.thought-delete-confirm {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 20px;\n\tcolor: #E15151;\n}\n\n.thought-clear {\n\talign-self: flex-start;\n}\n\n.thought-replies {\n\twidth: 250px;\n\tdisplay: flex;\n\tmargin-left: 10px;\n\tmax-height: 300px;\n\toverflow: scroll;\n\talign-content: flex-end;\n\tflex-wrap: wrap;\n}\n\n.thought-reply-box {\n\twidth: 100%;\n\toutline: 0;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\tborder-radius: 8px;\n\tborder: 2px solid #E0E0E0;\n\toverflow: hidden;\n\tpadding: 5px;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n}\n\n.thought-reply-input {\n\tborder: none;\n\twidth: 100%;\n\toutline: 0;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\tcolor: #858585;\n\tresize: none;\n}\n\n.thought-reply-input::placeholder {\n\tcolor: #DDDDDD;\n}\n\n.thought-reply-delete {\n\tmargin-left: 2px;\n\tborder-radius: 5px;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\tcolor: #E15151;\n\tpadding: 5px;\n\tborder-radius: 8px;\n\tborder: 2px solid #E0E0E0;\n\tbackground-color: #FFFFFF;\n}\n\n.thought-reply-delete:hover {\n\tbackground-color: #F5F5F5;\n}\n\n.thought-reply-action {\n\twidth: 100%;\n\tjustify-content: flex-end;\n\tdisplay: flex;\n\tflex-wrap: nowrap;\n}\n\n.thought-reply-clear {\n\tcolor: #DDDDDD;\n\tmargin-right: 10px;\n}\n\n.thought-reply-submit {\n\tcolor: #FF8E8E;\n\tmargin-right: 5px;\n}\n\n.thought-reply-item {\n\tmargin-bottom: 10px;\n\twidth: 100%;\n\tcolor: #858585;\n}\n\n.thought-reply-timestamp {\n\twidth: 100%;\n\tcolor: #DDDDDD;\n\tdisplay: flex;\n\tjustify-content: space-between;\n}\n\n.thought-reply-options {\n\tbackground-image: url(/img/three_dots.svg);\n\tbackground-size: contain;\n\tbackground-repeat: no-repeat;\n\tcursor: pointer;\n\twidth: 3px;\n}\n", ""]);
+exports.push([module.i, ".thought-card-container {\n\tmargin-left: auto;\n\tmargin-right: auto;\n\tmax-width: 1050px;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tjustify-content: center;\n}\n\n.thought-card-animated {\n  animation-duration: 1.0s;\n }\n\n.thought-card {\n\tmax-width: 700px;\n\tflex-grow: 1;\n\tflex-basis:0;\n\tborder: 2px solid #E0E0E0;\n\tbox-shadow: 0px 0px 15px 0px #ededed;\n\tbox-sizing: border-box;\n\tborder-radius: 15px;\n\tpadding: 10px 20px 10px 20px;\n}\n\n.thought-top-box {\n\tdisplay: flex;\n\tflex: no-wrap;\n\tjustify-content: end;\n}\n\n.thought-review-addons {\n\tdisplay: flex;\n\tmargin-bottom: 5px;\n}\n\n.thought-created-at {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: #DDDDDD;\n}\n\n.thought-title-row {\n\tmax-width: 700px;\n\tflex-grow: 1;\n}\n\n.thought-title {\n\twidth: 100%;\n\tflex-grow: 1;\n\tresize: none;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 25px;\n\n\tcolor: #8C8C8C;\n\tborder: none;\n\tmargin-bottom: none;\n}\n\n.thought-title::placeholder {\n\tcolor: #8C8C8C;\n\tborder: none;\n}\n\n.thought-title:focus {\n\toutline: 0;\n}\n\n.thought-content-box {\n\tmin-height: 100px;\n\tmargin-top: 15px;\n\twidth: 100%;\n}\n\n.thought-content {\n\tresize: none;\n\twidth: 100%;\n\tfont-family: Roboto;\n\tfont-weight: 300;\n\tfont-size: 25px;\n\tcolor: #8C8C8C;\n\tborder: none;\n}\n\n.thought-content::placeholder {\n\tcolor: #8C8C8C;\n\tborder: none;\n}\n\n.thought-content:focus {\n\toutline: 0;\n}\n\n.thought-bottom-box {\n\tmin-height: 20px;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\twidth: 100%;\n\talign-items: center;\n}\n\n.thought-bottom-row {\n\tmargin-top: 5px;\n\tflex-shrink: 0;\n\twidth: 100%;\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: end;\n}\n\n.thought-tags-row {\n\tflex-shrink: 0;\n\twidth: 100%;\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: end;\n}\n\n.thought-tag-bubbles {\n\tflex-grow: 1;\n\tdisplay: flex;\n\tjustify-content: start;\n\tflex-wrap: wrap;\n\tpadding:5px;\n}\n\n.thought-tag-bubbles-limited {\n\tmax-width: 550px;\n}\n\n.thought-tag-bubble {\n\tdisplay: flex;\n\talign-items: center;\n\tmargin: 5px;\n\tborder-radius: 15px;\n\tbackground: #FAFAFA; \n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 17px;\n\tpadding: 2.5px 10px 5px 10px;\n\n\tcolor: #8C8C8C\n}\n\n.thought-tag-bubble-delete {\n\tmargin-left: 5px;\n\theight: 12px;\n}\n\n.thought-edited-at {\n\tdisplay: flex;\n\tflex-shrink: 0;\n\talign-self: flex-end;\n\twidth: auto;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\tjustify-content: flex-end;\n\n\tcolor: #DDDDDD;\n}\n\n.thought-edited-at-timestamp {\n}\n\n.thought-add-tags {\n\tmargin-left: 5px;\n\tdisplay: flex;\n\talign-items: center;\n}\n\n.thought-tag-icon {\n\theight: 30px;\n}\n\n.thought-checkmark {\n\theight: 20px;\n}\n\n.thought-checkmark-toggle {\n\tmargin-left: 10px;\n\theight: 15px;\n\twidth: 15px;\n\tborder-radius: 3px;\n\tborder: 2px solid #EDEDED;\n}\n\n.thought-completed {\n\tbackground-image: url(/img/checkmark.svg);\n\tbackground-size: contain;\n\tbackground-repeat: no-repeat;\n}\n\n.thought-tag-input {\n\tmargin-left: 5px;\n\tcolor: #8C8C8C;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 17px;\n\twidth: 150px;\n\tborder: none;\n\tborder-bottom: 1.5px solid #EDEDED;\n}\n\n.thought-tag-input::placeholder {\n\tcolor: #EDEDED;\n\tborder: none;\n\tborder-bottom: 1.5px solid #EDEDED;\n}\n\ninput:focus::placeholder { color: transparent; }\ninput:focus::-webkit-input-placeholder { color:transparent; }\ninput:focus:-moz-placeholder { color:transparent; } /* FF 4-18 */\ninput:focus::-moz-placeholder { color:transparent; } /* FF 19+ */\ninput:focus:-ms-input-placeholder { color:transparent; } /* IE 10+ */\n\n.thought-tag-input:focus {\n\toutline: 0;\n\tborder-bottom: 1.5px solid #EDEDED;\n}\n\n.thought-tag-input:hover {\n\tborder-bottom: 1.5px solid #EDEDED;\n}\n\n.thought-update {\n\tmargin-left: auto;\n\tfont-family: Roboto;\n\tfont-weight: 500;\n\tfont-size: 20px;\n\tcolor: rgba(255, 142, 142);\n}\n\n.thought-update-disabled {\n\tcolor: rgba(255, 142, 142, .37);\n}\n\n.thought-saving-loader {\n  border: 4px solid #f3f3f3; /* Light grey */\n  border-top: 4px solid #FF8E8E; /* Orange */\n  border-radius: 50%;\n  width: 20px;\n  height: 20px;\n  animation: spin 2s linear infinite;\n}\n\n@keyframes spin {\n  0% { transform: rotate(0deg); }\n  100% { transform: rotate(360deg); }\n}\n\n.thought-delete-enabled {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: #E15151;\n}\n\n.thought-delete-disabled {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: rgba(225, 81, 81, .37);\n}\n\n.thought-delete-overlay {\n\tbackground-color: rgba(196, 196, 196, 0.41);\n    position: fixed;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    overflow: scroll;\n}\n\n.thought-delete-modal-container {\n\tmargin-top: 200px;\n\twidth: 100%;\n\tdisplay: flex;\n\toutline: 0;\n}\n\n.thought-delete-modal {\n\tbackground-color: white;\n\tborder-radius: 10px;\n\tmax-width: 400px;\n\tmargin-left: auto;\n\tmargin-right: auto;\n\tpadding: 25px 20px 25px 20px;\n\toutline: 0;\n\tdisplay: flex;\n\theight: 200px;\n\tflex-direction: column;\n}\n\n.thought-delete-modal-title {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 25px;\n\tcolor: #959595;\n}\n\n.thought-delete-modal-content {\n\tdisplay: flex;\n\tflex-wrap: nowrap;\n\tmargin-top: 20px;\n}\n\n.thought-delete-modal-subtitle {\n\tfont-family: Roboto;\n\tfont-weight: 300;\n\tfont-size: 20px;\n\tcolor: #ACACAC;\n}\n\n.thought-delete-trash-can {\n\twidth: 75px;\n\tmargin: 0px 20px 0px 20px\n}\n\n.thought-delete-modal-buttons {\n\twidth: 100%;\n\tdisplay: flex;\n\tjustify-content: flex-end;\n\n}\n\n.thought-delete-cancel {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 20px;\n\tcolor: #959595;\n}\n\n.thought-delete-separator {\n\tmargin-left: 10px;\n\tmargin-right: 10px;\n\twidth: 1px;\n\tbackground-color: #EDEDED;\n\theight: 20px;\n}\n\n.thought-delete-confirm {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 20px;\n\tcolor: #E15151;\n}\n\n.thought-clear {\n\talign-self: flex-start;\n}\n\n.thought-replies {\n\twidth: 250px;\n\tdisplay: flex;\n\tmargin-left: 10px;\n\tmax-height: 300px;\n\toverflow: scroll;\n\talign-content: flex-end;\n\tflex-wrap: wrap;\n}\n\n.thought-reply-box {\n\twidth: 100%;\n\toutline: 0;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\tborder-radius: 8px;\n\tborder: 2px solid #E0E0E0;\n\toverflow: hidden;\n\tpadding: 5px;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n}\n\n.thought-reply-input {\n\tborder: none;\n\twidth: 100%;\n\toutline: 0;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\tcolor: #858585;\n\tresize: none;\n}\n\n.thought-reply-input::placeholder {\n\tcolor: #DDDDDD;\n}\n\n.thought-reply-delete {\n\tmargin-left: 2px;\n\tborder-radius: 5px;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\tcolor: #E15151;\n\tpadding: 5px;\n\tborder-radius: 8px;\n\tborder: 2px solid #E0E0E0;\n\tbackground-color: #FFFFFF;\n}\n\n.thought-reply-delete:hover {\n\tbackground-color: #F5F5F5;\n}\n\n.thought-reply-action {\n\twidth: 100%;\n\tjustify-content: flex-end;\n\tdisplay: flex;\n\tflex-wrap: nowrap;\n}\n\n.thought-reply-clear {\n\tcolor: #DDDDDD;\n\tmargin-right: 10px;\n}\n\n.thought-reply-submit {\n\tcolor: #FF8E8E;\n\tmargin-right: 5px;\n}\n\n.thought-reply-item {\n\tmargin-bottom: 10px;\n\twidth: 100%;\n\tcolor: #858585;\n}\n\n.thought-reply-timestamp {\n\twidth: 100%;\n\tcolor: #DDDDDD;\n\tdisplay: flex;\n\tjustify-content: space-between;\n}\n\n.thought-reply-options {\n\tbackground-image: url(/img/three_dots.svg);\n\tbackground-size: contain;\n\tbackground-repeat: no-repeat;\n\tcursor: pointer;\n\twidth: 3px;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -2524,7 +2524,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "#app {\n}\nhtml {\n\theight: 100%;\n}\nbody {\n\tz-index: 0;\n\tmargin: 0;\n\tpadding: 0;\n}\n\n.noscroll {\n\theight: 100%;\n\toverflow: hidden;\n}\n\n.container {\n\theight: 100%;\n\tfont-family: Roboto;\n}\n\n.navbar {\n\twidth: 100%;\n\tdisplay: flex;\n}\n\n.menu-container {\n\tflex: 1;\n\tdisplay: flex;\n\talign-items: flex-start;\n\tjustify-content: flex-start;\n}\n\n.menu-overlay {\n\tbackground-color: #FF8E8E;\n}\n\n.bm-burger-button {\n\tmargin-top: 25px;\n\tposition: fixed;\n\theight: 60px;\n\twidth: 120px;\n\tdisplay: inline;\n\toutline: 0;\n}\n\n.bm-burger-button-inverted {\n\tmargin-left:40px;\n\tbackground-image: url(/img/logo_color_filled_inverted.svg);\n\tbackground-repeat: no-repeat;\n\tjustify-self: flex-start;\n\tmargin-top: 25px;\n\tmargin-bottom: 15px;\n\tbackground-size: contain;\n\theight: 40px;\n\toutline: 0;\n}\n\n/* Styling of overlay */\n.bm-overlay {\n}\n\n.list-item {\n\tmargin-left:auto;\n\tmargin-right: auto;\n\tmargin-top: 5px;\n\tcolor: #FFFFFF; \n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 17px;\n\twidth: 100px;\n\tpadding-bottom: 5px;\n\tborder-bottom: 1px solid white;\n\tdisplay: flex;\n\toutline: 0;\n}\n\n.list-item-text {\n\tjustify-content: flex-start;\n}\n\n.bm-icon {\n\tmax-height: 40px;\n}\n\n.icon-container {\n\tmargin-top: 25px;\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: center;\n}\n\n.icon-image {\n\theight: 80px;\n}\n\n.search-bar-container {\n\tvisibility: hidden;\n\tflex: 1;\n}\n\n.pointer {\n\tcursor: pointer;\n}\n\n.review-more-container {\n  margin-top: 150px;\n  display: flex;\n  align-content: center;\n  justify-content: center;\n  flex-wrap: wrap;\n}\n\n.review-more-text {\n\twidth: 100%;\n\ttext-align: center;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 35px;\n\n\tcolor: #FF8E8E;\n}\n\n.review-more-buttons {\n\tmargin-top: 20px;\n\twidth: 400px;\n\tdisplay: flex;\n\n\tjustify-content: center;\n\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: #858585;\n}\n\n.home-button {\n\tmargin-left: 8px;\n\tcolor: #FF8E8E;\n}\n\n.nav-button {\n\tborder-radius: 8px;\n\tborder: 2px solid #E0E0E0;\n\tjustify-content: center;\n\tpadding: 8px;\n\tcursor: pointer;\n}", ""]);
+exports.push([module.i, "#app {\n}\nhtml {\n\theight: 100%;\n}\nbody {\n\tz-index: 0;\n\tmargin: 0;\n\tpadding: 0;\n}\n\n.noscroll {\n\theight: 100%;\n\toverflow: hidden;\n}\n\n.container {\n\theight: 100%;\n\tfont-family: Roboto;\n}\n\n.navbar {\n\twidth: 100%;\n\tdisplay: flex;\n}\n\n.menu-container {\n\tflex: 1;\n\tdisplay: flex;\n\talign-items: flex-start;\n\tjustify-content: flex-start;\n}\n\n.menu-overlay {\n\tbackground-color: #FF8E8E;\n}\n\n.bm-burger-button {\n\tmargin-top: 25px;\n\tposition: fixed;\n\theight: 60px;\n\twidth: 120px;\n\tdisplay: inline;\n\toutline: 0;\n}\n\n.bm-burger-button-inverted {\n\tmargin-left:40px;\n\tbackground-image: url(/img/logo_color_filled_inverted.svg);\n\tbackground-repeat: no-repeat;\n\tjustify-self: flex-start;\n\tmargin-top: 25px;\n\tmargin-bottom: 15px;\n\tbackground-size: contain;\n\theight: 40px;\n\toutline: 0;\n}\n\n/* Styling of overlay */\n.bm-overlay {\n}\n\n.list-item {\n\tmargin-left:auto;\n\tmargin-right: auto;\n\tmargin-top: 5px;\n\tcolor: #FFFFFF; \n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 17px;\n\twidth: 100px;\n\tpadding-bottom: 5px;\n\tborder-bottom: 1px solid white;\n\tdisplay: flex;\n\toutline: 0;\n}\n\n.list-item-text {\n\tjustify-content: flex-start;\n}\n\n.bm-icon {\n\tmax-height: 40px;\n}\n\n.icon-container {\n\tmargin-top: 25px;\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: center;\n}\n\n.icon-image {\n\theight: 80px;\n}\n\n.search-bar-container {\n\tvisibility: hidden;\n\tflex: 1;\n}\n\n.pointer {\n\tcursor: pointer;\n}\n\n.review-more-container {\n  margin-top: 150px;\n  display: flex;\n  align-content: center;\n  justify-content: center;\n  flex-wrap: wrap;\n}\n\n.review-more-text {\n\twidth: 100%;\n\ttext-align: center;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 35px;\n\n\tcolor: #FF8E8E;\n}\n\n.review-more-buttons {\n\tmargin-top: 20px;\n\twidth: 400px;\n\tdisplay: flex;\n\n\tjustify-content: center;\n\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: #858585;\n}\n\n.home-button {\n\tmargin-left: 8px;\n\tcolor: #FF8E8E;\n}\n\n.nav-button {\n\tborder-radius: 8px;\n\tborder: 2px solid #E0E0E0;\n\tjustify-content: center;\n\tpadding: 8px;\n\tcursor: pointer;\n}\n\n.italic {\n\tfont-style: italic;\n}\n\n.entry-container {\n\tmargin-top: 60px;\n}\n\n.all-entries-button {\n\tcolor: #FF8E8E;\n\twidth: 125px;\n}\n\n.back-button-container {\n\tjustify-self: flex-start;\n}", ""]);
 // Exports
 module.exports = exports;
 
@@ -2543,6 +2543,42 @@ var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../node_modul
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
 exports.push([module.i, ".home-container {\n\tmargin-top: 70px;\n}", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js!./src/main/js/css/listMiniCards.css":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./src/main/js/css/listMiniCards.css ***!
+  \*********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".all-list-container {\n\twidth: 100%;\n\tdisplay: flex;\n\tjustify-content: center;\n}\n\n.all-mini-cards {\n\tjustify-content: center;\n\tmargin-top: 35px;\n\tpadding: 15px;\n\theight: 100%;\n\toverflow: scroll;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n}\n\n.mini-card {\n\tcursor: pointer;\n\twidth: 350px;\n\tmargin: 15px;\n\tborder: 1px solid #E0E0E0;\n\tbox-shadow: 0px 0px 15px 0px #ededed;\n\tbox-sizing: border-box;\n\tborder-radius: 10px;\n\tpadding: 10px 20px 10px 20px;\n}\n\n.mini-card:hover {\n\tbackground: #EDEDED;\n}\n\n.mini-card-created-at {\n\twidth: 100%;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 12px;\n\n\tcolor: #DDDDDD;\n}\n\n.mini-card-title {\n\twidth: 100%;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 20px;\n\n\tcolor: #8C8C8C;\n}\n\n.mini-card-content {\n\tmargin-top: 5px;\n\theight: 90px;\n\toverflow: hidden;\n\tfont-family: Roboto;\n\tfont-weight: 300;\n\tfont-size: 20px;\n\tcolor: #8C8C8C;\n}\n\n.mini-card-bottom-box {\n\talign-self: flex-end;\n}\n\n.mini-card-tag-bubbles {\n\twidth: 100%;\n\tdisplay: flex;\n\tjustify-content: start;\n\tflex-wrap: wrap;\n\tpadding:5px;\n\tmargin-right: 10px;\n}\n\n.mini-card-tag-bubble {\n\tdisplay: flex;\n\talign-items: center;\n\tmargin-top: 5px;\n\tmargin-right: 5px;\n\tborder-radius: 15px;\n\tbackground: #FAFAFA; \n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\tpadding: 2px 8px 4px 8px;\n\n\tcolor: #8C8C8C\n}\n\n.mini-card-category {\n\tmargin-top: 5px;\n\twidth: 100%;\n\tdisplay: flex;\n\theight: 20px;\n\talign-items: center;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: #8C8C8C;\n}", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js!./src/main/js/css/navigate.css":
+/*!****************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./src/main/js/css/navigate.css ***!
+  \****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, "\n.thought-nav-overlay {\n\tbackground-color: rgba(196, 196, 196, 0.41);\n    position: fixed;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    overflow: scroll;\n}\n\n.thought-nav-modal-container {\n\tmargin-top: 200px;\n\twidth: 100%;\n\tdisplay: flex;\n\toutline: 0;\n}\n\n.thought-nav-modal {\n\tbackground-color: white;\n\tborder-radius: 10px;\n\tmax-width: 400px;\n\tmargin-left: auto;\n\tmargin-right: auto;\n\tpadding: 25px 20px 25px 20px;\n\toutline: 0;\n\tdisplay: flex;\n\theight: 150px;\n\tflex-direction: column;\n}\n\n.thought-nav-modal-title {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 25px;\n\tcolor: #959595;\n}\n\n.thought-delete-modal-content {\n\tdisplay: flex;\n\tflex-wrap: nowrap;\n\tmargin-top: 20px;\n}\n\n.thought-nav-modal-subtitle {\n\tfont-family: Roboto;\n\tfont-weight: 300;\n\tfont-size: 20px;\n\tcolor: #ACACAC;\n}\n\n.thought-nav-modal-buttons {\n\twidth: 100%;\n\tdisplay: flex;\n\tjustify-content: flex-end;\n\n}\n\n.thought-nav-cancel {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 20px;\n\tcolor: #959595;\n}\n\n.thought-nav-separator {\n\tmargin-left: 10px;\n\tmargin-right: 10px;\n\twidth: 1px;\n\tbackground-color: #EDEDED;\n\theight: 20px;\n}\n\n.thought-nav-confirm {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 20px;\n\tcolor: #E15151;\n}", ""]);
 // Exports
 module.exports = exports;
 
@@ -56143,6 +56179,143 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/** @license MIT License (c) copyright 2010-20
 
 /***/ }),
 
+/***/ "./src/main/js/AllComponent.jsx":
+/*!**************************************!*\
+  !*** ./src/main/js/AllComponent.jsx ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _TimeFormatUtils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TimeFormatUtils.js */ "./src/main/js/TimeFormatUtils.js");
+/* harmony import */ var _EntryViewComponent_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./EntryViewComponent.jsx */ "./src/main/js/EntryViewComponent.jsx");
+/* harmony import */ var _MiniCardComponent_jsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./MiniCardComponent.jsx */ "./src/main/js/MiniCardComponent.jsx");
+/* harmony import */ var _Storage_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Storage.js */ "./src/main/js/Storage.js");
+/* harmony import */ var _css_listMiniCards_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./css/listMiniCards.css */ "./src/main/js/css/listMiniCards.css");
+/* harmony import */ var _css_listMiniCards_css__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_css_listMiniCards_css__WEBPACK_IMPORTED_MODULE_5__);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+
+
+
+var AllComponent = /*#__PURE__*/function (_Component) {
+  _inherits(AllComponent, _Component);
+
+  var _super = _createSuper(AllComponent);
+
+  function AllComponent(props) {
+    var _this;
+
+    _classCallCheck(this, AllComponent);
+
+    _this = _super.call(this, props);
+
+    _defineProperty(_assertThisInitialized(_this), "getMiniCards", function () {
+      var miniCards = [];
+
+      for (var i = 0; i < _this.state.items.length; i++) {
+        miniCards.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_MiniCardComponent_jsx__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          key: i,
+          thoughtId: _this.state.items[i],
+          onClick: _this.goToEntry.bind(_assertThisInitialized(_this), i + 1)
+        }));
+      }
+
+      return miniCards;
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "goToEntry", function (index) {
+      _this.setState({
+        active: index,
+        listView: false
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "setActive", function (newActive, runAfter) {
+      _this.setState({
+        active: newActive
+      }, runAfter);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "backToEntries", function () {
+      _this.setState({
+        listView: true
+      });
+    });
+
+    _this.state = {
+      listView: true,
+      items: [],
+      active: 0
+    };
+    return _this;
+  }
+
+  _createClass(AllComponent, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var component = this;
+      Object(_Storage_js__WEBPACK_IMPORTED_MODULE_4__["searchThoughts"])(this.props.searchQuery).then(function (thoughts) {
+        component.setState({
+          items: thoughts
+        });
+      }, function (err) {
+        console.log(err);
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "all-list-container"
+      }, this.state.listView ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        "class": "all-mini-cards"
+      }, this.getMiniCards()) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_EntryViewComponent_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        reviewIds: this.state.items,
+        active: this.state.active,
+        setActive: this.setActive,
+        toggleSavedContent: this.props.toggleSavedContent,
+        backToEntries: this.backToEntries
+      }));
+    }
+  }]);
+
+  return AllComponent;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+/* harmony default export */ __webpack_exports__["default"] = (AllComponent);
+
+/***/ }),
+
 /***/ "./src/main/js/CategoryComponent.jsx":
 /*!*******************************************!*\
   !*** ./src/main/js/CategoryComponent.jsx ***!
@@ -56412,6 +56585,156 @@ var DeleteModal = /*#__PURE__*/function (_Component) {
 
 /***/ }),
 
+/***/ "./src/main/js/EntryViewComponent.jsx":
+/*!********************************************!*\
+  !*** ./src/main/js/EntryViewComponent.jsx ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _ThoughtCard_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ThoughtCard.jsx */ "./src/main/js/ThoughtCard.jsx");
+/* harmony import */ var _Storage_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Storage.js */ "./src/main/js/Storage.js");
+/* harmony import */ var _css_ThoughtCard_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./css/ThoughtCard.css */ "./src/main/js/css/ThoughtCard.css");
+/* harmony import */ var _css_ThoughtCard_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_css_ThoughtCard_css__WEBPACK_IMPORTED_MODULE_3__);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+
+var EntryViewComponent = /*#__PURE__*/function (_Component) {
+  _inherits(EntryViewComponent, _Component);
+
+  var _super = _createSuper(EntryViewComponent);
+
+  function EntryViewComponent(props) {
+    var _this;
+
+    _classCallCheck(this, EntryViewComponent);
+
+    _this = _super.call(this, props);
+
+    _defineProperty(_assertThisInitialized(_this), "switchActive", function (index) {
+      if (index < 1 || index > _this.props.reviewIds.length) {
+        return;
+      }
+
+      var prevButton = document.getElementById("prevButton");
+      var nextButton = document.getElementById("nextButton");
+
+      if (index == 1) {
+        prevButton.classList.remove("nav-button-active");
+        prevButton.classList.add("nav-button-disabled");
+      } else {
+        prevButton.classList.remove("nav-button-disabled");
+        prevButton.classList.add("nav-button-active");
+      }
+
+      if (index == _this.props.reviewIds.length) {
+        nextButton.classList.remove("nav-button-active");
+        nextButton.classList.add("nav-button-disabled");
+      }
+
+      var firstAnimation = "fadeOutLeft";
+      var secondAnimation = "fadeInRight";
+
+      if (_this.props.active > index) {
+        firstAnimation = "fadeOutRight";
+        secondAnimation = "fadeInLeft";
+      }
+
+      var thoughtContainer = document.getElementById("thought-container");
+      thoughtContainer.classList.add("animated");
+      thoughtContainer.classList.add(firstAnimation);
+      thoughtContainer.classList.add("faster");
+      setTimeout(function () {
+        thoughtContainer.classList.remove("animated");
+        thoughtContainer.classList.remove(firstAnimation);
+        thoughtContainer.classList.add("animated");
+        thoughtContainer.classList.add(secondAnimation);
+
+        _this.props.setActive(index, function () {
+          setTimeout(function () {
+            thoughtContainer.classList.remove("animated");
+            thoughtContainer.classList.remove(secondAnimation);
+            thoughtContainer.classList.remove("faster");
+          }, 500);
+        });
+      }, 500);
+    });
+
+    return _this;
+  }
+
+  _createClass(EntryViewComponent, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {}
+  }, {
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "entry-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ThoughtCard_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        mode: "review",
+        thoughtId: this.props.reviewIds[this.props.active - 1],
+        toggleSavedContent: this.props.toggleSavedContent
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "nav-buttons"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "back-button-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "nav-button all-entries-button nav-button-active",
+        onClick: this.props.backToEntries
+      }, "Back to All entries")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "prev-button-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: this.props.active > 1 ? "nav-button prev-button nav-button-active" : "nav-button prev-button nav-button-disabled",
+        id: "prevButton",
+        onClick: this.switchActive.bind(this, this.props.active - 1)
+      }, "Previous")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "next-button-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: this.props.active < this.props.reviewIds.length ? "nav-button next-button nav-button-active" : "nav-button next-button nav-button-disabled",
+        id: "nextButton",
+        onClick: this.switchActive.bind(this, this.props.active + 1)
+      }, "Next"))))));
+    }
+  }]);
+
+  return EntryViewComponent;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+/* harmony default export */ __webpack_exports__["default"] = (EntryViewComponent);
+
+/***/ }),
+
 /***/ "./src/main/js/HomeComponent.jsx":
 /*!***************************************!*\
   !*** ./src/main/js/HomeComponent.jsx ***!
@@ -56470,7 +56793,8 @@ var HomeComponent = /*#__PURE__*/function (_Component) {
         className: "home-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ThoughtCard_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
         mode: "home",
-        setPage: this.props.setPage
+        setPage: this.props.setPage,
+        toggleSavedContent: this.props.toggleSavedContent
       }));
     }
   }]);
@@ -56536,10 +56860,14 @@ var Icon = /*#__PURE__*/function (_Component) {
     _this = _super.call.apply(_super, [this].concat(args));
 
     _defineProperty(_assertThisInitialized(_this), "getImageForPage", function () {
+      console.log(_this.props.page);
+
       if (_this.props.page == "home") {
         return "/img/pen.svg";
       } else if (_this.props.page == "review") {
         return "/img/magnifying_glass.svg";
+      } else if (_this.props.page == "all") {
+        return "/img/review_glasses.svg";
       } else {
         return "/img/pen.svg";
       }
@@ -56682,7 +57010,8 @@ var Menu = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "list-item-text"
       }, " Review ")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        className: "list-item"
+        className: "list-item pointer",
+        onClick: this.changePage.bind(this, "all")
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "list-item-text"
       }, " All Entries ")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -56697,6 +57026,239 @@ var Menu = /*#__PURE__*/function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 /* harmony default export */ __webpack_exports__["default"] = (Menu);
+
+/***/ }),
+
+/***/ "./src/main/js/MiniCardComponent.jsx":
+/*!*******************************************!*\
+  !*** ./src/main/js/MiniCardComponent.jsx ***!
+  \*******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _TimeFormatUtils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TimeFormatUtils.js */ "./src/main/js/TimeFormatUtils.js");
+/* harmony import */ var _Storage_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Storage.js */ "./src/main/js/Storage.js");
+/* harmony import */ var _css_listMiniCards_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./css/listMiniCards.css */ "./src/main/js/css/listMiniCards.css");
+/* harmony import */ var _css_listMiniCards_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_css_listMiniCards_css__WEBPACK_IMPORTED_MODULE_3__);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+
+var MiniCardComponent = /*#__PURE__*/function (_Component) {
+  _inherits(MiniCardComponent, _Component);
+
+  var _super = _createSuper(MiniCardComponent);
+
+  function MiniCardComponent(props) {
+    var _this;
+
+    _classCallCheck(this, MiniCardComponent);
+
+    _this = _super.call(this, props);
+
+    _defineProperty(_assertThisInitialized(_this), "loadThought", function () {
+      var component = _assertThisInitialized(_this);
+
+      Object(_Storage_js__WEBPACK_IMPORTED_MODULE_2__["getThought"])(_this.props.thoughtId).then(function (thought) {
+        component.setState({
+          currentThought: thought
+        });
+      }, function (err) {
+        console.log(err);
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "getTags", function () {
+      var tagItems = [];
+
+      if (_this.state.currentThought.plusOnes > 1) {
+        tagItems.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "mini-card-tag-bubble",
+          style: {
+            background: "#E0E0E0"
+          }
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "+", _this.state.currentThought.plusOnes)));
+      }
+
+      var _iterator = _createForOfIteratorHelper(_this.state.currentThought.tags),
+          _step;
+
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var _step$value = _slicedToArray(_step.value, 2),
+              key = _step$value[0],
+              value = _step$value[1];
+
+          tagItems.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            className: "mini-card-tag-bubble",
+            key: key,
+            style: _this.getTagColor(key)
+          }, value));
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+
+      return tagItems;
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "getTitleClasses", function () {
+      if (_this.state.currentThought.title == null || _this.state.currentThought.title == "") {
+        return "mini-card-title italic";
+      } else {
+        return "mini-card-title";
+      }
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "getTitle", function () {
+      if (_this.state.currentThought.title == null || _this.state.currentThought.title == "") {
+        return "[No Title]";
+      } else {
+        return _this.state.currentThought.title;
+      }
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "getContentClasses", function () {
+      if (_this.state.currentThought.content == null || _this.state.currentThought.content == "") {
+        return "mini-card-content italic";
+      } else {
+        return "mini-card-content";
+      }
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "getContent", function () {
+      if (_this.state.currentThought.content == null || _this.state.currentThought.content == "") {
+        return "No thought body";
+      } else {
+        return _this.state.currentThought.content;
+      }
+    });
+
+    _this.state = {
+      currentThought: {
+        id: null,
+        title: null,
+        content: null,
+        creationTimestampMs: null,
+        tags: new Map(),
+        category: 0,
+        replies: new Map(),
+        plusOnes: 1,
+        completed: false,
+        lastEditedTimestampMs: null,
+        lastReviewedTimestampMs: null,
+        deleted: false
+      }
+    };
+    return _this;
+  }
+
+  _createClass(MiniCardComponent, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.loadThought();
+    }
+  }, {
+    key: "getTagColor",
+
+    /* Converts hash of a tag value to a color for tag background */
+    value: function getTagColor(tagHash) {
+      if (tagHash % 100 < 33) {
+        return {
+          background: "#FFF48E"
+        };
+      }
+
+      if (tagHash % 100 < 66) {
+        return {
+          background: "#90DBAE"
+        };
+      }
+
+      return {
+        background: "#B4D0FA"
+      };
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        "class": "mini-card",
+        onClick: this.props.onClick
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "thought-top-box"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "mini-card-title-row"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "mini-card-created-at"
+      }, "Created at ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        id: "created-at-formatted"
+      }, Object(_TimeFormatUtils_js__WEBPACK_IMPORTED_MODULE_1__["prettyFormat"])(this.state.currentThought.creationTimestampMs))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: this.getTitleClasses()
+      }, this.getTitle()))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: this.getContentClasses(),
+        id: "thought-content-area"
+      }, this.getContent()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "mini-card-bottom-box"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "mini-card-tag-bubbles"
+      }, this.getTags()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "mini-card-category"
+      }, this.state.currentThought.category == 0 ? "Just a thought" : "Action Item", this.state.currentThought.category == 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: this.state.currentThought.completed ? "thought-checkmark-toggle thought-completed" : "thought-checkmark-toggle"
+      }) : null)));
+    }
+  }]);
+
+  return MiniCardComponent;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+/* harmony default export */ __webpack_exports__["default"] = (MiniCardComponent);
 
 /***/ }),
 
@@ -56883,7 +57445,8 @@ var ReviewComponent = /*#__PURE__*/function (_Component) {
         className: "nav-dots"
       }, this.getNavDots()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ThoughtCard_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
         mode: "review",
-        thoughtId: this.state.reviewIds[this.state.active - 1]
+        thoughtId: this.state.reviewIds[this.state.active - 1],
+        toggleSavedContent: this.props.toggleSavedContent
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "nav-buttons"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -56922,7 +57485,7 @@ var ReviewComponent = /*#__PURE__*/function (_Component) {
 /*!********************************!*\
   !*** ./src/main/js/Storage.js ***!
   \********************************/
-/*! exports provided: saveThought, getThought, getThoughtsToReview, finishReviewingThoughts, updateThought */
+/*! exports provided: saveThought, getThought, getThoughtsToReview, finishReviewingThoughts, updateThought, searchThoughts */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -56932,6 +57495,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getThoughtsToReview", function() { return getThoughtsToReview; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "finishReviewingThoughts", function() { return finishReviewingThoughts; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateThought", function() { return updateThought; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "searchThoughts", function() { return searchThoughts; });
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid */ "./node_modules/uuid/dist/esm-browser/index.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -56979,6 +57543,9 @@ var StorageClient = /*#__PURE__*/function () {
   }, {
     key: "finishReviewingThoughts",
     value: function finishReviewingThoughts() {}
+  }, {
+    key: "searchThoughts",
+    value: function searchThoughts(query) {}
   }]);
 
   return StorageClient;
@@ -57161,6 +57728,24 @@ var SessionStorageClient = /*#__PURE__*/function (_StorageClient) {
       });
     });
 
+    _defineProperty(_assertThisInitialized(_this), "searchThoughts", function (query) {
+      var localStorageSupported = _this.localStorageSupported;
+      return new Promise(function (resolve, reject) {
+        if (!localStorageSupported) {
+          reject(Error("Cannot pull thoughts. Browser does not support local storage. "));
+          return;
+        }
+
+        if (localStorage.getItem("thoughts") !== null) {
+          var thoughtsDictionary = JSON.parse(localStorage.getItem("thoughts"));
+          var thoughtIds = Object.keys(thoughtsDictionary);
+          resolve(thoughtIds);
+        } else {
+          resolve([]);
+        }
+      });
+    });
+
     if (typeof Storage == "undefined") {
       console.log("Cannot store to local storage");
       _this.localStorageSupported = false;
@@ -57180,6 +57765,7 @@ var getThought = storageClient.getThought;
 var getThoughtsToReview = storageClient.getThoughtsToReview;
 var finishReviewingThoughts = storageClient.finishReviewingThoughts;
 var updateThought = storageClient.updateThought;
+var searchThoughts = storageClient.searchThoughts;
 
 /***/ }),
 
@@ -57300,6 +57886,8 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
           hasTitle: false
         }, _this.checkIfTitleOrContentPresent);
       }
+
+      _this.props.toggleSavedContent(true);
     });
 
     _defineProperty(_assertThisInitialized(_this), "onContentUpdate", function (event) {
@@ -57314,6 +57902,8 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
           hasContent: false
         }, _this.checkIfTitleOrContentPresent);
       }
+
+      _this.props.toggleSavedContent(true);
     });
 
     _defineProperty(_assertThisInitialized(_this), "checkIfTitleOrContentPresent", function () {
@@ -57463,6 +58053,8 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
           }
         })
       });
+
+      _this.props.toggleSavedContent(true);
     });
 
     _defineProperty(_assertThisInitialized(_this), "saveReply", function () {
@@ -57481,6 +58073,8 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
       });
 
       _this.clearReply();
+
+      _this.props.toggleSavedContent(true);
     });
 
     _defineProperty(_assertThisInitialized(_this), "getTags", function () {
@@ -57550,6 +58144,8 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
           });
         }
 
+        _this.props.toggleSavedContent(true);
+
         document.getElementById("tag-input").value = "";
       }
     });
@@ -57563,6 +58159,8 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
             }
           })
         });
+
+        _this.props.toggleSavedContent(true);
       }
     });
 
@@ -57579,7 +58177,7 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
           }
         })
       }, function () {
-        console.log(_this.state.currentThought.category);
+        _this.props.toggleSavedContent(true);
       });
     });
 
@@ -57591,7 +58189,7 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
           }
         })
       }, function () {
-        console.log(_this.state.currentThought.completed);
+        _this.props.toggleSavedContent(true);
       });
     });
 
@@ -57641,6 +58239,7 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
         })
       }, function () {
         Object(_Storage_js__WEBPACK_IMPORTED_MODULE_6__["updateThought"])(component.state.currentThought).then(function (editTimestamp) {
+          component.props.toggleSavedContent(false);
           component.setState({
             currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_4___default()(component.state.currentThought, {
               lastEditedTimestampMs: {
@@ -57686,6 +58285,7 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
       }, function () {
         Object(_Storage_js__WEBPACK_IMPORTED_MODULE_6__["saveThought"])(this.state.currentThought).then(function (result) {
           if (result.showSuggestReviewScreen) {
+            component.clearThought();
             component.setState({
               currentlySaving: false,
               saveSuccess: false,
@@ -57763,6 +58363,8 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "clearThought", function () {
+      _this.props.toggleSavedContent(false);
+
       _this.resetThoughtData();
 
       _this.setState({
@@ -57780,6 +58382,8 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "deleteThought", function () {
+      _this.props.toggleSavedContent(false);
+
       _this.resetThoughtData();
 
       _this.setState({
@@ -57833,6 +58437,8 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
   _createClass(ThoughtCard, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      this.props.toggleSavedContent(false);
+
       if (this.props.mode === "review") {
         this.loadThought();
       } else {
@@ -58180,14 +58786,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Icon_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Icon.jsx */ "./src/main/js/Icon.jsx");
 /* harmony import */ var _HomeComponent_jsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./HomeComponent.jsx */ "./src/main/js/HomeComponent.jsx");
 /* harmony import */ var _ReviewComponent_jsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ReviewComponent.jsx */ "./src/main/js/ReviewComponent.jsx");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _client__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./client */ "./src/main/js/client.js");
-/* harmony import */ var _client__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_client__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var react_modal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-modal */ "./node_modules/react-modal/lib/index.js");
-/* harmony import */ var react_modal__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react_modal__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _css_app_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./css/app.css */ "./src/main/js/css/app.css");
-/* harmony import */ var _css_app_css__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_css_app_css__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _AllComponent_jsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./AllComponent.jsx */ "./src/main/js/AllComponent.jsx");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _client__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./client */ "./src/main/js/client.js");
+/* harmony import */ var _client__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_client__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var react_modal__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-modal */ "./node_modules/react-modal/lib/index.js");
+/* harmony import */ var react_modal__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(react_modal__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _css_app_css__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./css/app.css */ "./src/main/js/css/app.css");
+/* harmony import */ var _css_app_css__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_css_app_css__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _css_navigate_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./css/navigate.css */ "./src/main/js/css/navigate.css");
+/* harmony import */ var _css_navigate_css__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_css_navigate_css__WEBPACK_IMPORTED_MODULE_10__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -58222,6 +58831,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
+
 var App = /*#__PURE__*/function (_Component) {
   _inherits(App, _Component);
 
@@ -58236,36 +58847,85 @@ var App = /*#__PURE__*/function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "setPage", function (page) {
       _this.setState({
-        page: page
+        newPage: page
+      }, function () {
+        _this.navigateToPage();
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "toggleSavedContent", function (savedContentState) {
+      console.log(savedContentState);
+
+      _this.setState({
+        hasUnsavedContent: savedContentState
       });
     });
 
     _defineProperty(_assertThisInitialized(_this), "getPage", function () {
       if (_this.state.page == "home") {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_HomeComponent_jsx__WEBPACK_IMPORTED_MODULE_3__["default"], {
-          setPage: _this.setPage
+          setPage: _this.setPage,
+          toggleSavedContent: _this.toggleSavedContent
+        });
+      } else if (_this.state.page == "review") {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ReviewComponent_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], {
+          setPage: _this.setPage,
+          toggleSavedContent: _this.toggleSavedContent
         });
       } else {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ReviewComponent_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], {
-          setPage: _this.setPage
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AllComponent_jsx__WEBPACK_IMPORTED_MODULE_5__["default"], {
+          toggleSavedContent: _this.toggleSavedContent
         });
       }
     });
 
     _defineProperty(_assertThisInitialized(_this), "togglePage", function () {
+      var newPage = "";
+
       if (_this.state.page == "home") {
+        newPage = "review";
+      } else if (_this.state.page == "review") {
+        newPage = "all";
+      } else {
+        newPage = "home";
+      }
+
+      _this.setState({
+        newPage: newPage
+      }, function () {
+        _this.navigateToPage();
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "navigateToPage", function () {
+      if (_this.state.hasUnsavedContent) {
         _this.setState({
-          page: "review"
+          showModal: true
         });
       } else {
-        _this.setState({
-          page: "home"
-        });
+        _this.forceSetPage();
       }
     });
 
+    _defineProperty(_assertThisInitialized(_this), "forceSetPage", function () {
+      _this.setState({
+        page: _this.state.newPage,
+        newPage: null,
+        showModal: false
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "handleCloseModal", function () {
+      _this.setState({
+        newPage: null,
+        showModal: false
+      });
+    });
+
     _this.state = {
-      page: "home"
+      page: "home",
+      newPage: null,
+      hasUnsavedContent: false
     };
     return _this;
   } //TODO: check that page is valid
@@ -58285,15 +58945,42 @@ var App = /*#__PURE__*/function (_Component) {
         togglePage: this.togglePage
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "search-bar-container"
-      })), this.getPage());
+      })), this.getPage(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_modal__WEBPACK_IMPORTED_MODULE_8___default.a, {
+        isOpen: this.state.showModal,
+        onRequestClose: this.handleCloseModal,
+        contentLabel: "Minimal Modal Example",
+        className: "thought-nav-modal-container",
+        overlayClassName: "thought-nav-overlay",
+        shouldCloseOnEsc: true,
+        shouldCloseOnOverlayClick: true,
+        shouldReturnFocusAfterClose: true
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "thought-nav-modal"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "thought-nav-modal-title"
+      }, "Are you sure you want to navigate away from this page?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "thought-nav-modal-content"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "thought-nav-modal-subtitle"
+      }, "Your unsaved edits to this thought will be lost.")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "thought-nav-modal-buttons"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "thought-nav-cancel pointer",
+        onClick: this.handleCloseModal
+      }, "Cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "thought-nav-separator"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "thought-nav-confirm pointer",
+        onClick: this.forceSetPage
+      }, "Yes, Let's leave")))));
     }
   }]);
 
   return App;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
-react_modal__WEBPACK_IMPORTED_MODULE_7___default.a.setAppElement('#app');
-react_dom__WEBPACK_IMPORTED_MODULE_5___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(App, null), document.getElementById('app'));
+react_modal__WEBPACK_IMPORTED_MODULE_8___default.a.setAppElement('#app');
+react_dom__WEBPACK_IMPORTED_MODULE_6___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(App, null), document.getElementById('app'));
 
 /***/ }),
 
@@ -58394,6 +59081,58 @@ module.exports = exported;
 var api = __webpack_require__(/*! ../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
 
 var content = __webpack_require__(/*! !../../../../node_modules/css-loader/dist/cjs.js!./home.css */ "./node_modules/css-loader/dist/cjs.js!./src/main/js/css/home.css");
+
+content = content.__esModule ? content["default"] : content;
+
+if (typeof content === 'string') {
+  content = [[module.i, content, '']];
+}
+
+var options = {};
+options.insert = "head";
+options.singleton = false;
+var update = api(content, options);
+var exported = content.locals ? content.locals : {};
+module.exports = exported;
+
+/***/ }),
+
+/***/ "./src/main/js/css/listMiniCards.css":
+/*!*******************************************!*\
+  !*** ./src/main/js/css/listMiniCards.css ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var api = __webpack_require__(/*! ../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader/dist/cjs.js!./listMiniCards.css */ "./node_modules/css-loader/dist/cjs.js!./src/main/js/css/listMiniCards.css");
+
+content = content.__esModule ? content["default"] : content;
+
+if (typeof content === 'string') {
+  content = [[module.i, content, '']];
+}
+
+var options = {};
+options.insert = "head";
+options.singleton = false;
+var update = api(content, options);
+var exported = content.locals ? content.locals : {};
+module.exports = exported;
+
+/***/ }),
+
+/***/ "./src/main/js/css/navigate.css":
+/*!**************************************!*\
+  !*** ./src/main/js/css/navigate.css ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var api = __webpack_require__(/*! ../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader/dist/cjs.js!./navigate.css */ "./node_modules/css-loader/dist/cjs.js!./src/main/js/css/navigate.css");
 
 content = content.__esModule ? content["default"] : content;
 

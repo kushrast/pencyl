@@ -3,47 +3,93 @@ import Menu from './Menu.jsx';
 import Icon from './Icon.jsx';
 import HomeComponent from './HomeComponent.jsx';
 import ReviewComponent from './ReviewComponent.jsx';
+import AllComponent from "./AllComponent.jsx";
 import ReactDOM from 'react-dom';
 import client from './client';
 import Modal from 'react-modal';
 
 import "./css/app.css";
+import "./css/navigate.css";
 
 class App extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			page: "home"
+			page: "home",
+			newPage: null,
+			hasUnsavedContent: false
 		}
 	}
 
 	//TODO: check that page is valid
 	setPage = (page) => {
 		this.setState({
-			page: page
+			newPage: page
+		}, () => {
+			this.navigateToPage();
+		});
+
+	}
+
+	toggleSavedContent = (savedContentState) => {
+		console.log(savedContentState);
+		this.setState({
+			hasUnsavedContent: savedContentState
 		});
 	}
 
 	getPage = () => {
 		if (this.state.page == "home") {
-			return <HomeComponent setPage={this.setPage}/>
+			return <HomeComponent setPage={this.setPage} toggleSavedContent={this.toggleSavedContent}/>
+		} else if (this.state.page == "review"){
+			return <ReviewComponent setPage={this.setPage} toggleSavedContent={this.toggleSavedContent}/>
 		} else {
-			return <ReviewComponent setPage={this.setPage}/>
+			return <AllComponent toggleSavedContent={this.toggleSavedContent}/>
 		}
 	}
 
 	//TODO: Convert to numerical order
 	togglePage = () => {
+		var newPage = "";
 		if (this.state.page == "home") {
+			newPage = "review";
+		} else if (this.state.page == "review") {
+			newPage = "all";
+		} else {
+			newPage = "home";
+		}
+
+		this.setState({
+			newPage: newPage
+		}, () => {
+			this.navigateToPage();
+		});
+	}
+
+	navigateToPage = () => {
+		if (this.state.hasUnsavedContent) {
 			this.setState({
-				page: "review"
+				showModal: true
 			});
 		} else {
-			this.setState({
-				page: "home"
-			});
+			this.forceSetPage();
 		}
+	}
+
+	forceSetPage = () => {
+		this.setState({
+			page: this.state.newPage,
+			newPage: null,
+			showModal: false
+		});
+	}
+
+	handleCloseModal = () => {
+		this.setState({
+			newPage: null,
+			showModal: false,
+		});
 	}
 
 	render() {
@@ -55,6 +101,31 @@ class App extends Component {
 					<div className="search-bar-container"></div>
 				</div>
 				{this.getPage()}
+
+				<Modal 
+		           isOpen={this.state.showModal}
+	             onRequestClose={this.handleCloseModal}
+		           contentLabel="Minimal Modal Example"
+		           className="thought-nav-modal-container"
+		           overlayClassName="thought-nav-overlay"
+		           shouldCloseOnEsc={true}
+		           shouldCloseOnOverlayClick={true}
+	             shouldReturnFocusAfterClose={true}
+		        >
+	            <div className="thought-nav-modal">
+		        	  <div className="thought-nav-modal-title">Are you sure you want to navigate away from this page?</div>
+		        	  <div className="thought-nav-modal-content">
+	                <div className="thought-nav-modal-subtitle">
+	                  Your unsaved edits to this thought will be lost. 
+	                </div>
+	              </div>
+	              <div className="thought-nav-modal-buttons">
+	                <div className="thought-nav-cancel pointer" onClick={this.handleCloseModal}>Cancel</div>
+	                <div className="thought-nav-separator"></div>
+	                <div className="thought-nav-confirm pointer" onClick={this.forceSetPage}>Yes, Let's leave</div>
+	              </div>
+		        	</div>
+		        </Modal>
 			</div>
 		);
 	}

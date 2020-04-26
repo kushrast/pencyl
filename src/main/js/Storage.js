@@ -13,6 +13,7 @@ class StorageClient {
 
 	finishReviewingThoughts(){}
 
+	searchThoughts(query){}
 }
 
 class SessionStorageClient extends StorageClient {
@@ -200,6 +201,28 @@ class SessionStorageClient extends StorageClient {
 			}
 		});
 	}
+
+	searchThoughts = (query) => {
+		var localStorageSupported = this.localStorageSupported;
+
+		return new Promise(function(resolve, reject) {
+
+			if (!localStorageSupported) {
+				reject(Error("Cannot pull thoughts. Browser does not support local storage. "));
+				return;
+			}
+
+			if (localStorage.getItem("thoughts") !== null) {
+				var thoughtsDictionary = JSON.parse(localStorage.getItem("thoughts"));
+
+				var thoughtIds = Object.keys(thoughtsDictionary);
+
+				resolve(thoughtIds);
+			} else {
+				resolve([]);
+			}
+		});
+	}
 }
 
 var storageClient = new SessionStorageClient();
@@ -209,3 +232,4 @@ export const getThought = storageClient.getThought;
 export const getThoughtsToReview = storageClient.getThoughtsToReview;
 export const finishReviewingThoughts = storageClient.finishReviewingThoughts;
 export const updateThought = storageClient.updateThought;
+export const searchThoughts= storageClient.searchThoughts;

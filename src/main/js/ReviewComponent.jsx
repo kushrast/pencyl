@@ -127,7 +127,7 @@ class ReviewComponent extends Component {
 			  		<div className="nav-dots">
 			  			{this.getNavDots()}
 			  		</div>
-			  		<ThoughtCard mode={"review"} thoughtId={this.state.reviewIds[this.state.active-1]}/>
+			  		<ThoughtCard mode={"review"} thoughtId={this.state.reviewIds[this.state.active-1]} toggleSavedContent={this.props.toggleSavedContent}/>
 			  		<div className="nav-buttons">
 			  			<div className="prev-button-container"><div className="nav-button prev-button nav-button-disabled" id="prevButton" onClick={this.switchActive.bind(this, this.state.active-1)}>Previous</div></div>
 			  			<div className="next-button-container"><div className="nav-button next-button nav-button-active" id="nextButton" onClick={this.switchActive.bind(this, this.state.active+1)}>
