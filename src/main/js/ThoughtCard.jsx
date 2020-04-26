@@ -36,10 +36,11 @@ class ThoughtCard extends Component {
 			saveSuccess: false,
 			showPopoverReplyId: "",
 			showSuggestReviewScreen: false,
-		}	
+		}
 	}
 
 	componentDidMount() {
+		this.props.toggleSavedContent(false);
 		if (this.props.mode === "review") {
 			this.loadThought();
 		} else {
@@ -79,13 +80,15 @@ class ThoughtCard extends Component {
 
 		if (title != "") {
 			this.setState({
-				hasTitle: true
+				hasTitle: true,
 			}, this.checkIfTitleOrContentPresent);
 		} else {
 			this.setState({
-				hasTitle: false
+				hasTitle: false,
 			}, this.checkIfTitleOrContentPresent);
 		}
+
+		this.props.toggleSavedContent(true);
 	}
 
 	/* Triggered when the Content textarea is updated. Helps us determine whether to show the delete/update buttons */
@@ -94,13 +97,15 @@ class ThoughtCard extends Component {
 
 		if (content != "") {
 			this.setState({
-				hasContent: true
+				hasContent: true,
 			}, this.checkIfTitleOrContentPresent);
 		} else {
 			this.setState({
-				hasContent: false
+				hasContent: false,
 			}, this.checkIfTitleOrContentPresent);
 		}
+
+		this.props.toggleSavedContent(true);
 	}
 
 
@@ -182,13 +187,13 @@ class ThoughtCard extends Component {
 
 	incrementPlusOnes = () => {
 		this.setState({
-			currentThought: update(this.state.currentThought, {plusOnes: {$set: this.state.currentThought.plusOnes+1}})
+			currentThought: update(this.state.currentThought, {plusOnes: {$set: this.state.currentThought.plusOnes+1}}),
 		})
 	}
 
 	resetPlusOnes = () => {
 		this.setState({
-			currentThought: update(this.state.currentThought, {plusOnes: {$set: 0}})
+			currentThought: update(this.state.currentThought, {plusOnes: {$set: 0}}),
 		});
 	}
 
@@ -229,8 +234,10 @@ class ThoughtCard extends Component {
 	deleteReply = (key) => {
 		this.setState({
 			showPopoverReplyId: "",
-			currentThought: update(this.state.currentThought, {replies: {$remove: [key]}})
+			currentThought: update(this.state.currentThought, {replies: {$remove: [key]}}),
 		});
+
+		this.props.toggleSavedContent(true);
 	}
 
 	saveReply = () => {
@@ -238,13 +245,14 @@ class ThoughtCard extends Component {
 		const currTimestamp = new Date().getTime();
 		this.setState({
 			isDeletePopoverOpen: false,
-			currentThought: update(this.state.currentThought, {replies: {$add: [[currTimestamp,reply]]}})
+			currentThought: update(this.state.currentThought, {replies: {$add: [[currTimestamp,reply]]}}),
 		},
 		() => {
 			console.log(this.state.currentThought.replies);
 		});
 
 		this.clearReply();
+		this.props.toggleSavedContent(true);
 	}
 
 	getTags = () => {
@@ -281,9 +289,10 @@ class ThoughtCard extends Component {
 			if (uniqueString) {
 				this.setState({
 					hasTagContent: false,
-					currentThought: update(this.state.currentThought, {tags: {$add: [[tagHash, tagVal]]}})
+					currentThought: update(this.state.currentThought, {tags: {$add: [[tagHash, tagVal]]}}),
 				});
 			}
+			this.props.toggleSavedContent(true);
 	 		document.getElementById("tag-input").value = "";
 		}
 	}
@@ -294,8 +303,9 @@ class ThoughtCard extends Component {
 	deleteTag = (key) => {
 		if (this.state.currentThought.tags.has(key)) {
 			this.setState({
-				currentThought: update(this.state.currentThought, {tags: {$remove: [key]}})
+				currentThought: update(this.state.currentThought, {tags: {$remove: [key]}}),
 			});
+			this.props.toggleSavedContent(true);
 		}
 	}
 
@@ -307,8 +317,10 @@ class ThoughtCard extends Component {
 				{
 					completed: {$set: false},
 					category: {$set: newCategory.value},
-				})
-		}, ()=>{console.log(this.state.currentThought.category)});
+				}),
+		}, ()=>{
+			this.props.toggleSavedContent(true);
+		});
 	}
 
 	toggleThoughtComplete = () => {
@@ -316,9 +328,11 @@ class ThoughtCard extends Component {
 			currentThought: update(this.state.currentThought, 
 				{
 					completed: {$set: !this.state.currentThought.completed},
-				})
+				}),
 		},
-		() => {console.log(this.state.currentThought.completed)});
+		() => {
+				this.props.toggleSavedContent(true);
+		});
 	}
 
 	getFinishOrUpdateButton = () => {
@@ -352,6 +366,7 @@ class ThoughtCard extends Component {
 		}, function() {
 			updateThought(component.state.currentThought)
 				.then(function(editTimestamp) {
+					component.props.toggleSavedContent(false);
 					component.setState({
 						currentThought: update(component.state.currentThought, 
 						{
@@ -393,6 +408,7 @@ class ThoughtCard extends Component {
 			saveThought(this.state.currentThought)
 				.then(function(result) {
 					if (result.showSuggestReviewScreen) {
+						component.clearThought();
 						component.setState({
 							currentlySaving: false,
 							saveSuccess: false,
@@ -467,6 +483,7 @@ class ThoughtCard extends Component {
 
 	/* Clears an unsaved thought */
 	clearThought = () => {
+		this.props.toggleSavedContent(false);
 		this.resetThoughtData();
 		this.setState({
 			hasTitle: false,
@@ -483,6 +500,7 @@ class ThoughtCard extends Component {
 
 	/* Deletes a saved thought */
 	deleteThought = () => {
+		this.props.toggleSavedContent(false);
 		this.resetThoughtData();
 		this.setState({
 			hasTitle: false,

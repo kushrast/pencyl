@@ -24,7 +24,7 @@
 
 .thought-top-box {
 	display: flex;
-	align-items: center;
+	flex: no-wrap;
 	justify-content: end;
 }
 

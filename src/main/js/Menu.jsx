@@ -39,7 +39,7 @@ class Menu extends Component {
 	  			</div>
 	  			<a className="list-item pointer" onClick={this.changePage.bind(this, "home")} ><div className="list-item-text"> Home </div></a>
 	  			<a className="list-item pointer" onClick={this.changePage.bind(this, "review")}><div className="list-item-text"> Review </div></a>
-	  			<a className="list-item"><div className="list-item-text"> All Entries </div></a>
+	  			<a className="list-item pointer" onClick={this.changePage.bind(this, "all")}><div className="list-item-text"> All Entries </div></a>
 	  			<a className="list-item"><div className="list-item-text"> Logout </div></a>
 	  		</SlideMenu>
 	  	</div>
