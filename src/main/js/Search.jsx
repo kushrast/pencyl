@@ -23,7 +23,7 @@ class Search extends Component {
 			searchOptions: 
 				[
 					{
-						label:`'${newValue}'`, value: newValue, type: "regular"
+						label: newValue, value: newValue, type: "regular"
 					},
 					{
 					      label: "Tags",
@@ -36,9 +36,8 @@ class Search extends Component {
 	}
 
 	onChange = (item, action) => {
-		console.log(action);
 		if (action.action === "select-option") {
-			this.props.updateSearch(item[0], action);
+			this.props.updateSearch(item.slice(-1)[0] , action);
 		} else if (action.action === "remove-value") {
 			this.props.updateSearch(action.removedValue, action);
 		}

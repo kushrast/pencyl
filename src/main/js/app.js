@@ -103,6 +103,8 @@ class App extends Component {
 				)
 			},
 			()=>{
+				console.log(item);
+				console.log(this.state.searchCriteria);
 				this.setPage("all");
 			});
 		} else if (action.action === "remove-value") {

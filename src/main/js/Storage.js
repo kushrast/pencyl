@@ -224,6 +224,7 @@ class SessionStorageClient extends StorageClient {
 
 				for (var key in thoughtsDictionary) {
 					var include = false;
+					var thoughtTags = null;
 
 					searchCriteria.forEach((criteria, criteriaKey, map) => {
 						if (criteria.type === "tag") {
@@ -232,6 +233,7 @@ class SessionStorageClient extends StorageClient {
 							}
 
 							thoughtTags.forEach((tag, tagKey, map) => {
+								console.log(tag);
 								if (tag === criteria.value) {
 									include = true;
 								}

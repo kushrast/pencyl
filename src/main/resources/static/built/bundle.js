@@ -56882,8 +56882,6 @@ var Icon = /*#__PURE__*/function (_Component) {
     _this = _super.call.apply(_super, [this].concat(args));
 
     _defineProperty(_assertThisInitialized(_this), "getImageForPage", function () {
-      console.log(_this.props.page);
-
       if (_this.props.page == "home") {
         return "/img/pen.svg";
       } else if (_this.props.page == "review") {
@@ -57571,7 +57569,7 @@ var Search = /*#__PURE__*/function (_Component) {
 
       _this.setState({
         searchOptions: [{
-          label: "'".concat(newValue, "'"),
+          label: newValue,
           value: newValue,
           type: "regular"
         }, {
@@ -57586,10 +57584,8 @@ var Search = /*#__PURE__*/function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "onChange", function (item, action) {
-      console.log(action);
-
       if (action.action === "select-option") {
-        _this.props.updateSearch(item[0], action);
+        _this.props.updateSearch(item.slice(-1)[0], action);
       } else if (action.action === "remove-value") {
         _this.props.updateSearch(action.removedValue, action);
       }
@@ -57973,6 +57969,7 @@ var SessionStorageClient = /*#__PURE__*/function (_StorageClient) {
 
           for (var key in thoughtsDictionary) {
             var include = false;
+            var thoughtTags = null;
             searchCriteria.forEach(function (criteria, criteriaKey, map) {
               if (criteria.type === "tag") {
                 if (thoughtTags == null) {
@@ -57980,6 +57977,8 @@ var SessionStorageClient = /*#__PURE__*/function (_StorageClient) {
                 }
 
                 thoughtTags.forEach(function (tag, tagKey, map) {
+                  console.log(tag);
+
                   if (tag === criteria.value) {
                     include = true;
                   }
@@ -59193,6 +59192,9 @@ var App = /*#__PURE__*/function (_Component) {
             $add: [[item.label, item]]
           })
         }, function () {
+          console.log(item);
+          console.log(_this.state.searchCriteria);
+
           _this.setPage("all");
         });
       } else if (action.action === "remove-value") {

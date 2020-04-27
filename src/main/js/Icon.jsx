@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 class Icon extends Component {
 
 	getImageForPage = () => {
-		console.log(this.props.page);
 		if (this.props.page == "home") {
 			return "/img/pen.svg";
 		} else if (this.props.page == "review") {
