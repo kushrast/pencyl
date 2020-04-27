@@ -18,22 +18,41 @@ class AllComponent extends Component {
 
 	componentDidMount() {
 		var component = this;
-		searchThoughts(this.props.searchQuery)
+		console.log(this.props.searchCriteria);
+		searchThoughts(this.props.searchCriteria)
 		.then(
 			function(thoughts) {
 				component.setState({
-					items: thoughts
+					items: thoughts,
+					active: 0
 				});
 			}, function(err) {
 				console.log(err);
 			});
 	}
 
+	componentDidUpdate(prevProps) {
+		var component = this;
+		if (prevProps.searchCriteria !== component.props.searchCriteria) {
+			console.log("searching");
+			searchThoughts(component.props.searchCriteria)
+			.then(
+				function(thoughts) {
+					component.setState({
+						items: thoughts,
+						acive: 0
+					}, ()=>{console.log(component.state.items)});
+				}, function(err) {
+					console.log(err);
+				});
+		}
+	}
+
 	getMiniCards = () => {
 		var miniCards = [];
 		for(var i = 0; i < this.state.items.length; i++) {
 			miniCards.push(
-				<MiniCardComponent key={i} thoughtId={this.state.items[i]} onClick={this.goToEntry.bind(this, i+1)}/>
+				<MiniCardComponent key={this.state.items[i]} thoughtId={this.state.items[i]} onClick={this.goToEntry.bind(this, i+1)}/>
 				);
 		}
 

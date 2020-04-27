@@ -10,6 +10,7 @@ class CategoryComponent extends Component {
 			...provided,
 			width: 'auto',
 			marginLeft: '15px',
+			maxHeight: '60px',
 		}),
 		control: (provided, state) => ({
 			...provided,

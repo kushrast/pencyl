@@ -202,7 +202,7 @@ class SessionStorageClient extends StorageClient {
 		});
 	}
 
-	searchThoughts = (query) => {
+	searchThoughts = (searchCriteria) => {
 		var localStorageSupported = this.localStorageSupported;
 
 		return new Promise(function(resolve, reject) {
@@ -215,7 +215,42 @@ class SessionStorageClient extends StorageClient {
 			if (localStorage.getItem("thoughts") !== null) {
 				var thoughtsDictionary = JSON.parse(localStorage.getItem("thoughts"));
 
-				var thoughtIds = Object.keys(thoughtsDictionary);
+				var thoughtIds = [];
+
+				if (searchCriteria.size == 0) {
+					resolve(Object.keys(thoughtsDictionary));
+					return;
+				}
+
+				for (var key in thoughtsDictionary) {
+					var include = false;
+					var thoughtTags = null;
+
+					searchCriteria.forEach((criteria, criteriaKey, map) => {
+						if (criteria.type === "tag") {
+							if (thoughtTags == null) {
+								thoughtTags = new Map(thoughtsDictionary[key].tags);
+							}
+
+							thoughtTags.forEach((tag, tagKey, map) => {
+								console.log(tag);
+								if (tag === criteria.value) {
+									include = true;
+								}
+							});
+						} else {
+	
+							if (thoughtsDictionary[key].title.includes(criteria.value) || thoughtsDictionary[key].content.includes(criteria.value)) {
+								console.log(thoughtsDictionary[key]);
+								include = true;
+							} 
+						}
+					});
+
+					if (include) {
+						thoughtIds.push(key);
+					}
+				}
 
 				resolve(thoughtIds);
 			} else {

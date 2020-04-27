@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import Menu from './Menu.jsx';
 import Icon from './Icon.jsx';
+import Search from './Search.jsx';
 import HomeComponent from './HomeComponent.jsx';
 import ReviewComponent from './ReviewComponent.jsx';
 import AllComponent from "./AllComponent.jsx";
 import ReactDOM from 'react-dom';
 import client from './client';
 import Modal from 'react-modal';
+import update from 'immutability-helper';
 
 import "./css/app.css";
 import "./css/navigate.css";
@@ -18,7 +20,8 @@ class App extends Component {
 		this.state = {
 			page: "home",
 			newPage: null,
-			hasUnsavedContent: false
+			hasUnsavedContent: false,
+			searchCriteria: new Map(),
 		}
 	}
 
@@ -45,7 +48,7 @@ class App extends Component {
 		} else if (this.state.page == "review"){
 			return <ReviewComponent setPage={this.setPage} toggleSavedContent={this.toggleSavedContent}/>
 		} else {
-			return <AllComponent toggleSavedContent={this.toggleSavedContent}/>
+			return <AllComponent toggleSavedContent={this.toggleSavedContent} searchCriteria={this.state.searchCriteria}/>
 		}
 	}
 
@@ -92,13 +95,34 @@ class App extends Component {
 		});
 	}
 
+	updateSearch = (item, action) => {
+		if (action.action === "select-option") {
+			this.setState({
+				searchCriteria: update(this.state.searchCriteria, 
+				{$add: [[item.label, item]]}
+				)
+			},
+			()=>{
+				console.log(item);
+				console.log(this.state.searchCriteria);
+				this.setPage("all");
+			});
+		} else if (action.action === "remove-value") {
+			this.setState({
+				searchCriteria: update(this.state.searchCriteria, 
+				{$remove: [item.label]}
+				)
+			});
+		}
+	}
+
 	render() {
 		return (
 			<div className="container">
 				<div className="navbar">
 					<Menu setPage={this.setPage}/>
 					<Icon page={this.state.page} togglePage={this.togglePage}/>
-					<div className="search-bar-container"></div>
+					<Search updateSearch={this.updateSearch}/>
 				</div>
 				{this.getPage()}
 

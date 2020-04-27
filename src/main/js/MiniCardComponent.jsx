@@ -35,7 +35,7 @@ class MiniCardComponent extends Component {
 			function(thought) {
 				component.setState({
 					currentThought: thought,
-				})
+				},()=>{console.log(component.state.currentThought)})
 			}, function(err) {
 				console.log(err);
 			}
