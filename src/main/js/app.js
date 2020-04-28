@@ -9,7 +9,6 @@ import ReactDOM from 'react-dom';
 import client from './client';
 import Modal from 'react-modal';
 import update from 'immutability-helper';
-
 import "./css/app.css";
 import "./css/navigate.css";
 
@@ -46,9 +45,9 @@ class App extends Component {
 		if (this.state.page == "home") {
 			return <HomeComponent setPage={this.setPage} toggleSavedContent={this.toggleSavedContent}/>
 		} else if (this.state.page == "review"){
-			return <ReviewComponent setPage={this.setPage} toggleSavedContent={this.toggleSavedContent}/>
+			return <ReviewComponent setPage={this.setPage} toggleSavedContent={this.toggleSavedContent}  hasUnsavedContent={this.state.hasUnsavedContent}/>
 		} else {
-			return <AllComponent toggleSavedContent={this.toggleSavedContent} searchCriteria={this.state.searchCriteria}/>
+			return <AllComponent toggleSavedContent={this.toggleSavedContent} hasUnsavedContent={this.state.hasUnsavedContent} searchCriteria={this.state.searchCriteria}/>
 		}
 	}
 

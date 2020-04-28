@@ -56325,7 +56325,8 @@ var AllComponent = /*#__PURE__*/function (_Component) {
         active: this.state.active,
         setActive: this.setActive,
         toggleSavedContent: this.props.toggleSavedContent,
-        backToEntries: this.backToEntries
+        backToEntries: this.backToEntries,
+        hasUnsavedContent: this.props.hasUnsavedContent
       }));
     }
   }]);
@@ -56726,7 +56727,8 @@ var EntryViewComponent = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ThoughtCard_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
         mode: "review",
         thoughtId: this.props.reviewIds[this.props.active - 1],
-        toggleSavedContent: this.props.toggleSavedContent
+        toggleSavedContent: this.props.toggleSavedContent,
+        hasUnsavedContent: this.props.hasUnsavedContent
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "nav-buttons"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -57468,7 +57470,8 @@ var ReviewComponent = /*#__PURE__*/function (_Component) {
       }, this.getNavDots()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ThoughtCard_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
         mode: "review",
         thoughtId: this.state.reviewIds[this.state.active - 1],
-        toggleSavedContent: this.props.toggleSavedContent
+        toggleSavedContent: this.props.toggleSavedContent,
+        hasUnsavedContent: this.props.hasUnsavedContent
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "nav-buttons"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -58145,6 +58148,10 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
       }
 
       _this.props.toggleSavedContent(true);
+
+      if (_this.props.mode != "home") {
+        if (_this.state.reviewLastUpdated == null) _this.updateThought();
+      }
     });
 
     _defineProperty(_assertThisInitialized(_this), "onContentUpdate", function (event) {
@@ -58161,6 +58168,10 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
       }
 
       _this.props.toggleSavedContent(true);
+
+      if (_this.props.mode != "home") {
+        _this.updateThought();
+      }
     });
 
     _defineProperty(_assertThisInitialized(_this), "checkIfTitleOrContentPresent", function () {
@@ -58312,6 +58323,10 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
       });
 
       _this.props.toggleSavedContent(true);
+
+      if (_this.props.mode != "home") {
+        _this.updateThought();
+      }
     });
 
     _defineProperty(_assertThisInitialized(_this), "saveReply", function () {
@@ -58332,6 +58347,10 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
       _this.clearReply();
 
       _this.props.toggleSavedContent(true);
+
+      if (_this.props.mode != "home") {
+        _this.updateThought();
+      }
     });
 
     _defineProperty(_assertThisInitialized(_this), "getTags", function () {
@@ -58381,16 +58400,50 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
       return tagItems;
     });
 
+    _defineProperty(_assertThisInitialized(_this), "checkTagValidity", function () {});
+
+    _defineProperty(_assertThisInitialized(_this), "getTagCheckmarkOrCross", function () {
+      if (_this.state.hasTagContent) {
+        var tagInput = document.getElementById("tag-input");
+        var tagVal = tagInput.value;
+
+        if (tagVal != "") {
+          var tagHash = _this.stringHash(tagVal);
+
+          var uniqueString = !_this.state.currentThought.tags.has(tagHash);
+
+          if (uniqueString) {
+            tagInput.setCustomValidity('');
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+              src: "/img/checkmark.svg",
+              className: "thought-checkmark",
+              onClick: _this.saveTag
+            });
+          }
+
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+            src: "/img/red_cross.svg",
+            className: "thought-checkmark"
+          });
+        }
+      }
+
+      return null;
+    });
+
     _defineProperty(_assertThisInitialized(_this), "saveTag", function () {
       //TODO: Error if submit without value
-      var tagVal = document.getElementById("tag-input").value;
+      var tagInput = document.getElementById("tag-input");
+      var tagVal = tagInput.value;
 
       if (tagVal != "") {
         var tagHash = _this.stringHash(tagVal);
 
-        var uniqueString = !(tagHash in _this.state.currentThought.tags);
+        var uniqueString = !_this.state.currentThought.tags.has(tagHash);
 
         if (uniqueString) {
+          tagInput.setCustomValidity('');
+
           _this.setState({
             hasTagContent: false,
             currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_4___default()(_this.state.currentThought, {
@@ -58399,11 +58452,18 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
               }
             })
           });
+
+          document.getElementById("tag-input").value = "";
+        } else {
+          tagInput.setCustomValidity('This tag already exists for this thought!');
+          tagInput.reportValidity();
         }
 
         _this.props.toggleSavedContent(true);
 
-        document.getElementById("tag-input").value = "";
+        if (_this.props.mode != "home") {
+          _this.updateThought();
+        }
       }
     });
 
@@ -58418,6 +58478,10 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
         });
 
         _this.props.toggleSavedContent(true);
+
+        if (_this.props.mode != "home") {
+          _this.updateThought();
+        }
       }
     });
 
@@ -58435,6 +58499,10 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
         })
       }, function () {
         _this.props.toggleSavedContent(true);
+
+        if (_this.props.mode != "home") {
+          _this.updateThought();
+        }
       });
     });
 
@@ -58447,6 +58515,10 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
         })
       }, function () {
         _this.props.toggleSavedContent(true);
+
+        if (_this.props.mode != "home") {
+          _this.updateThought();
+        }
       });
     });
 
@@ -58464,7 +58536,7 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
         if (_this.props.mode === "review") {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "thought-update pointer",
-            onClick: _this.updateThought
+            onClick: _this.updateThought.bind(_assertThisInitialized(_this), true)
           }, "Update Thought");
         } else if (_this.state.hasTypedInfo) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -58480,47 +58552,53 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "updateThought", function () {
-      var component = _assertThisInitialized(_this);
+      var forceUpdate = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+      var currTime = new Date().getTime();
 
-      var title = document.getElementById("thought-title-area").value;
-      var content = document.getElementById("thought-content-area").value;
-      component.setState({
-        currentlySaving: true,
-        currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_4___default()(component.state.currentThought, {
-          title: {
-            $set: title
-          },
-          content: {
-            $set: content
-          }
-        })
-      }, function () {
-        Object(_Storage_js__WEBPACK_IMPORTED_MODULE_6__["updateThought"])(component.state.currentThought).then(function (editTimestamp) {
-          component.props.toggleSavedContent(false);
-          component.setState({
-            currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_4___default()(component.state.currentThought, {
-              lastEditedTimestampMs: {
-                $set: editTimestamp
-              }
-            })
-          });
-        }, function (err) {
-          console.log(err);
-        }).then(function () {
-          //TODO: Should take into account success or failure
-          component.setState({
-            currentlySaving: false,
-            saveSuccess: true
-          }, function () {
-            console.log("let it be");
-            setTimeout(function () {
-              component.setState({
-                saveSuccess: false
-              });
-            }, 1000);
+      if (forceUpdate || (_this.state.reviewLastUpdated == null || currTime > _this.state.reviewLastUpdated + 5000) && _this.props.hasUnsavedContent) {
+        var component = _assertThisInitialized(_this);
+
+        var title = document.getElementById("thought-title-area").value;
+        var content = document.getElementById("thought-content-area").value;
+        component.setState({
+          currentlySaving: true,
+          currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_4___default()(component.state.currentThought, {
+            title: {
+              $set: title
+            },
+            content: {
+              $set: content
+            }
+          })
+        }, function () {
+          Object(_Storage_js__WEBPACK_IMPORTED_MODULE_6__["updateThought"])(component.state.currentThought).then(function (editTimestamp) {
+            component.props.toggleSavedContent(false);
+            component.setState({
+              reviewLastUpdated: currTime,
+              currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_4___default()(component.state.currentThought, {
+                lastEditedTimestampMs: {
+                  $set: editTimestamp
+                }
+              })
+            });
+          }, function (err) {
+            console.log(err);
+          }).then(function () {
+            //TODO: Should take into account success or failure
+            component.setState({
+              currentlySaving: false,
+              saveSuccess: true
+            }, function () {
+              console.log("let it be");
+              setTimeout(function () {
+                component.setState({
+                  saveSuccess: false
+                });
+              }, 1000);
+            });
           });
         });
-      });
+      }
     });
 
     _defineProperty(_assertThisInitialized(_this), "saveNewThought", function () {
@@ -58686,7 +58764,8 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
       currentlySaving: false,
       saveSuccess: false,
       showPopoverReplyId: "",
-      showSuggestReviewScreen: false
+      showSuggestReviewScreen: false,
+      reviewLastUpdated: null
     };
     return _this;
   }
@@ -58698,6 +58777,7 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
 
       if (this.props.mode === "review") {
         this.loadThought();
+        setInterval(this.updateThought, 5000);
       } else {
         this.setFocusToContent();
       }
@@ -58823,11 +58903,7 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
         onKeyUp: this.onTagKeyUp,
         id: "tag-input",
         maxLength: "25"
-      }), this.state.hasTagContent ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: "/img/checkmark.svg",
-        className: "thought-checkmark",
-        onClick: this.saveTag
-      }) : null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CategoryComponent_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      }), this.getTagCheckmarkOrCross()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CategoryComponent_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
         updateCategory: this.changeCategory,
         defaultCategory: this.state.currentThought.category
       }), this.props.mode === "review" && this.state.currentThought.category == 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -59132,11 +59208,13 @@ var App = /*#__PURE__*/function (_Component) {
       } else if (_this.state.page == "review") {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ReviewComponent_jsx__WEBPACK_IMPORTED_MODULE_5__["default"], {
           setPage: _this.setPage,
-          toggleSavedContent: _this.toggleSavedContent
+          toggleSavedContent: _this.toggleSavedContent,
+          hasUnsavedContent: _this.state.hasUnsavedContent
         });
       } else {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AllComponent_jsx__WEBPACK_IMPORTED_MODULE_6__["default"], {
           toggleSavedContent: _this.toggleSavedContent,
+          hasUnsavedContent: _this.state.hasUnsavedContent,
           searchCriteria: _this.state.searchCriteria
         });
       }

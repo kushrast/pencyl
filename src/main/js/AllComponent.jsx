@@ -86,7 +86,7 @@ class AllComponent extends Component {
 	  				{this.getMiniCards()}
 	  			</div>
 	  			:
-	  			<EntryViewComponent reviewIds={this.state.items} active={this.state.active} setActive={this.setActive} toggleSavedContent={this.props.toggleSavedContent} backToEntries={this.backToEntries}/>
+	  			<EntryViewComponent reviewIds={this.state.items} active={this.state.active} setActive={this.setActive} toggleSavedContent={this.props.toggleSavedContent} backToEntries={this.backToEntries}  hasUnsavedContent={this.props.hasUnsavedContent}/>
 	  		}
 	  	</div>
   	);
