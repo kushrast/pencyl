@@ -36,6 +36,7 @@ class ThoughtCard extends Component {
 			saveSuccess: false,
 			showPopoverReplyId: "",
 			showSuggestReviewScreen: false,
+			reviewLastUpdated: null,
 		}
 	}
 
@@ -43,6 +44,7 @@ class ThoughtCard extends Component {
 		this.props.toggleSavedContent(false);
 		if (this.props.mode === "review") {
 			this.loadThought();
+			setInterval(this.updateThought, 5000);
 		} else {
 			this.setFocusToContent();
 		}
@@ -74,6 +76,8 @@ class ThoughtCard extends Component {
 		);
 	}
 
+
+
 	/* Triggered when the Title textarea is updated. Helps us determine whether to show the delete/update buttons */
 	onTitleUpdate = (event) => {
 		var title = event.target.value;
@@ -89,6 +93,10 @@ class ThoughtCard extends Component {
 		}
 
 		this.props.toggleSavedContent(true);
+		if (this.props.mode != "home"){
+			if (this.state.reviewLastUpdated == null)
+			this.updateThought();
+		}
 	}
 
 	/* Triggered when the Content textarea is updated. Helps us determine whether to show the delete/update buttons */
@@ -106,6 +114,9 @@ class ThoughtCard extends Component {
 		}
 
 		this.props.toggleSavedContent(true);
+		if (this.props.mode != "home"){
+			this.updateThought();
+		}
 	}
 
 
@@ -238,6 +249,9 @@ class ThoughtCard extends Component {
 		});
 
 		this.props.toggleSavedContent(true);
+		if (this.props.mode != "home"){
+			this.updateThought();
+		}
 	}
 
 	saveReply = () => {
@@ -253,6 +267,9 @@ class ThoughtCard extends Component {
 
 		this.clearReply();
 		this.props.toggleSavedContent(true);
+		if (this.props.mode != "home"){
+			this.updateThought();
+		}
 	}
 
 	getTags = () => {
@@ -277,23 +294,54 @@ class ThoughtCard extends Component {
 	  	return tagItems;
 	}
 
+	checkTagValidity = () => {
+
+	}
+
+	getTagCheckmarkOrCross = () => {
+
+		if (this.state.hasTagContent) {
+			const tagInput = document.getElementById("tag-input");
+			var tagVal = tagInput.value;
+			if (tagVal != "" ) {
+				const tagHash = this.stringHash(tagVal);
+				var uniqueString = !this.state.currentThought.tags.has(tagHash);
+
+				if (uniqueString) {
+					tagInput.setCustomValidity('');
+					return <img src="/img/checkmark.svg" className="thought-checkmark" onClick={this.saveTag}/>;
+				}
+
+				return <img src="/img/red_cross.svg" className="thought-checkmark"/>;
+			}
+		}
+		return null;
+	}
+
 	/* Saves a tag value if unique and not empty */
 	saveTag = () => {
 		//TODO: Error if submit without value
-		var tagVal = document.getElementById("tag-input").value;
+		const tagInput = document.getElementById("tag-input");
+		var tagVal = tagInput.value;
 		if (tagVal != "") {
 			const tagHash = this.stringHash(tagVal);
 
-			var uniqueString = !(tagHash in this.state.currentThought.tags);
-
+			var uniqueString = !this.state.currentThought.tags.has(tagHash);
 			if (uniqueString) {
+				tagInput.setCustomValidity('');
 				this.setState({
 					hasTagContent: false,
 					currentThought: update(this.state.currentThought, {tags: {$add: [[tagHash, tagVal]]}}),
 				});
+	 			document.getElementById("tag-input").value = "";
+			} else {
+				tagInput.setCustomValidity('This tag already exists for this thought!');
+				tagInput.reportValidity();
 			}
 			this.props.toggleSavedContent(true);
-	 		document.getElementById("tag-input").value = "";
+			if (this.props.mode != "home"){
+				this.updateThought();
+			}
 		}
 	}
 
@@ -306,6 +354,9 @@ class ThoughtCard extends Component {
 				currentThought: update(this.state.currentThought, {tags: {$remove: [key]}}),
 			});
 			this.props.toggleSavedContent(true);
+			if (this.props.mode != "home"){
+				this.updateThought();
+			}
 		}
 	}
 
@@ -320,6 +371,9 @@ class ThoughtCard extends Component {
 				}),
 		}, ()=>{
 			this.props.toggleSavedContent(true);
+			if (this.props.mode != "home"){
+				this.updateThought();
+			}
 		});
 	}
 
@@ -332,6 +386,9 @@ class ThoughtCard extends Component {
 		},
 		() => {
 				this.props.toggleSavedContent(true);
+				if (this.props.mode != "home"){
+					this.updateThought();
+				}
 		});
 	}
 
@@ -342,7 +399,7 @@ class ThoughtCard extends Component {
 			return <img className="thought-checkmark" src="/img/checkmark.svg"/>;
 		} else {
 			if (this.props.mode === "review") {
-				return <div className="thought-update pointer" onClick={this.updateThought}>Update Thought</div>;
+				return <div className="thought-update pointer" onClick={this.updateThought.bind(this, true)}>Update Thought</div>;
 			} else if (this.state.hasTypedInfo) {
 				return <div className="thought-update pointer" onClick={this.saveNewThought}>Finish Thought</div>;
 			} else {
@@ -351,46 +408,50 @@ class ThoughtCard extends Component {
 		}
 	}
 
-	updateThought = () => {
-		var component = this;
+	updateThought = (forceUpdate = false) => {
+		var currTime = new Date().getTime();
+		if (forceUpdate || ((this.state.reviewLastUpdated == null || currTime > this.state.reviewLastUpdated + 5000) && this.props.hasUnsavedContent)) {
+			var component = this;
 
-		const title = document.getElementById("thought-title-area").value;
-		const content = document.getElementById("thought-content-area").value;
-		component.setState({
-			currentlySaving: true,
-			currentThought: update(component.state.currentThought, 
-			{
-				title: {$set: title},
-				content: {$set: content}
-			})
-		}, function() {
-			updateThought(component.state.currentThought)
-				.then(function(editTimestamp) {
-					component.props.toggleSavedContent(false);
-					component.setState({
-						currentThought: update(component.state.currentThought, 
-						{
-							lastEditedTimestampMs: {$set: editTimestamp}
-						})
-					});
-				}, function(err) {
-					console.log(err);
+			const title = document.getElementById("thought-title-area").value;
+			const content = document.getElementById("thought-content-area").value;
+			component.setState({
+				currentlySaving: true,
+				currentThought: update(component.state.currentThought, 
+				{
+					title: {$set: title},
+					content: {$set: content}
 				})
-				.then(() => {
-					//TODO: Should take into account success or failure
-					component.setState({
-						currentlySaving: false,
-						saveSuccess: true
-					}, () => {
-						console.log("let it be");
-						setTimeout(() => {
-							component.setState({
-								saveSuccess: false
+			}, function() {
+				updateThought(component.state.currentThought)
+					.then(function(editTimestamp) {
+						component.props.toggleSavedContent(false);
+						component.setState({
+							reviewLastUpdated: currTime,
+							currentThought: update(component.state.currentThought, 
+							{
+								lastEditedTimestampMs: {$set: editTimestamp}
 							})
-						}, 1000);
+						});
+					}, function(err) {
+						console.log(err);
+					})
+					.then(() => {
+						//TODO: Should take into account success or failure
+						component.setState({
+							currentlySaving: false,
+							saveSuccess: true
+						}, () => {
+							console.log("let it be");
+							setTimeout(() => {
+								component.setState({
+									saveSuccess: false
+								})
+							}, 1000);
+						});
 					});
-				});
-		});
+			});
+		}
 	}
 
 	saveNewThought = () => {
@@ -567,7 +628,7 @@ class ThoughtCard extends Component {
 			  				<div className="thought-add-tags">
 			  					<img src="/img/tag.svg" className="thought-tag-icon"/>
 			  					<input type="text" className="thought-tag-input" placeholder="Add New Tag..." onChange={this.onTagUpdate} onKeyUp={this.onTagKeyUp} id="tag-input" maxLength="25"/>
-			  					{ this.state.hasTagContent ? <img src="/img/checkmark.svg" className="thought-checkmark" onClick={this.saveTag}/> : null}
+			  					{this.getTagCheckmarkOrCross()}
 			  				</div>
 			  				<CategoryComponent updateCategory={this.changeCategory} defaultCategory={this.state.currentThought.category}/>
 			  				{
