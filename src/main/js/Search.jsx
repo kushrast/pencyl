@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
+import { withRouter } from 'react-router-dom';
 
 class Search extends Component {
 	constructor(props) {
@@ -38,6 +39,7 @@ class Search extends Component {
 	onChange = (item, action) => {
 		if (action.action === "select-option") {
 			this.props.updateSearch(item.slice(-1)[0] , action);
+			this.props.history.push("/view");
 		} else if (action.action === "remove-value") {
 			this.props.updateSearch(action.removedValue, action);
 		}
@@ -123,4 +125,4 @@ const customStyles = {
   	);
   }
 }
-export default Search;
+export default withRouter(Search);

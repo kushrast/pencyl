@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.kushrastogi</groupId>
-	<artifactId>thoughtbank</artifactId>
+	<artifactId>pencyl</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>thoughtbank</name>
-	<description>Thought Bank Web Application</description>
+	<name>pencyl</name>
+	<description>Pencyl Web Application</description>
 
 	<properties>
 		<java.version>1.8</java.version>

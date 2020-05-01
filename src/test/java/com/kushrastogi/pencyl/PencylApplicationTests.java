@@ -1,10 +1,10 @@
-package com.kushrastogi.thoughtbank;
+package com.kushrastogi.pencyl;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ThoughtbankApplicationTests {
+class PencylApplicationTests {
 
 	@Test
 	void contextLoads() {

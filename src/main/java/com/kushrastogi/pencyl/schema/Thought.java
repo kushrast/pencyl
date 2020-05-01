@@ -1,4 +1,4 @@
-package com.kushrastogi.thoughtbank.schema;
+package com.kushrastogi.pencyl.schema;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

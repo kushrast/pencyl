@@ -1,10 +1,10 @@
 {
-  "name": "thoughtbank",
+  "name": "Pencyl",
   "version": "0.1.0",
   "description": "Web App that helps users catch their thoughts before they fly away",
   "repository": {
     "type": "git",
-    "url": "git@github.com:kushrast/thoughtbank.git"
+    "url": "git@github.com:kushrast/pencyl.git"
   },
   "keywords": [
     "rest",
@@ -15,7 +15,7 @@
   ],
   "author": "Kush Rastogi",
   "license": "Apache-2.0",
-  "homepage": "https://github.com/kushrast/thoughtbank",
+  "homepage": "https://github.com/kushrast/pencyl",
   "dependencies": {
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
@@ -27,7 +27,8 @@
     "uuid": "7.0.3",
     "animate.css": "3.7.2",
     "react-burger-menu": "2.6.13",
-    "react-tiny-popover": "4.0.0"
+    "react-tiny-popover": "4.0.0",
+    "react-router-dom": "5.1.2"
   },
   "scripts": {
     "watch": "webpack --watch -d"

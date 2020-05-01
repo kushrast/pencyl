@@ -35,14 +35,13 @@ class ThoughtCard extends Component {
 			currentlySaving: false,
 			saveSuccess: false,
 			showPopoverReplyId: "",
-			showSuggestReviewScreen: false,
 			reviewLastUpdated: null,
 		}
 	}
 
 	componentDidMount() {
 		this.props.toggleSavedContent(false);
-		if (this.props.mode === "review") {
+		if (this.props.location.pathname !== "/") {
 			this.loadThought();
 			setInterval(this.updateThought, 5000);
 		} else {
@@ -51,8 +50,14 @@ class ThoughtCard extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		if (this.props.mode === "review" && prevProps.thoughtId != this.props.thoughtId) {
+		if (this.props.location.pathname !== "/" && prevProps.thoughtId != this.props.thoughtId) {
 			this.loadThought();
+		}
+	}
+
+	componentWillUnmount() {
+		if (this.props.location.pathname !== "/") {
+			clearInterval(this.updateThought);
 		}
 	}
 
@@ -93,7 +98,7 @@ class ThoughtCard extends Component {
 		}
 
 		this.props.toggleSavedContent(true);
-		if (this.props.mode != "home"){
+		if (this.props.location.pathname !== "/"){
 			if (this.state.reviewLastUpdated == null)
 			this.updateThought();
 		}
@@ -114,7 +119,7 @@ class ThoughtCard extends Component {
 		}
 
 		this.props.toggleSavedContent(true);
-		if (this.props.mode != "home"){
+		if (this.props.location.pathname !== "/"){
 			this.updateThought();
 		}
 	}
@@ -249,7 +254,7 @@ class ThoughtCard extends Component {
 		});
 
 		this.props.toggleSavedContent(true);
-		if (this.props.mode != "home"){
+		if (this.props.location.pathname !== "/"){
 			this.updateThought();
 		}
 	}
@@ -267,7 +272,7 @@ class ThoughtCard extends Component {
 
 		this.clearReply();
 		this.props.toggleSavedContent(true);
-		if (this.props.mode != "home"){
+		if (this.props.location.pathname !== "/"){
 			this.updateThought();
 		}
 	}
@@ -275,7 +280,7 @@ class ThoughtCard extends Component {
 	getTags = () => {
 		var tagItems = [];
 
-		if (this.props.mode === "review") {
+		if (this.props.location.pathname !== "/") {
 			tagItems.push(
 				<div className="thought-tag-bubble" style={{background: "#E0E0E0"}}>
 	  			<span className="pointer" onClick={this.incrementPlusOnes}>+{this.state.currentThought.plusOnes}</span>
@@ -339,7 +344,7 @@ class ThoughtCard extends Component {
 				tagInput.reportValidity();
 			}
 			this.props.toggleSavedContent(true);
-			if (this.props.mode != "home"){
+			if (this.props.location.pathname !== "/"){
 				this.updateThought();
 			}
 		}
@@ -354,7 +359,7 @@ class ThoughtCard extends Component {
 				currentThought: update(this.state.currentThought, {tags: {$remove: [key]}}),
 			});
 			this.props.toggleSavedContent(true);
-			if (this.props.mode != "home"){
+			if (this.props.location.pathname !== "/"){
 				this.updateThought();
 			}
 		}
@@ -371,7 +376,7 @@ class ThoughtCard extends Component {
 				}),
 		}, ()=>{
 			this.props.toggleSavedContent(true);
-			if (this.props.mode != "home"){
+			if (this.props.location.pathname !== "/"){
 				this.updateThought();
 			}
 		});
@@ -386,7 +391,7 @@ class ThoughtCard extends Component {
 		},
 		() => {
 				this.props.toggleSavedContent(true);
-				if (this.props.mode != "home"){
+				if (this.props.location.pathname !== "/"){
 					this.updateThought();
 				}
 		});
@@ -398,7 +403,7 @@ class ThoughtCard extends Component {
 		} else if (this.state.saveSuccess) {
 			return <img className="thought-checkmark" src="/img/checkmark.svg"/>;
 		} else {
-			if (this.props.mode === "review") {
+			if (this.props.location.pathname !== "/") {
 				return <div className="thought-update pointer" onClick={this.updateThought.bind(this, true)}>Update Thought</div>;
 			} else if (this.state.hasTypedInfo) {
 				return <div className="thought-update pointer" onClick={this.saveNewThought}>Finish Thought</div>;
@@ -473,8 +478,7 @@ class ThoughtCard extends Component {
 						component.setState({
 							currentlySaving: false,
 							saveSuccess: false,
-							showSuggestReviewScreen: true
-						});
+						}, () => {component.props.showSuggestReviewScreen()});
 					} else {
 						//TODO: Should take into account success or failure
 						component.setState({
@@ -531,7 +535,7 @@ class ThoughtCard extends Component {
 	}
 
 	getClearOrDelete = () => {
-		if (this.props.mode === "home") {
+		if (this.props.location === "/") {
 			if (this.state.hasTypedInfo) {
 				return <div className="thought-delete-enabled pointer" onClick={this.clearThought}>Clear</div>;
 			} else {
@@ -580,31 +584,14 @@ class ThoughtCard extends Component {
 		document.getElementById("thought-content-area").focus();
 	}
 
-	denyReviewScreen = () => {
-		this.setState({
-			showSuggestReviewScreen: false,
-		});	
-	}
-
 	  render() {
 	  	return ( 
-	  		this.state.showSuggestReviewScreen ?
-				<div className="review-more-container">
-		  			<div className="review-more-text">
-		  				Would you like to review some old thoughts?
-		  			</div>
-		  			<div className="review-more-buttons">
-		  				<div className="nav-button" onClick={this.denyReviewScreen}>Not right now</div>
-		  				<div className="nav-button home-button" onClick={this.props.setPage.bind(this, "review")}> Sure, let's do it </div>
-		  			</div>
-		  		</div> 
-	  			:
 	  		<div className="thought-card-container" id="thought-container">
 		  		<div className="thought-card" id="thought-card">
 		  			<div className="thought-top-box">
 		  				<div className="thought-title-row">
 
-		  					{this.props.mode === "review" ? 
+		  					{this.props.location.pathname !== "/" ? 
 		  					<div className="thought-review-addons">
 		  						<div className="thought-created-at">Created at <span id="created-at-formatted">{prettyFormat(this.state.currentThought.creationTimestampMs)}</span></div>
 		  					</div> : null}
@@ -617,10 +604,10 @@ class ThoughtCard extends Component {
 		  			<div className="thought-content-box"><TextareaAutosize className="thought-content" placeholder="What's on your mind?" onChange={this.onContentUpdate} maxRows={15} id="thought-content-area" minrows={3}/></div>
 		  			<div className="thought-bottom-box">
 		  				<div className="thought-bottom-row">
-		  					<div className={this.props.mode === "review" ? "thought-tag-bubbles thought-tag-bubbles-limited" : "thought-tag-bubbles"}>
+		  					<div className={this.props.location.pathname !== "/" ? "thought-tag-bubbles thought-tag-bubbles-limited" : "thought-tag-bubbles"}>
 		  						{this.getTags()}
 		  					</div>
-		  					{this.props.mode === "review" ? 
+		  					{this.props.location.pathname !== "/" ? 
 		  						<div className="thought-edited-at"><div className="thought-edited-at-timestamp">Edited <span id="edited-at-formatted">{dateAwareFormat(this.state.currentThought.lastEditedTimestampMs)}</span></div></div>
 		  					 : null}
 		  				</div>
@@ -632,7 +619,7 @@ class ThoughtCard extends Component {
 			  				</div>
 			  				<CategoryComponent updateCategory={this.changeCategory} defaultCategory={this.state.currentThought.category}/>
 			  				{
-			  					this.props.mode === "review" && this.state.currentThought.category == 1 ?
+			  					this.props.location.pathname !== "/" && this.state.currentThought.category == 1 ?
 			  					<div className="thought-complete" onClick={this.toggleThoughtComplete}>
 			  						<div className={this.state.currentThought.completed ? "thought-checkmark-toggle thought-completed" : "thought-checkmark-toggle"}></div>
 			  					</div>
@@ -644,7 +631,7 @@ class ThoughtCard extends Component {
 		  				</div>
 		  			</div>
 		  		</div>
-		  		{this.props.mode === "review" ? 
+		  		{this.props.location.pathname !== "/" ? 
 		  			<div className="thought-replies">
 		  				{this.getReplies()}
 		  				<div className="thought-reply-box">

@@ -1,13 +1,13 @@
-package com.kushrastogi.thoughtbank;
+package com.kushrastogi.pencyl;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ThoughtbankApplication {
+public class PencylApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ThoughtbankApplication.class, args);
+		SpringApplication.run(PencylApplication.class, args);
 	}
 
 }

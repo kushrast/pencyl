@@ -1,6 +1,6 @@
-package com.kushrastogi.thoughtbank;
+package com.kushrastogi.pencyl;
 
-import com.kushrastogi.thoughtbank.schema.Thought;
+import com.kushrastogi.pencyl.schema.Thought;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

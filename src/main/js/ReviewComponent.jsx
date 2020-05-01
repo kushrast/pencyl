@@ -116,7 +116,7 @@ class ReviewComponent extends Component {
 	  				🎉  You reviewed {this.state.reviewIds.length} entries!  🎉
 	  			</div>
 	  			<div className="review-more-buttons">
-	  				<div className="nav-button home-button" onClick={this.props.setPage.bind(this, "home")}>Back to home </div>
+	  				<div className="nav-button home-button" onClick={()=>{this.props.history.push("/")}}>Back to home </div>
 	  				<div className="nav-button" onClick={this.loadMoreReviews}> Review More </div>
 	  			</div>
 	  		</div> 
@@ -127,7 +127,7 @@ class ReviewComponent extends Component {
 			  		<div className="nav-dots">
 			  			{this.getNavDots()}
 			  		</div>
-			  		<ThoughtCard mode={"review"} thoughtId={this.state.reviewIds[this.state.active-1]} toggleSavedContent={this.props.toggleSavedContent} hasUnsavedContent={this.props.hasUnsavedContent}/>
+			  		<ThoughtCard location={this.props.location} thoughtId={this.state.reviewIds[this.state.active-1]} toggleSavedContent={this.props.toggleSavedContent} hasUnsavedContent={this.props.hasUnsavedContent}/>
 			  		<div className="nav-buttons">
 			  			<div className="prev-button-container"><div className="nav-button prev-button nav-button-disabled" id="prevButton" onClick={this.switchActive.bind(this, this.state.active-1)}>Previous</div></div>
 			  			<div className="next-button-container"><div className="nav-button next-button nav-button-active" id="nextButton" onClick={this.switchActive.bind(this, this.state.active+1)}>
@@ -141,7 +141,7 @@ class ReviewComponent extends Component {
 	  				You have no thoughts to review
 	  			</div>
 	  			<div className="review-more-buttons">
-	  				<div className="nav-button" onClick={this.props.setPage.bind(this, "home")}>Make some thoughts</div>
+	  				<div className="nav-button" onClick={()=>{this.props.history.push("/")}}>Make some thoughts</div>
 	  			</div>
 	  		</div>
 		  }
