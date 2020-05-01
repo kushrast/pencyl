@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {slide as SlideMenu} from 'react-burger-menu';
+import { NavLink } from 'react-router-dom';
 
 class Menu extends Component {
 	constructor(props) {
@@ -19,8 +20,6 @@ class Menu extends Component {
 	changePage = (page) => {
 		this.setState({
 			isOpen: false,
-		}, () => {
-			this.props.setPage(page);
 		});
 	}
 
@@ -35,12 +34,12 @@ class Menu extends Component {
 	  		{/* <img className="menu-logo" src="/img/menu_logo.svg" alt="Menu Logo" /> */}
 	  		<SlideMenu customBurgerIcon={<img src="/img/burger_menu.svg"/>} menuClassName={"menu-overlay"} disableAutoFocus styles={styles} width={180} isOpen={this.state.isOpen} onStateChange={(state) => this.handleStateChange(state)}>
 	  			<div>
-	  				<div className="bm-burger-button-inverted" onClick={this.changePage.bind(this, "home")}/>
+	  				<div className="bm-burger-button-inverted"/>
 	  			</div>
-	  			<a className="list-item pointer" onClick={this.changePage.bind(this, "home")} ><div className="list-item-text"> Home </div></a>
-	  			<a className="list-item pointer" onClick={this.changePage.bind(this, "review")}><div className="list-item-text"> Review </div></a>
-	  			<a className="list-item pointer" onClick={this.changePage.bind(this, "all")}><div className="list-item-text"> All Entries </div></a>
-	  			<a className="list-item"><div className="list-item-text"> Logout </div></a>
+	  			<a className="list-item pointer"><NavLink className="list-item-text" to="/" onClick={this.changePage}> Home </NavLink></a>
+	  			<a className="list-item pointer"><NavLink className="list-item-text" to="/review" onClick={this.changePage}> Review </NavLink></a>
+	  			<a className="list-item pointer"><NavLink className="list-item-text" to="/view" onClick={this.changePage}> All Entries </NavLink></a>
+	  			{/*<a className="list-item"><div className="list-item-text"> Logout </div></a>*/}
 	  		</SlideMenu>
 	  	</div>
   	);

@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
 class Icon extends Component {
+//TODO: Will need prop types for WithRouter
 
 	getImageForPage = () => {
-		if (this.props.page == "home") {
+		if (this.props.location.pathname == "/") {
 			return "/img/pen.svg";
-		} else if (this.props.page == "review") {
+		} else if (this.props.location.pathname == "/review") {
 			return "/img/magnifying_glass.svg";
-		} else if (this.props.page == "all") {
+		} else if (this.props.location.pathname == "/view") {
 			return "/img/review_glasses.svg";
 		} else {
 			return "/img/pen.svg";
@@ -17,9 +19,9 @@ class Icon extends Component {
   render() {
   	return (
 	  	<div className="icon-container">
-	  		<img className="icon-image pointer" src={this.getImageForPage()} alt="Main Icon" onClick={this.props.togglePage}/>
+	  		<img className="icon-image pointer" src={this.getImageForPage()} alt="Main Icon" onClick={()=>{if (this.props.location != "/"){this.props.history.push("/")}}}/>
 	  	</div>
   	);
   }
 }
-export default Icon;
+export default withRouter(Icon);

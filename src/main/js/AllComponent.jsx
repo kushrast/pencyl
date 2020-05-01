@@ -19,6 +19,7 @@ class AllComponent extends Component {
 	componentDidMount() {
 		var component = this;
 		console.log(this.props.searchCriteria);
+		console.log(this.props.match.params);
 		searchThoughts(this.props.searchCriteria)
 		.then(
 			function(thoughts) {
@@ -34,6 +35,7 @@ class AllComponent extends Component {
 	componentDidUpdate(prevProps) {
 		var component = this;
 		if (prevProps.searchCriteria !== component.props.searchCriteria) {
+			console.log(this.props.match.params);
 			console.log("searching");
 			searchThoughts(component.props.searchCriteria)
 			.then(
@@ -86,7 +88,7 @@ class AllComponent extends Component {
 	  				{this.getMiniCards()}
 	  			</div>
 	  			:
-	  			<EntryViewComponent reviewIds={this.state.items} active={this.state.active} setActive={this.setActive} toggleSavedContent={this.props.toggleSavedContent} backToEntries={this.backToEntries}  hasUnsavedContent={this.props.hasUnsavedContent}/>
+	  			<EntryViewComponent location={this.props.location} reviewIds={this.state.items} active={this.state.active} setActive={this.setActive} toggleSavedContent={this.props.toggleSavedContent} backToEntries={this.backToEntries}  hasUnsavedContent={this.props.hasUnsavedContent}/>
 	  		}
 	  	</div>
   	);

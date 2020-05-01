@@ -15,4 +15,20 @@ public class HomeController {
     public String index() {
         return "index";
     }
+
+    /**
+     * Direct requests for reviews towards home page as well
+     */
+    @RequestMapping(value = "/review")
+    public String review() {
+        return "index";
+    }
+
+    /**
+     * Direct requests for view all page towards home page as well
+     */
+    @RequestMapping(value = "/view")
+    public String view() {
+        return "index";
+    }
 }
