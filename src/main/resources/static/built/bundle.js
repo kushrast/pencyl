@@ -59483,8 +59483,6 @@ var AllComponent = /*#__PURE__*/function (_Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       var component = this;
-      console.log(this.props.searchCriteria);
-      console.log(this.props.match.params);
       Object(_Storage_js__WEBPACK_IMPORTED_MODULE_4__["searchThoughts"])(this.props.searchCriteria).then(function (thoughts) {
         component.setState({
           items: thoughts,
@@ -59500,15 +59498,11 @@ var AllComponent = /*#__PURE__*/function (_Component) {
       var component = this;
 
       if (prevProps.searchCriteria !== component.props.searchCriteria) {
-        console.log(this.props.match.params);
-        console.log("searching");
         Object(_Storage_js__WEBPACK_IMPORTED_MODULE_4__["searchThoughts"])(component.props.searchCriteria).then(function (thoughts) {
           component.setState({
             items: thoughts,
             acive: 0
-          }, function () {
-            console.log(component.state.items);
-          });
+          }, function () {});
         }, function (err) {
           console.log(err);
         });
@@ -60845,7 +60839,7 @@ var Search = /*#__PURE__*/function (_Component) {
       if (action.action === "select-option") {
         _this.props.updateSearch(item.slice(-1)[0], action);
 
-        _this.props.history.push("/view?tag=namaha");
+        _this.props.history.push("/view");
       } else if (action.action === "remove-value") {
         _this.props.updateSearch(action.removedValue, action);
       }

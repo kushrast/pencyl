@@ -39,7 +39,7 @@ class Search extends Component {
 	onChange = (item, action) => {
 		if (action.action === "select-option") {
 			this.props.updateSearch(item.slice(-1)[0] , action);
-			this.props.history.push("/view?tag=namaha");
+			this.props.history.push("/view");
 		} else if (action.action === "remove-value") {
 			this.props.updateSearch(action.removedValue, action);
 		}

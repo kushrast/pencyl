@@ -18,8 +18,6 @@ class AllComponent extends Component {
 
 	componentDidMount() {
 		var component = this;
-		console.log(this.props.searchCriteria);
-		console.log(this.props.match.params);
 		searchThoughts(this.props.searchCriteria)
 		.then(
 			function(thoughts) {
@@ -35,15 +33,13 @@ class AllComponent extends Component {
 	componentDidUpdate(prevProps) {
 		var component = this;
 		if (prevProps.searchCriteria !== component.props.searchCriteria) {
-			console.log(this.props.match.params);
-			console.log("searching");
 			searchThoughts(component.props.searchCriteria)
 			.then(
 				function(thoughts) {
 					component.setState({
 						items: thoughts,
 						acive: 0
-					}, ()=>{console.log(component.state.items)});
+					}, ()=>{});
 				}, function(err) {
 					console.log(err);
 				});
