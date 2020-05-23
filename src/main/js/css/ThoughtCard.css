@@ -144,6 +144,14 @@
 	color: #8C8C8C
 }
 
+.thought-plus-one {
+	background: #FAFAFA
+}
+
+.thought-plus-one:hover {
+	background: #E0E0E0
+}
+
 .thought-tag-bubble-delete {
 	margin-left: 5px;
 	height: 12px;
@@ -201,13 +209,13 @@
 	font-size: 17px;
 	width: 150px;
 	border: none;
-	border-bottom: 1.5px solid #EDEDED;
+	border-bottom: 1px solid #EDEDED;
 }
 
 .thought-tag-input::placeholder {
 	color: #EDEDED;
 	border: none;
-	border-bottom: 1.5px solid #EDEDED;
+	border-bottom: 1px solid #EDEDED;
 }
 
 input:focus::placeholder { color: transparent; }
@@ -218,11 +226,11 @@ input:focus:-ms-input-placeholder { color:transparent; } /* IE 10+ */
 
 .thought-tag-input:focus {
 	outline: 0;
-	border-bottom: 1.5px solid #EDEDED;
+	border-bottom: 1px solid #EDEDED;
 }
 
 .thought-tag-input:hover {
-	border-bottom: 1.5px solid #EDEDED;
+	border-bottom: 1px solid #EDEDED;
 }
 
 .thought-update {

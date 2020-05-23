@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+
 import ThoughtCard from "./ThoughtCard.jsx";
 import "./css/home.css"
-import { withRouter } from 'react-router-dom';
 
 class HomeComponent extends Component {
 	constructor(props) {

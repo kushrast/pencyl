@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import CategoryComponent from './CategoryComponent.jsx';
 import TextareaAutosize from 'react-autosize-textarea';
-import DeleteModal from './DeleteModal.jsx';
-import update from 'immutability-helper';
 import Popover from 'react-tiny-popover'
-import {saveThought, getThought, updateThought} from "./Storage.js";
+import update from 'immutability-helper';
+
+import CategoryComponent from './CategoryComponent.jsx';
+import DeleteModal from './DeleteModal.jsx';
+import {saveThought, getThought, updateThought, deleteThought} from "./Storage.js";
 import {quickFormat, prettyFormat, dateAwareFormat} from "./TimeFormatUtils.js";
 import "animate.css";
 import "./css/ThoughtCard.css";
@@ -36,6 +37,7 @@ class ThoughtCard extends Component {
 			saveSuccess: false,
 			showPopoverReplyId: "",
 			reviewLastUpdated: null,
+			minRows: 3,
 		}
 	}
 
@@ -65,16 +67,19 @@ class ThoughtCard extends Component {
 		const component = this;
 		getThought(this.props.thoughtId).then(
 			function(thought) {
-				console.log(thought);
+				document.getElementById("thought-title-area").value = thought.title;
+				document.getElementById("thought-content-area").value = thought.content;
+
 				component.setState({
 					currentThought: thought,
 					hasTitle: thought.title != "",
 					hasContent: thought.content != "",
 					hasTagContent: false,
 					hasTypedInfo: true,
+					minRows: 4,
 				});
-				document.getElementById("thought-title-area").value = thought.title;
-				document.getElementById("thought-content-area").value = thought.content;
+
+				console.log(document.getElementById("thought-content-area").value);
 			}, function(err) {
 				console.log(err);
 			}
@@ -192,11 +197,14 @@ class ThoughtCard extends Component {
 
 	/* Converts hash of a tag value to a color for tag background */
 	getTagColor(tagHash) {
-		if (tagHash % 100 < 33) {	
+		if (tagHash % 100 < 25) {	
 			return {background: "#FFF48E"};
 		}
-		if (tagHash % 100 < 66) {
+		if (tagHash % 100 < 50) {
 			return {background: "#90DBAE"};
+		}
+		if (tagHash % 100 < 75) {
+			return {background: "#f5a798"};
 		}
 		return {background: "#B4D0FA"};
 	}
@@ -265,9 +273,6 @@ class ThoughtCard extends Component {
 		this.setState({
 			isDeletePopoverOpen: false,
 			currentThought: update(this.state.currentThought, {replies: {$add: [[currTimestamp,reply]]}}),
-		},
-		() => {
-			console.log(this.state.currentThought.replies);
 		});
 
 		this.clearReply();
@@ -282,7 +287,7 @@ class ThoughtCard extends Component {
 
 		if (this.props.location.pathname !== "/") {
 			tagItems.push(
-				<div className="thought-tag-bubble" style={{background: "#E0E0E0"}}>
+				<div className="thought-tag-bubble thought-plus-one">
 	  			<span className="pointer" onClick={this.incrementPlusOnes}>+{this.state.currentThought.plusOnes}</span>
 	  			{ this.state.currentThought.plusOnes > 0 ?
 		  			<img src="/img/crosshairs.svg" onClick={this.resetPlusOnes} className="thought-tag-bubble-delete pointer"/> : null
@@ -299,8 +304,11 @@ class ThoughtCard extends Component {
 	  	return tagItems;
 	}
 
-	checkTagValidity = () => {
-
+	clearTagContent = () => {
+		document.getElementById("tag-input").value = "";
+		this.setState({
+			hasTagContent: false
+		});
 	}
 
 	getTagCheckmarkOrCross = () => {
@@ -317,7 +325,7 @@ class ThoughtCard extends Component {
 					return <img src="/img/checkmark.svg" className="thought-checkmark" onClick={this.saveTag}/>;
 				}
 
-				return <img src="/img/red_cross.svg" className="thought-checkmark"/>;
+				return <img src="/img/red_cross.svg" className="thought-checkmark pointer" onClick={this.clearTagContent}/>;
 			}
 		}
 		return null;
@@ -333,17 +341,15 @@ class ThoughtCard extends Component {
 
 			var uniqueString = !this.state.currentThought.tags.has(tagHash);
 			if (uniqueString) {
+				this.props.toggleSavedContent(true);
 				tagInput.setCustomValidity('');
 				this.setState({
-					hasTagContent: false,
 					currentThought: update(this.state.currentThought, {tags: {$add: [[tagHash, tagVal]]}}),
-				});
-	 			document.getElementById("tag-input").value = "";
+				}, this.clearTagContent);
 			} else {
 				tagInput.setCustomValidity('This tag already exists for this thought!');
 				tagInput.reportValidity();
 			}
-			this.props.toggleSavedContent(true);
 			if (this.props.location.pathname !== "/"){
 				this.updateThought();
 			}
@@ -367,7 +373,6 @@ class ThoughtCard extends Component {
 
 	/* Changes the selected category */
 	changeCategory = (newCategory) => {
-		console.log(newCategory);
 		this.setState({
 			currentThought: update(this.state.currentThought, 
 				{
@@ -404,7 +409,11 @@ class ThoughtCard extends Component {
 			return <img className="thought-checkmark" src="/img/checkmark.svg"/>;
 		} else {
 			if (this.props.location.pathname !== "/") {
-				return <div className="thought-update pointer" onClick={this.updateThought.bind(this, true)}>Update Thought</div>;
+				if (this.props.hasUnsavedContent) {
+					return <div className="thought-update pointer" onClick={this.updateThought.bind(this, true)}>Update Thought</div>;
+				} else {
+					return <div className="thought-update-disabled pointer" onClick={this.updateThought.bind(this, true)}>Update Thought</div>;
+				}
 			} else if (this.state.hasTypedInfo) {
 				return <div className="thought-update pointer" onClick={this.saveNewThought}>Finish Thought</div>;
 			} else {
@@ -415,7 +424,9 @@ class ThoughtCard extends Component {
 
 	updateThought = (forceUpdate = false) => {
 		var currTime = new Date().getTime();
-		if (forceUpdate || ((this.state.reviewLastUpdated == null || currTime > this.state.reviewLastUpdated + 5000) && this.props.hasUnsavedContent)) {
+		if (forceUpdate || ((this.state.reviewLastUpdated == null || currTime > this.state.reviewLastUpdated + 5000) && this.props.hasUnsavedContent && !this.state.currentlySaving)) {
+			console.log(currTime);
+			console.log(this.state.reviewLastUpdated);
 			var component = this;
 
 			const title = document.getElementById("thought-title-area").value;
@@ -447,7 +458,6 @@ class ThoughtCard extends Component {
 							currentlySaving: false,
 							saveSuccess: true
 						}, () => {
-							console.log("let it be");
 							setTimeout(() => {
 								component.setState({
 									saveSuccess: false
@@ -535,7 +545,7 @@ class ThoughtCard extends Component {
 	}
 
 	getClearOrDelete = () => {
-		if (this.props.location === "/") {
+		if (this.props.location.pathname === "/" || this.props.location.pathname === "") {
 			if (this.state.hasTypedInfo) {
 				return <div className="thought-delete-enabled pointer" onClick={this.clearThought}>Clear</div>;
 			} else {
@@ -565,18 +575,29 @@ class ThoughtCard extends Component {
 
 	/* Deletes a saved thought */
 	deleteThought = () => {
-		this.props.toggleSavedContent(false);
-		this.resetThoughtData();
+		var component = this;
 		this.setState({
 			hasTitle: false,
 			hasContent: false,
 			hasTagContent: false,
 			hasTypedInfo: false,
+		}, () => {
+			deleteThought(this.state.currentThought.id)
+			.then(
+				function(result) {
+					component.props.toggleSavedContent(false);
+					component.resetThoughtData();
+					document.getElementById("tag-input").value = "";
+					document.getElementById("thought-title-area").value = "";
+					document.getElementById("thought-content-area").value = "";
+					component.setFocusToContent();
+					console.log(component.props);
+					component.props.history.push("/");
+				},
+				function(err) {
+					console.log(err);
+				});
 		});
-		document.getElementById("tag-input").value = "";
-		document.getElementById("thought-title-area").value = "";
-		document.getElementById("thought-content-area").value = "";
-		this.setFocusToContent();
 	}
 
 	/* Focuses content textarea for autotyping */
@@ -601,7 +622,7 @@ class ThoughtCard extends Component {
 		  				{this.getClearOrDelete()}
 		  				</div>
 		  			</div>
-		  			<div className="thought-content-box"><TextareaAutosize className="thought-content" placeholder="What's on your mind?" onChange={this.onContentUpdate} maxRows={15} id="thought-content-area" minrows={3}/></div>
+		  			<div className="thought-content-box"><TextareaAutosize className="thought-content" placeholder="What's on your mind?" onChange={this.onContentUpdate} minRows={this.state.minRows} maxRows={15} id="thought-content-area"/></div>
 		  			<div className="thought-bottom-box">
 		  				<div className="thought-bottom-row">
 		  					<div className={this.props.location.pathname !== "/" ? "thought-tag-bubbles thought-tag-bubbles-limited" : "thought-tag-bubbles"}>

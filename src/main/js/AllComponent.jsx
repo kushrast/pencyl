@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import {prettyFormat} from "./TimeFormatUtils.js";
+
 import EntryViewComponent from "./EntryViewComponent.jsx";
 import MiniCardComponent from "./MiniCardComponent.jsx";
+import {prettyFormat} from "./TimeFormatUtils.js";
 import {searchThoughts} from "./Storage.js";
 import "./css/listMiniCards.css";
 
@@ -43,6 +44,9 @@ class AllComponent extends Component {
 				}, function(err) {
 					console.log(err);
 				});
+			this.setState({
+				listView: true
+			});
 		}
 	}
 
@@ -80,11 +84,36 @@ class AllComponent extends Component {
   	return (
 	  	<div className="all-list-container">
 	  		{this.state.listView ? 
-	  			<div class="all-mini-cards">
-	  				{this.getMiniCards()}
-	  			</div>
+	  			<div>
+	  				{
+	  					this.state.items.length == 0 ?
+		  					<div className="show-text-container">
+			  					<div className="show-text">
+			  					{this.props.searchCriteria.size == 0 ? 
+			  						<div>
+				  						<span>You haven't stored any thoughts!</span>
+				  						<div className="show-more-buttons">
+							  				<div className="nav-button home-button" style={{marginRight:"0px"}} onClick={()=>{this.props.history.push("/")}}>Back to home </div>
+							  			</div>
+						  			</div>
+			  						:
+			  						<div>
+				  						<span>No thoughts found for query</span>
+				  						<div className="show-more-buttons">
+							  				<div className="nav-button home-button" style={{marginRight:"0px"}} onClick={()=>{this.props.history.push("/")}}>Back to home </div>
+							  			</div>
+						  			</div>
+						  			} 
+			  					</div>
+		  					</div>
+	  					:
+		  					<div class="all-mini-cards">
+					  			{this.getMiniCards()}
+					  		</div>
+	  				}
+  				</div>
 	  			:
-	  			<EntryViewComponent location={this.props.location} reviewIds={this.state.items} active={this.state.active} setActive={this.setActive} toggleSavedContent={this.props.toggleSavedContent} backToEntries={this.backToEntries}  hasUnsavedContent={this.props.hasUnsavedContent}/>
+	  			<EntryViewComponent history={this.props.history} location={this.props.location} reviewIds={this.state.items} active={this.state.active} setActive={this.setActive} toggleSavedContent={this.props.toggleSavedContent} backToEntries={this.backToEntries}  hasUnsavedContent={this.props.hasUnsavedContent}/>
 	  		}
 	  	</div>
   	);

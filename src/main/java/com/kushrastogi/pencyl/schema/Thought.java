@@ -3,6 +3,7 @@ package com.kushrastogi.pencyl.schema;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,20 +17,66 @@ public class Thought {
         ACTION_ITEM
     }
 
-    private @Id @GeneratedValue Long id;
+    private @Id
+    @GeneratedValue
+    Long id;
     private long user_id;
+
+    @Column(columnDefinition = "TEXT")
     private String title;
+
+    @Column(columnDefinition = "TEXT")
     private String content;
     private long creation_timestamp_ms;
 
+    @Embeddable
+    public static class Tag {
+        private String tag_key;
+        private String tag_content;
+
+        public Tag() {
+
+        }
+
+        public Tag(String tag_key, String tag_content) {
+            this.tag_key = tag_key;
+            this.tag_content = tag_content;
+        }
+
+        public String getTag_key() {
+            return tag_key;
+        }
+
+        public void setTag_key(String tag_key) {
+            this.tag_key = tag_key;
+        }
+
+        public String getTag_content() {
+            return tag_content;
+        }
+
+        public void setTag_content(String tag_content) {
+            this.tag_content = tag_content;
+        }
+    }
+
     @ElementCollection
-    private List<String> tags;
+    private List<Tag> tags = new ArrayList<>();
     private int category;
 
     @Embeddable
-    class Reply {
+    public static class Reply {
         private String reply_content;
         private long reply_timestamp_ms;
+
+        public Reply() {
+
+        }
+
+        public Reply(String reply_content, long reply_timestamp_ms) {
+            this.reply_content = reply_content;
+            this.reply_timestamp_ms = reply_timestamp_ms;
+        }
 
         public String getReply_content() {
             return reply_content;
@@ -49,11 +96,11 @@ public class Thought {
     }
 
     @ElementCollection
-    private List<Reply> replies;
-    private int stars;
+    private List<Reply> replies = new ArrayList<>();
+    private int plusOnes;
     private long last_edited_timestamp_ms;
     private long last_reviewed_timestamp_ms;
-    private boolean deleted;
+    private boolean completed;
 
     private @Version
     @JsonIgnore
@@ -62,11 +109,18 @@ public class Thought {
     public Thought() {
     }
 
-    public Thought(String title, String content, long creation_timestamp_ms, int category) {
+    public Thought(long userId, String title, String content, long creation_timestamp_ms, List<Tag> tags, int category, List<Reply> replies, int plusOnes) {
+        this.user_id = userId;
         this.title = title;
         this.content = content;
         this.creation_timestamp_ms = creation_timestamp_ms;
+        this.tags = tags;
         this.category = category;
+        this.replies = replies;
+        this.plusOnes = plusOnes;
+        this.completed = false;
+        this.last_edited_timestamp_ms = creation_timestamp_ms;
+        this.last_reviewed_timestamp_ms = creation_timestamp_ms;
     }
 
     public Long getId() {
@@ -105,15 +159,15 @@ public class Thought {
         return creation_timestamp_ms;
     }
 
-    public void setCreation_timestamp_ms(int creation_timestamp_ms) {
+    public void setCreation_timestamp_ms(long creation_timestamp_ms) {
         this.creation_timestamp_ms = creation_timestamp_ms;
     }
 
-    public List<String> getTags() {
+    public List<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(List<String> tags) {
+    public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
 
@@ -133,19 +187,19 @@ public class Thought {
         this.replies = replies;
     }
 
-    public int getStars() {
-        return stars;
+    public int getPlusOnes() {
+        return plusOnes;
     }
 
-    public void setStars(int stars) {
-        this.stars = stars;
+    public void setPlusOnes(int plusOnes) {
+        this.plusOnes = plusOnes;
     }
 
     public long getLast_edited_timestamp_ms() {
         return last_edited_timestamp_ms;
     }
 
-    public void setLast_edited_timestamp_ms(int last_edited_timestamp_ms) {
+    public void setLast_edited_timestamp_ms(long last_edited_timestamp_ms) {
         this.last_edited_timestamp_ms = last_edited_timestamp_ms;
     }
 
@@ -153,16 +207,16 @@ public class Thought {
         return last_reviewed_timestamp_ms;
     }
 
-    public void setLast_reviewed_timestamp_ms(int last_reviewed_timestamp_ms) {
+    public void setLast_reviewed_timestamp_ms(long last_reviewed_timestamp_ms) {
         this.last_reviewed_timestamp_ms = last_reviewed_timestamp_ms;
     }
 
-    public boolean isDeleted() {
-        return deleted;
+    public boolean isCompleted() {
+        return completed;
     }
 
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 
     public Long getVersion() {
@@ -181,10 +235,10 @@ public class Thought {
         return user_id == thought.user_id &&
                 creation_timestamp_ms == thought.creation_timestamp_ms &&
                 category == thought.category &&
-                stars == thought.stars &&
+                plusOnes == thought.plusOnes &&
                 last_edited_timestamp_ms == thought.last_edited_timestamp_ms &&
                 last_reviewed_timestamp_ms == thought.last_reviewed_timestamp_ms &&
-                deleted == thought.deleted &&
+                completed == thought.completed &&
                 id.equals(thought.id) &&
                 Objects.equals(title, thought.title) &&
                 Objects.equals(content, thought.content) &&
@@ -194,7 +248,35 @@ public class Thought {
     }
 
     @Override
+    public String toString() {
+        return "Thought{" +
+                "id=" + id +
+                ", user_id=" + user_id +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", creation_timestamp_ms=" + creation_timestamp_ms +
+                ", tags=" + tags +
+                ", category=" + category +
+                ", replies=" + replies +
+                ", plusOnes=" + plusOnes +
+                ", last_edited_timestamp_ms=" + last_edited_timestamp_ms +
+                ", last_reviewed_timestamp_ms=" + last_reviewed_timestamp_ms +
+                ", completed=" + completed +
+                ", version=" + version +
+                '}';
+    }
+
+    public void updateFrom(Thought updated) {
+        setTitle(updated.title);
+        setContent(updated.content);
+        setTags(updated.tags);
+        setCategory(updated.category);
+        setReplies(updated.replies);
+        setPlusOnes(updated.plusOnes);
+    }
+
+    @Override
     public int hashCode() {
-        return Objects.hash(id, user_id, title, content, creation_timestamp_ms, tags, category, replies, stars, last_edited_timestamp_ms, last_reviewed_timestamp_ms, deleted, version);
+        return Objects.hash(id, user_id, title, content, creation_timestamp_ms, tags, category, replies, plusOnes, last_edited_timestamp_ms, last_reviewed_timestamp_ms, completed, version);
     }
 }

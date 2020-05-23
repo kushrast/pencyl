@@ -32,7 +32,7 @@ class Menu extends Component {
   	return (
 	  	<div className="menu-container">
 	  		{/* <img className="menu-logo" src="/img/menu_logo.svg" alt="Menu Logo" /> */}
-	  		<SlideMenu customBurgerIcon={<img src="/img/burger_menu.svg"/>} menuClassName={"menu-overlay"} disableAutoFocus styles={styles} width={180} isOpen={this.state.isOpen} onStateChange={(state) => this.handleStateChange(state)}>
+	  		<SlideMenu customBurgerIcon={<img src="/img/burger_menu.svg"/>} menuClassName={"menu-overlay"} disableAutoFocus styles={styles} width={300} isOpen={this.state.isOpen} onStateChange={(state) => this.handleStateChange(state)}>
 	  			<div>
 	  				<div className="bm-burger-button-inverted"/>
 	  			</div>

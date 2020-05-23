@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import ThoughtCard from "./ThoughtCard.jsx";
 import {getThoughtsToReview, finishReviewingThoughts} from "./Storage.js";
 import "./css/review.css";
@@ -111,11 +112,11 @@ class ReviewComponent extends Component {
   	return (
 	  	<div className="review-container">
 	  	{ this.state.showReviewMoreScreen ? 
-	  		<div className="review-more-container">
-	  			<div className="review-more-text">
+	  		<div className="show-text-container">
+	  			<div className="show-text">
 	  				🎉  You reviewed {this.state.reviewIds.length} entries!  🎉
 	  			</div>
-	  			<div className="review-more-buttons">
+	  			<div className="show-more-buttons">
 	  				<div className="nav-button home-button" onClick={()=>{this.props.history.push("/")}}>Back to home </div>
 	  				<div className="nav-button" onClick={this.loadMoreReviews}> Review More </div>
 	  			</div>
@@ -127,7 +128,7 @@ class ReviewComponent extends Component {
 			  		<div className="nav-dots">
 			  			{this.getNavDots()}
 			  		</div>
-			  		<ThoughtCard location={this.props.location} thoughtId={this.state.reviewIds[this.state.active-1]} toggleSavedContent={this.props.toggleSavedContent} hasUnsavedContent={this.props.hasUnsavedContent}/>
+			  		<ThoughtCard history={this.props.history} location={this.props.location} thoughtId={this.state.reviewIds[this.state.active-1]} toggleSavedContent={this.props.toggleSavedContent} hasUnsavedContent={this.props.hasUnsavedContent}/>
 			  		<div className="nav-buttons">
 			  			<div className="prev-button-container"><div className="nav-button prev-button nav-button-disabled" id="prevButton" onClick={this.switchActive.bind(this, this.state.active-1)}>Previous</div></div>
 			  			<div className="next-button-container"><div className="nav-button next-button nav-button-active" id="nextButton" onClick={this.switchActive.bind(this, this.state.active+1)}>
