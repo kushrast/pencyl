@@ -86,38 +86,6 @@
 	margin-left: 4px;
 }
 
-.review-more-container {
-  margin-top: 150px;
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.review-more-text {
-	width: 100%;
-	text-align: center;
-	font-family: Roboto;
-	font-weight: 400;
-	font-size: 35px;
-
-	color: #FF8E8E;
-}
-
-.review-more-buttons {
-	margin-top: 20px;
-	width: 400px;
-	display: flex;
-
-	justify-content: center;
-
-	font-family: Roboto;
-	font-weight: 400;
-	font-size: 15px;
-
-	color: #858585;
-}
-
 .home-button {
 	margin-right: 8px;
 	color: #FF8E8E;

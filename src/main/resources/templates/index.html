@@ -4,11 +4,17 @@
     <meta charset="UTF-8"/>
     <title>Pencyl</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://apis.google.com/js/api:client.js"></script>
 </head>
 <body>
 
 <div id="app"></div>
 
+<script>
+    var userId = "[[${userId}]]";
+    var userEmail = "[[${userEmail}]]";
+    var GCS_CLIENT_ID = "[[${GCS_CLIENT_ID}]]";
+</script>
 <script src="built/bundle.js"></script>
 
 </body>

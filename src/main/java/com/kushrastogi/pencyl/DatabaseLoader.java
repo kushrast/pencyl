@@ -1,11 +1,8 @@
 package com.kushrastogi.pencyl;
 
-import com.kushrastogi.pencyl.schema.Thought;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
-import java.util.Date;
 
 /**
  * Loads database
@@ -13,18 +10,18 @@ import java.util.Date;
 @Component
 public class DatabaseLoader implements CommandLineRunner {
 
-    private final ThoughtRepository repository;
+    private final ThoughtRepository thoughtRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public DatabaseLoader(ThoughtRepository repository) {
-        this.repository = repository;
+    public DatabaseLoader(
+            ThoughtRepository thoughtRepository,
+            UserRepository userRepository) {
+        this.thoughtRepository = thoughtRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
     public void run(String... strings) throws Exception {
-        final long currentTime = new Date().getTime();
-        this.repository.save(
-                new Thought("Big thought", "Big content", currentTime, 0)
-        );
     }
 }

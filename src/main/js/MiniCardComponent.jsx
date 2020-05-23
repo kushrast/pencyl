@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import {prettyFormat} from "./TimeFormatUtils.js";
 import {getThought} from "./Storage.js";
 import "./css/listMiniCards.css";
@@ -35,7 +36,7 @@ class MiniCardComponent extends Component {
 			function(thought) {
 				component.setState({
 					currentThought: thought,
-				},()=>{console.log(component.state.currentThought)})
+				})
 			}, function(err) {
 				console.log(err);
 			}

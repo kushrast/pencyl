@@ -2514,6 +2514,1819 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
+/***/ "./node_modules/axios/index.js":
+/*!*************************************!*\
+  !*** ./node_modules/axios/index.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! ./lib/axios */ "./node_modules/axios/lib/axios.js");
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/adapters/xhr.js":
+/*!************************************************!*\
+  !*** ./node_modules/axios/lib/adapters/xhr.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
+var settle = __webpack_require__(/*! ./../core/settle */ "./node_modules/axios/lib/core/settle.js");
+var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ "./node_modules/axios/lib/helpers/buildURL.js");
+var buildFullPath = __webpack_require__(/*! ../core/buildFullPath */ "./node_modules/axios/lib/core/buildFullPath.js");
+var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ "./node_modules/axios/lib/helpers/parseHeaders.js");
+var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ "./node_modules/axios/lib/helpers/isURLSameOrigin.js");
+var createError = __webpack_require__(/*! ../core/createError */ "./node_modules/axios/lib/core/createError.js");
+
+module.exports = function xhrAdapter(config) {
+  return new Promise(function dispatchXhrRequest(resolve, reject) {
+    var requestData = config.data;
+    var requestHeaders = config.headers;
+
+    if (utils.isFormData(requestData)) {
+      delete requestHeaders['Content-Type']; // Let the browser set it
+    }
+
+    var request = new XMLHttpRequest();
+
+    // HTTP basic authentication
+    if (config.auth) {
+      var username = config.auth.username || '';
+      var password = config.auth.password || '';
+      requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
+    }
+
+    var fullPath = buildFullPath(config.baseURL, config.url);
+    request.open(config.method.toUpperCase(), buildURL(fullPath, config.params, config.paramsSerializer), true);
+
+    // Set the request timeout in MS
+    request.timeout = config.timeout;
+
+    // Listen for ready state
+    request.onreadystatechange = function handleLoad() {
+      if (!request || request.readyState !== 4) {
+        return;
+      }
+
+      // The request errored out and we didn't get a response, this will be
+      // handled by onerror instead
+      // With one exception: request that using file: protocol, most browsers
+      // will return status as 0 even though it's a successful request
+      if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf('file:') === 0)) {
+        return;
+      }
+
+      // Prepare the response
+      var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
+      var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
+      var response = {
+        data: responseData,
+        status: request.status,
+        statusText: request.statusText,
+        headers: responseHeaders,
+        config: config,
+        request: request
+      };
+
+      settle(resolve, reject, response);
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle browser request cancellation (as opposed to a manual cancellation)
+    request.onabort = function handleAbort() {
+      if (!request) {
+        return;
+      }
+
+      reject(createError('Request aborted', config, 'ECONNABORTED', request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle low level network errors
+    request.onerror = function handleError() {
+      // Real errors are hidden from us by the browser
+      // onerror should only fire if it's a network error
+      reject(createError('Network Error', config, null, request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle timeout
+    request.ontimeout = function handleTimeout() {
+      var timeoutErrorMessage = 'timeout of ' + config.timeout + 'ms exceeded';
+      if (config.timeoutErrorMessage) {
+        timeoutErrorMessage = config.timeoutErrorMessage;
+      }
+      reject(createError(timeoutErrorMessage, config, 'ECONNABORTED',
+        request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Add xsrf header
+    // This is only done if running in a standard browser environment.
+    // Specifically not if we're in a web worker, or react-native.
+    if (utils.isStandardBrowserEnv()) {
+      var cookies = __webpack_require__(/*! ./../helpers/cookies */ "./node_modules/axios/lib/helpers/cookies.js");
+
+      // Add xsrf header
+      var xsrfValue = (config.withCredentials || isURLSameOrigin(fullPath)) && config.xsrfCookieName ?
+        cookies.read(config.xsrfCookieName) :
+        undefined;
+
+      if (xsrfValue) {
+        requestHeaders[config.xsrfHeaderName] = xsrfValue;
+      }
+    }
+
+    // Add headers to the request
+    if ('setRequestHeader' in request) {
+      utils.forEach(requestHeaders, function setRequestHeader(val, key) {
+        if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') {
+          // Remove Content-Type if data is undefined
+          delete requestHeaders[key];
+        } else {
+          // Otherwise add header to the request
+          request.setRequestHeader(key, val);
+        }
+      });
+    }
+
+    // Add withCredentials to request if needed
+    if (!utils.isUndefined(config.withCredentials)) {
+      request.withCredentials = !!config.withCredentials;
+    }
+
+    // Add responseType to request if needed
+    if (config.responseType) {
+      try {
+        request.responseType = config.responseType;
+      } catch (e) {
+        // Expected DOMException thrown by browsers not compatible XMLHttpRequest Level 2.
+        // But, this can be suppressed for 'json' type as it can be parsed by default 'transformResponse' function.
+        if (config.responseType !== 'json') {
+          throw e;
+        }
+      }
+    }
+
+    // Handle progress if needed
+    if (typeof config.onDownloadProgress === 'function') {
+      request.addEventListener('progress', config.onDownloadProgress);
+    }
+
+    // Not all browsers support upload events
+    if (typeof config.onUploadProgress === 'function' && request.upload) {
+      request.upload.addEventListener('progress', config.onUploadProgress);
+    }
+
+    if (config.cancelToken) {
+      // Handle cancellation
+      config.cancelToken.promise.then(function onCanceled(cancel) {
+        if (!request) {
+          return;
+        }
+
+        request.abort();
+        reject(cancel);
+        // Clean up request
+        request = null;
+      });
+    }
+
+    if (requestData === undefined) {
+      requestData = null;
+    }
+
+    // Send the request
+    request.send(requestData);
+  });
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/axios.js":
+/*!*****************************************!*\
+  !*** ./node_modules/axios/lib/axios.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./utils */ "./node_modules/axios/lib/utils.js");
+var bind = __webpack_require__(/*! ./helpers/bind */ "./node_modules/axios/lib/helpers/bind.js");
+var Axios = __webpack_require__(/*! ./core/Axios */ "./node_modules/axios/lib/core/Axios.js");
+var mergeConfig = __webpack_require__(/*! ./core/mergeConfig */ "./node_modules/axios/lib/core/mergeConfig.js");
+var defaults = __webpack_require__(/*! ./defaults */ "./node_modules/axios/lib/defaults.js");
+
+/**
+ * Create an instance of Axios
+ *
+ * @param {Object} defaultConfig The default config for the instance
+ * @return {Axios} A new instance of Axios
+ */
+function createInstance(defaultConfig) {
+  var context = new Axios(defaultConfig);
+  var instance = bind(Axios.prototype.request, context);
+
+  // Copy axios.prototype to instance
+  utils.extend(instance, Axios.prototype, context);
+
+  // Copy context to instance
+  utils.extend(instance, context);
+
+  return instance;
+}
+
+// Create the default instance to be exported
+var axios = createInstance(defaults);
+
+// Expose Axios class to allow class inheritance
+axios.Axios = Axios;
+
+// Factory for creating new instances
+axios.create = function create(instanceConfig) {
+  return createInstance(mergeConfig(axios.defaults, instanceConfig));
+};
+
+// Expose Cancel & CancelToken
+axios.Cancel = __webpack_require__(/*! ./cancel/Cancel */ "./node_modules/axios/lib/cancel/Cancel.js");
+axios.CancelToken = __webpack_require__(/*! ./cancel/CancelToken */ "./node_modules/axios/lib/cancel/CancelToken.js");
+axios.isCancel = __webpack_require__(/*! ./cancel/isCancel */ "./node_modules/axios/lib/cancel/isCancel.js");
+
+// Expose all/spread
+axios.all = function all(promises) {
+  return Promise.all(promises);
+};
+axios.spread = __webpack_require__(/*! ./helpers/spread */ "./node_modules/axios/lib/helpers/spread.js");
+
+module.exports = axios;
+
+// Allow use of default import syntax in TypeScript
+module.exports.default = axios;
+
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/cancel/Cancel.js":
+/*!*************************************************!*\
+  !*** ./node_modules/axios/lib/cancel/Cancel.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * A `Cancel` is an object that is thrown when an operation is canceled.
+ *
+ * @class
+ * @param {string=} message The message.
+ */
+function Cancel(message) {
+  this.message = message;
+}
+
+Cancel.prototype.toString = function toString() {
+  return 'Cancel' + (this.message ? ': ' + this.message : '');
+};
+
+Cancel.prototype.__CANCEL__ = true;
+
+module.exports = Cancel;
+
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/cancel/CancelToken.js":
+/*!******************************************************!*\
+  !*** ./node_modules/axios/lib/cancel/CancelToken.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var Cancel = __webpack_require__(/*! ./Cancel */ "./node_modules/axios/lib/cancel/Cancel.js");
+
+/**
+ * A `CancelToken` is an object that can be used to request cancellation of an operation.
+ *
+ * @class
+ * @param {Function} executor The executor function.
+ */
+function CancelToken(executor) {
+  if (typeof executor !== 'function') {
+    throw new TypeError('executor must be a function.');
+  }
+
+  var resolvePromise;
+  this.promise = new Promise(function promiseExecutor(resolve) {
+    resolvePromise = resolve;
+  });
+
+  var token = this;
+  executor(function cancel(message) {
+    if (token.reason) {
+      // Cancellation has already been requested
+      return;
+    }
+
+    token.reason = new Cancel(message);
+    resolvePromise(token.reason);
+  });
+}
+
+/**
+ * Throws a `Cancel` if cancellation has been requested.
+ */
+CancelToken.prototype.throwIfRequested = function throwIfRequested() {
+  if (this.reason) {
+    throw this.reason;
+  }
+};
+
+/**
+ * Returns an object that contains a new `CancelToken` and a function that, when called,
+ * cancels the `CancelToken`.
+ */
+CancelToken.source = function source() {
+  var cancel;
+  var token = new CancelToken(function executor(c) {
+    cancel = c;
+  });
+  return {
+    token: token,
+    cancel: cancel
+  };
+};
+
+module.exports = CancelToken;
+
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/cancel/isCancel.js":
+/*!***************************************************!*\
+  !*** ./node_modules/axios/lib/cancel/isCancel.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function isCancel(value) {
+  return !!(value && value.__CANCEL__);
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/core/Axios.js":
+/*!**********************************************!*\
+  !*** ./node_modules/axios/lib/core/Axios.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
+var buildURL = __webpack_require__(/*! ../helpers/buildURL */ "./node_modules/axios/lib/helpers/buildURL.js");
+var InterceptorManager = __webpack_require__(/*! ./InterceptorManager */ "./node_modules/axios/lib/core/InterceptorManager.js");
+var dispatchRequest = __webpack_require__(/*! ./dispatchRequest */ "./node_modules/axios/lib/core/dispatchRequest.js");
+var mergeConfig = __webpack_require__(/*! ./mergeConfig */ "./node_modules/axios/lib/core/mergeConfig.js");
+
+/**
+ * Create a new instance of Axios
+ *
+ * @param {Object} instanceConfig The default config for the instance
+ */
+function Axios(instanceConfig) {
+  this.defaults = instanceConfig;
+  this.interceptors = {
+    request: new InterceptorManager(),
+    response: new InterceptorManager()
+  };
+}
+
+/**
+ * Dispatch a request
+ *
+ * @param {Object} config The config specific for this request (merged with this.defaults)
+ */
+Axios.prototype.request = function request(config) {
+  /*eslint no-param-reassign:0*/
+  // Allow for axios('example/url'[, config]) a la fetch API
+  if (typeof config === 'string') {
+    config = arguments[1] || {};
+    config.url = arguments[0];
+  } else {
+    config = config || {};
+  }
+
+  config = mergeConfig(this.defaults, config);
+
+  // Set config.method
+  if (config.method) {
+    config.method = config.method.toLowerCase();
+  } else if (this.defaults.method) {
+    config.method = this.defaults.method.toLowerCase();
+  } else {
+    config.method = 'get';
+  }
+
+  // Hook up interceptors middleware
+  var chain = [dispatchRequest, undefined];
+  var promise = Promise.resolve(config);
+
+  this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {
+    chain.unshift(interceptor.fulfilled, interceptor.rejected);
+  });
+
+  this.interceptors.response.forEach(function pushResponseInterceptors(interceptor) {
+    chain.push(interceptor.fulfilled, interceptor.rejected);
+  });
+
+  while (chain.length) {
+    promise = promise.then(chain.shift(), chain.shift());
+  }
+
+  return promise;
+};
+
+Axios.prototype.getUri = function getUri(config) {
+  config = mergeConfig(this.defaults, config);
+  return buildURL(config.url, config.params, config.paramsSerializer).replace(/^\?/, '');
+};
+
+// Provide aliases for supported request methods
+utils.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData(method) {
+  /*eslint func-names:0*/
+  Axios.prototype[method] = function(url, config) {
+    return this.request(utils.merge(config || {}, {
+      method: method,
+      url: url
+    }));
+  };
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  /*eslint func-names:0*/
+  Axios.prototype[method] = function(url, data, config) {
+    return this.request(utils.merge(config || {}, {
+      method: method,
+      url: url,
+      data: data
+    }));
+  };
+});
+
+module.exports = Axios;
+
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/core/InterceptorManager.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/axios/lib/core/InterceptorManager.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
+
+function InterceptorManager() {
+  this.handlers = [];
+}
+
+/**
+ * Add a new interceptor to the stack
+ *
+ * @param {Function} fulfilled The function to handle `then` for a `Promise`
+ * @param {Function} rejected The function to handle `reject` for a `Promise`
+ *
+ * @return {Number} An ID used to remove interceptor later
+ */
+InterceptorManager.prototype.use = function use(fulfilled, rejected) {
+  this.handlers.push({
+    fulfilled: fulfilled,
+    rejected: rejected
+  });
+  return this.handlers.length - 1;
+};
+
+/**
+ * Remove an interceptor from the stack
+ *
+ * @param {Number} id The ID that was returned by `use`
+ */
+InterceptorManager.prototype.eject = function eject(id) {
+  if (this.handlers[id]) {
+    this.handlers[id] = null;
+  }
+};
+
+/**
+ * Iterate over all the registered interceptors
+ *
+ * This method is particularly useful for skipping over any
+ * interceptors that may have become `null` calling `eject`.
+ *
+ * @param {Function} fn The function to call for each interceptor
+ */
+InterceptorManager.prototype.forEach = function forEach(fn) {
+  utils.forEach(this.handlers, function forEachHandler(h) {
+    if (h !== null) {
+      fn(h);
+    }
+  });
+};
+
+module.exports = InterceptorManager;
+
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/core/buildFullPath.js":
+/*!******************************************************!*\
+  !*** ./node_modules/axios/lib/core/buildFullPath.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var isAbsoluteURL = __webpack_require__(/*! ../helpers/isAbsoluteURL */ "./node_modules/axios/lib/helpers/isAbsoluteURL.js");
+var combineURLs = __webpack_require__(/*! ../helpers/combineURLs */ "./node_modules/axios/lib/helpers/combineURLs.js");
+
+/**
+ * Creates a new URL by combining the baseURL with the requestedURL,
+ * only when the requestedURL is not already an absolute URL.
+ * If the requestURL is absolute, this function returns the requestedURL untouched.
+ *
+ * @param {string} baseURL The base URL
+ * @param {string} requestedURL Absolute or relative URL to combine
+ * @returns {string} The combined full path
+ */
+module.exports = function buildFullPath(baseURL, requestedURL) {
+  if (baseURL && !isAbsoluteURL(requestedURL)) {
+    return combineURLs(baseURL, requestedURL);
+  }
+  return requestedURL;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/core/createError.js":
+/*!****************************************************!*\
+  !*** ./node_modules/axios/lib/core/createError.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var enhanceError = __webpack_require__(/*! ./enhanceError */ "./node_modules/axios/lib/core/enhanceError.js");
+
+/**
+ * Create an Error with the specified message, config, error code, request and response.
+ *
+ * @param {string} message The error message.
+ * @param {Object} config The config.
+ * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ * @param {Object} [request] The request.
+ * @param {Object} [response] The response.
+ * @returns {Error} The created error.
+ */
+module.exports = function createError(message, config, code, request, response) {
+  var error = new Error(message);
+  return enhanceError(error, config, code, request, response);
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/core/dispatchRequest.js":
+/*!********************************************************!*\
+  !*** ./node_modules/axios/lib/core/dispatchRequest.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
+var transformData = __webpack_require__(/*! ./transformData */ "./node_modules/axios/lib/core/transformData.js");
+var isCancel = __webpack_require__(/*! ../cancel/isCancel */ "./node_modules/axios/lib/cancel/isCancel.js");
+var defaults = __webpack_require__(/*! ../defaults */ "./node_modules/axios/lib/defaults.js");
+
+/**
+ * Throws a `Cancel` if cancellation has been requested.
+ */
+function throwIfCancellationRequested(config) {
+  if (config.cancelToken) {
+    config.cancelToken.throwIfRequested();
+  }
+}
+
+/**
+ * Dispatch a request to the server using the configured adapter.
+ *
+ * @param {object} config The config that is to be used for the request
+ * @returns {Promise} The Promise to be fulfilled
+ */
+module.exports = function dispatchRequest(config) {
+  throwIfCancellationRequested(config);
+
+  // Ensure headers exist
+  config.headers = config.headers || {};
+
+  // Transform request data
+  config.data = transformData(
+    config.data,
+    config.headers,
+    config.transformRequest
+  );
+
+  // Flatten headers
+  config.headers = utils.merge(
+    config.headers.common || {},
+    config.headers[config.method] || {},
+    config.headers
+  );
+
+  utils.forEach(
+    ['delete', 'get', 'head', 'post', 'put', 'patch', 'common'],
+    function cleanHeaderConfig(method) {
+      delete config.headers[method];
+    }
+  );
+
+  var adapter = config.adapter || defaults.adapter;
+
+  return adapter(config).then(function onAdapterResolution(response) {
+    throwIfCancellationRequested(config);
+
+    // Transform response data
+    response.data = transformData(
+      response.data,
+      response.headers,
+      config.transformResponse
+    );
+
+    return response;
+  }, function onAdapterRejection(reason) {
+    if (!isCancel(reason)) {
+      throwIfCancellationRequested(config);
+
+      // Transform response data
+      if (reason && reason.response) {
+        reason.response.data = transformData(
+          reason.response.data,
+          reason.response.headers,
+          config.transformResponse
+        );
+      }
+    }
+
+    return Promise.reject(reason);
+  });
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/core/enhanceError.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/axios/lib/core/enhanceError.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Update an Error with the specified config, error code, and response.
+ *
+ * @param {Error} error The error to update.
+ * @param {Object} config The config.
+ * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ * @param {Object} [request] The request.
+ * @param {Object} [response] The response.
+ * @returns {Error} The error.
+ */
+module.exports = function enhanceError(error, config, code, request, response) {
+  error.config = config;
+  if (code) {
+    error.code = code;
+  }
+
+  error.request = request;
+  error.response = response;
+  error.isAxiosError = true;
+
+  error.toJSON = function() {
+    return {
+      // Standard
+      message: this.message,
+      name: this.name,
+      // Microsoft
+      description: this.description,
+      number: this.number,
+      // Mozilla
+      fileName: this.fileName,
+      lineNumber: this.lineNumber,
+      columnNumber: this.columnNumber,
+      stack: this.stack,
+      // Axios
+      config: this.config,
+      code: this.code
+    };
+  };
+  return error;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/core/mergeConfig.js":
+/*!****************************************************!*\
+  !*** ./node_modules/axios/lib/core/mergeConfig.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ../utils */ "./node_modules/axios/lib/utils.js");
+
+/**
+ * Config-specific merge-function which creates a new config-object
+ * by merging two configuration objects together.
+ *
+ * @param {Object} config1
+ * @param {Object} config2
+ * @returns {Object} New object resulting from merging config2 to config1
+ */
+module.exports = function mergeConfig(config1, config2) {
+  // eslint-disable-next-line no-param-reassign
+  config2 = config2 || {};
+  var config = {};
+
+  var valueFromConfig2Keys = ['url', 'method', 'params', 'data'];
+  var mergeDeepPropertiesKeys = ['headers', 'auth', 'proxy'];
+  var defaultToConfig2Keys = [
+    'baseURL', 'url', 'transformRequest', 'transformResponse', 'paramsSerializer',
+    'timeout', 'withCredentials', 'adapter', 'responseType', 'xsrfCookieName',
+    'xsrfHeaderName', 'onUploadProgress', 'onDownloadProgress',
+    'maxContentLength', 'validateStatus', 'maxRedirects', 'httpAgent',
+    'httpsAgent', 'cancelToken', 'socketPath'
+  ];
+
+  utils.forEach(valueFromConfig2Keys, function valueFromConfig2(prop) {
+    if (typeof config2[prop] !== 'undefined') {
+      config[prop] = config2[prop];
+    }
+  });
+
+  utils.forEach(mergeDeepPropertiesKeys, function mergeDeepProperties(prop) {
+    if (utils.isObject(config2[prop])) {
+      config[prop] = utils.deepMerge(config1[prop], config2[prop]);
+    } else if (typeof config2[prop] !== 'undefined') {
+      config[prop] = config2[prop];
+    } else if (utils.isObject(config1[prop])) {
+      config[prop] = utils.deepMerge(config1[prop]);
+    } else if (typeof config1[prop] !== 'undefined') {
+      config[prop] = config1[prop];
+    }
+  });
+
+  utils.forEach(defaultToConfig2Keys, function defaultToConfig2(prop) {
+    if (typeof config2[prop] !== 'undefined') {
+      config[prop] = config2[prop];
+    } else if (typeof config1[prop] !== 'undefined') {
+      config[prop] = config1[prop];
+    }
+  });
+
+  var axiosKeys = valueFromConfig2Keys
+    .concat(mergeDeepPropertiesKeys)
+    .concat(defaultToConfig2Keys);
+
+  var otherKeys = Object
+    .keys(config2)
+    .filter(function filterAxiosKeys(key) {
+      return axiosKeys.indexOf(key) === -1;
+    });
+
+  utils.forEach(otherKeys, function otherKeysDefaultToConfig2(prop) {
+    if (typeof config2[prop] !== 'undefined') {
+      config[prop] = config2[prop];
+    } else if (typeof config1[prop] !== 'undefined') {
+      config[prop] = config1[prop];
+    }
+  });
+
+  return config;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/core/settle.js":
+/*!***********************************************!*\
+  !*** ./node_modules/axios/lib/core/settle.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var createError = __webpack_require__(/*! ./createError */ "./node_modules/axios/lib/core/createError.js");
+
+/**
+ * Resolve or reject a Promise based on response status.
+ *
+ * @param {Function} resolve A function that resolves the promise.
+ * @param {Function} reject A function that rejects the promise.
+ * @param {object} response The response.
+ */
+module.exports = function settle(resolve, reject, response) {
+  var validateStatus = response.config.validateStatus;
+  if (!validateStatus || validateStatus(response.status)) {
+    resolve(response);
+  } else {
+    reject(createError(
+      'Request failed with status code ' + response.status,
+      response.config,
+      null,
+      response.request,
+      response
+    ));
+  }
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/core/transformData.js":
+/*!******************************************************!*\
+  !*** ./node_modules/axios/lib/core/transformData.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
+
+/**
+ * Transform the data for a request or a response
+ *
+ * @param {Object|String} data The data to be transformed
+ * @param {Array} headers The headers for the request or response
+ * @param {Array|Function} fns A single function or Array of functions
+ * @returns {*} The resulting transformed data
+ */
+module.exports = function transformData(data, headers, fns) {
+  /*eslint no-param-reassign:0*/
+  utils.forEach(fns, function transform(fn) {
+    data = fn(data, headers);
+  });
+
+  return data;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/defaults.js":
+/*!********************************************!*\
+  !*** ./node_modules/axios/lib/defaults.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var utils = __webpack_require__(/*! ./utils */ "./node_modules/axios/lib/utils.js");
+var normalizeHeaderName = __webpack_require__(/*! ./helpers/normalizeHeaderName */ "./node_modules/axios/lib/helpers/normalizeHeaderName.js");
+
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(/*! ./adapters/xhr */ "./node_modules/axios/lib/adapters/xhr.js");
+  } else if (typeof process !== 'undefined' && Object.prototype.toString.call(process) === '[object process]') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(/*! ./adapters/http */ "./node_modules/axios/lib/adapters/xhr.js");
+  }
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Accept');
+    normalizeHeaderName(headers, 'Content-Type');
+    if (utils.isFormData(data) ||
+      utils.isArrayBuffer(data) ||
+      utils.isBuffer(data) ||
+      utils.isStream(data) ||
+      utils.isFile(data) ||
+      utils.isBlob(data)
+    ) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) { /* Ignore */ }
+    }
+    return data;
+  }],
+
+  /**
+   * A timeout in milliseconds to abort a request. If set to 0 (default) a
+   * timeout is not created.
+   */
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../process/browser.js */ "./node_modules/process/browser.js")))
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/helpers/bind.js":
+/*!************************************************!*\
+  !*** ./node_modules/axios/lib/helpers/bind.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function bind(fn, thisArg) {
+  return function wrap() {
+    var args = new Array(arguments.length);
+    for (var i = 0; i < args.length; i++) {
+      args[i] = arguments[i];
+    }
+    return fn.apply(thisArg, args);
+  };
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/helpers/buildURL.js":
+/*!****************************************************!*\
+  !*** ./node_modules/axios/lib/helpers/buildURL.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
+
+function encode(val) {
+  return encodeURIComponent(val).
+    replace(/%40/gi, '@').
+    replace(/%3A/gi, ':').
+    replace(/%24/g, '$').
+    replace(/%2C/gi, ',').
+    replace(/%20/g, '+').
+    replace(/%5B/gi, '[').
+    replace(/%5D/gi, ']');
+}
+
+/**
+ * Build a URL by appending params to the end
+ *
+ * @param {string} url The base of the url (e.g., http://www.google.com)
+ * @param {object} [params] The params to be appended
+ * @returns {string} The formatted url
+ */
+module.exports = function buildURL(url, params, paramsSerializer) {
+  /*eslint no-param-reassign:0*/
+  if (!params) {
+    return url;
+  }
+
+  var serializedParams;
+  if (paramsSerializer) {
+    serializedParams = paramsSerializer(params);
+  } else if (utils.isURLSearchParams(params)) {
+    serializedParams = params.toString();
+  } else {
+    var parts = [];
+
+    utils.forEach(params, function serialize(val, key) {
+      if (val === null || typeof val === 'undefined') {
+        return;
+      }
+
+      if (utils.isArray(val)) {
+        key = key + '[]';
+      } else {
+        val = [val];
+      }
+
+      utils.forEach(val, function parseValue(v) {
+        if (utils.isDate(v)) {
+          v = v.toISOString();
+        } else if (utils.isObject(v)) {
+          v = JSON.stringify(v);
+        }
+        parts.push(encode(key) + '=' + encode(v));
+      });
+    });
+
+    serializedParams = parts.join('&');
+  }
+
+  if (serializedParams) {
+    var hashmarkIndex = url.indexOf('#');
+    if (hashmarkIndex !== -1) {
+      url = url.slice(0, hashmarkIndex);
+    }
+
+    url += (url.indexOf('?') === -1 ? '?' : '&') + serializedParams;
+  }
+
+  return url;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/helpers/combineURLs.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/axios/lib/helpers/combineURLs.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Creates a new URL by combining the specified URLs
+ *
+ * @param {string} baseURL The base URL
+ * @param {string} relativeURL The relative URL
+ * @returns {string} The combined URL
+ */
+module.exports = function combineURLs(baseURL, relativeURL) {
+  return relativeURL
+    ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '')
+    : baseURL;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/helpers/cookies.js":
+/*!***************************************************!*\
+  !*** ./node_modules/axios/lib/helpers/cookies.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
+
+module.exports = (
+  utils.isStandardBrowserEnv() ?
+
+  // Standard browser envs support document.cookie
+    (function standardBrowserEnv() {
+      return {
+        write: function write(name, value, expires, path, domain, secure) {
+          var cookie = [];
+          cookie.push(name + '=' + encodeURIComponent(value));
+
+          if (utils.isNumber(expires)) {
+            cookie.push('expires=' + new Date(expires).toGMTString());
+          }
+
+          if (utils.isString(path)) {
+            cookie.push('path=' + path);
+          }
+
+          if (utils.isString(domain)) {
+            cookie.push('domain=' + domain);
+          }
+
+          if (secure === true) {
+            cookie.push('secure');
+          }
+
+          document.cookie = cookie.join('; ');
+        },
+
+        read: function read(name) {
+          var match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
+          return (match ? decodeURIComponent(match[3]) : null);
+        },
+
+        remove: function remove(name) {
+          this.write(name, '', Date.now() - 86400000);
+        }
+      };
+    })() :
+
+  // Non standard browser env (web workers, react-native) lack needed support.
+    (function nonStandardBrowserEnv() {
+      return {
+        write: function write() {},
+        read: function read() { return null; },
+        remove: function remove() {}
+      };
+    })()
+);
+
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/helpers/isAbsoluteURL.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/axios/lib/helpers/isAbsoluteURL.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Determines whether the specified URL is absolute
+ *
+ * @param {string} url The URL to test
+ * @returns {boolean} True if the specified URL is absolute, otherwise false
+ */
+module.exports = function isAbsoluteURL(url) {
+  // A URL is considered absolute if it begins with "<scheme>://" or "//" (protocol-relative URL).
+  // RFC 3986 defines scheme name as a sequence of characters beginning with a letter and followed
+  // by any combination of letters, digits, plus, period, or hyphen.
+  return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/helpers/isURLSameOrigin.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/axios/lib/helpers/isURLSameOrigin.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
+
+module.exports = (
+  utils.isStandardBrowserEnv() ?
+
+  // Standard browser envs have full support of the APIs needed to test
+  // whether the request URL is of the same origin as current location.
+    (function standardBrowserEnv() {
+      var msie = /(msie|trident)/i.test(navigator.userAgent);
+      var urlParsingNode = document.createElement('a');
+      var originURL;
+
+      /**
+    * Parse a URL to discover it's components
+    *
+    * @param {String} url The URL to be parsed
+    * @returns {Object}
+    */
+      function resolveURL(url) {
+        var href = url;
+
+        if (msie) {
+        // IE needs attribute set twice to normalize properties
+          urlParsingNode.setAttribute('href', href);
+          href = urlParsingNode.href;
+        }
+
+        urlParsingNode.setAttribute('href', href);
+
+        // urlParsingNode provides the UrlUtils interface - http://url.spec.whatwg.org/#urlutils
+        return {
+          href: urlParsingNode.href,
+          protocol: urlParsingNode.protocol ? urlParsingNode.protocol.replace(/:$/, '') : '',
+          host: urlParsingNode.host,
+          search: urlParsingNode.search ? urlParsingNode.search.replace(/^\?/, '') : '',
+          hash: urlParsingNode.hash ? urlParsingNode.hash.replace(/^#/, '') : '',
+          hostname: urlParsingNode.hostname,
+          port: urlParsingNode.port,
+          pathname: (urlParsingNode.pathname.charAt(0) === '/') ?
+            urlParsingNode.pathname :
+            '/' + urlParsingNode.pathname
+        };
+      }
+
+      originURL = resolveURL(window.location.href);
+
+      /**
+    * Determine if a URL shares the same origin as the current location
+    *
+    * @param {String} requestURL The URL to test
+    * @returns {boolean} True if URL shares the same origin, otherwise false
+    */
+      return function isURLSameOrigin(requestURL) {
+        var parsed = (utils.isString(requestURL)) ? resolveURL(requestURL) : requestURL;
+        return (parsed.protocol === originURL.protocol &&
+            parsed.host === originURL.host);
+      };
+    })() :
+
+  // Non standard browser envs (web workers, react-native) lack needed support.
+    (function nonStandardBrowserEnv() {
+      return function isURLSameOrigin() {
+        return true;
+      };
+    })()
+);
+
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/helpers/normalizeHeaderName.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/axios/lib/helpers/normalizeHeaderName.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ../utils */ "./node_modules/axios/lib/utils.js");
+
+module.exports = function normalizeHeaderName(headers, normalizedName) {
+  utils.forEach(headers, function processHeader(value, name) {
+    if (name !== normalizedName && name.toUpperCase() === normalizedName.toUpperCase()) {
+      headers[normalizedName] = value;
+      delete headers[name];
+    }
+  });
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/helpers/parseHeaders.js":
+/*!********************************************************!*\
+  !*** ./node_modules/axios/lib/helpers/parseHeaders.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
+
+// Headers whose duplicates are ignored by node
+// c.f. https://nodejs.org/api/http.html#http_message_headers
+var ignoreDuplicateOf = [
+  'age', 'authorization', 'content-length', 'content-type', 'etag',
+  'expires', 'from', 'host', 'if-modified-since', 'if-unmodified-since',
+  'last-modified', 'location', 'max-forwards', 'proxy-authorization',
+  'referer', 'retry-after', 'user-agent'
+];
+
+/**
+ * Parse headers into an object
+ *
+ * ```
+ * Date: Wed, 27 Aug 2014 08:58:49 GMT
+ * Content-Type: application/json
+ * Connection: keep-alive
+ * Transfer-Encoding: chunked
+ * ```
+ *
+ * @param {String} headers Headers needing to be parsed
+ * @returns {Object} Headers parsed into an object
+ */
+module.exports = function parseHeaders(headers) {
+  var parsed = {};
+  var key;
+  var val;
+  var i;
+
+  if (!headers) { return parsed; }
+
+  utils.forEach(headers.split('\n'), function parser(line) {
+    i = line.indexOf(':');
+    key = utils.trim(line.substr(0, i)).toLowerCase();
+    val = utils.trim(line.substr(i + 1));
+
+    if (key) {
+      if (parsed[key] && ignoreDuplicateOf.indexOf(key) >= 0) {
+        return;
+      }
+      if (key === 'set-cookie') {
+        parsed[key] = (parsed[key] ? parsed[key] : []).concat([val]);
+      } else {
+        parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val;
+      }
+    }
+  });
+
+  return parsed;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/helpers/spread.js":
+/*!**************************************************!*\
+  !*** ./node_modules/axios/lib/helpers/spread.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Syntactic sugar for invoking a function and expanding an array for arguments.
+ *
+ * Common use case would be to use `Function.prototype.apply`.
+ *
+ *  ```js
+ *  function f(x, y, z) {}
+ *  var args = [1, 2, 3];
+ *  f.apply(null, args);
+ *  ```
+ *
+ * With `spread` this example can be re-written.
+ *
+ *  ```js
+ *  spread(function(x, y, z) {})([1, 2, 3]);
+ *  ```
+ *
+ * @param {Function} callback
+ * @returns {Function}
+ */
+module.exports = function spread(callback) {
+  return function wrap(arr) {
+    return callback.apply(null, arr);
+  };
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/axios/lib/utils.js":
+/*!*****************************************!*\
+  !*** ./node_modules/axios/lib/utils.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var bind = __webpack_require__(/*! ./helpers/bind */ "./node_modules/axios/lib/helpers/bind.js");
+
+/*global toString:true*/
+
+// utils is a library of generic helper functions non-specific to axios
+
+var toString = Object.prototype.toString;
+
+/**
+ * Determine if a value is an Array
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an Array, otherwise false
+ */
+function isArray(val) {
+  return toString.call(val) === '[object Array]';
+}
+
+/**
+ * Determine if a value is undefined
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if the value is undefined, otherwise false
+ */
+function isUndefined(val) {
+  return typeof val === 'undefined';
+}
+
+/**
+ * Determine if a value is a Buffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Buffer, otherwise false
+ */
+function isBuffer(val) {
+  return val !== null && !isUndefined(val) && val.constructor !== null && !isUndefined(val.constructor)
+    && typeof val.constructor.isBuffer === 'function' && val.constructor.isBuffer(val);
+}
+
+/**
+ * Determine if a value is an ArrayBuffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an ArrayBuffer, otherwise false
+ */
+function isArrayBuffer(val) {
+  return toString.call(val) === '[object ArrayBuffer]';
+}
+
+/**
+ * Determine if a value is a FormData
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an FormData, otherwise false
+ */
+function isFormData(val) {
+  return (typeof FormData !== 'undefined') && (val instanceof FormData);
+}
+
+/**
+ * Determine if a value is a view on an ArrayBuffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a view on an ArrayBuffer, otherwise false
+ */
+function isArrayBufferView(val) {
+  var result;
+  if ((typeof ArrayBuffer !== 'undefined') && (ArrayBuffer.isView)) {
+    result = ArrayBuffer.isView(val);
+  } else {
+    result = (val) && (val.buffer) && (val.buffer instanceof ArrayBuffer);
+  }
+  return result;
+}
+
+/**
+ * Determine if a value is a String
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a String, otherwise false
+ */
+function isString(val) {
+  return typeof val === 'string';
+}
+
+/**
+ * Determine if a value is a Number
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Number, otherwise false
+ */
+function isNumber(val) {
+  return typeof val === 'number';
+}
+
+/**
+ * Determine if a value is an Object
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an Object, otherwise false
+ */
+function isObject(val) {
+  return val !== null && typeof val === 'object';
+}
+
+/**
+ * Determine if a value is a Date
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Date, otherwise false
+ */
+function isDate(val) {
+  return toString.call(val) === '[object Date]';
+}
+
+/**
+ * Determine if a value is a File
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a File, otherwise false
+ */
+function isFile(val) {
+  return toString.call(val) === '[object File]';
+}
+
+/**
+ * Determine if a value is a Blob
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Blob, otherwise false
+ */
+function isBlob(val) {
+  return toString.call(val) === '[object Blob]';
+}
+
+/**
+ * Determine if a value is a Function
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Function, otherwise false
+ */
+function isFunction(val) {
+  return toString.call(val) === '[object Function]';
+}
+
+/**
+ * Determine if a value is a Stream
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Stream, otherwise false
+ */
+function isStream(val) {
+  return isObject(val) && isFunction(val.pipe);
+}
+
+/**
+ * Determine if a value is a URLSearchParams object
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a URLSearchParams object, otherwise false
+ */
+function isURLSearchParams(val) {
+  return typeof URLSearchParams !== 'undefined' && val instanceof URLSearchParams;
+}
+
+/**
+ * Trim excess whitespace off the beginning and end of a string
+ *
+ * @param {String} str The String to trim
+ * @returns {String} The String freed of excess whitespace
+ */
+function trim(str) {
+  return str.replace(/^\s*/, '').replace(/\s*$/, '');
+}
+
+/**
+ * Determine if we're running in a standard browser environment
+ *
+ * This allows axios to run in a web worker, and react-native.
+ * Both environments support XMLHttpRequest, but not fully standard globals.
+ *
+ * web workers:
+ *  typeof window -> undefined
+ *  typeof document -> undefined
+ *
+ * react-native:
+ *  navigator.product -> 'ReactNative'
+ * nativescript
+ *  navigator.product -> 'NativeScript' or 'NS'
+ */
+function isStandardBrowserEnv() {
+  if (typeof navigator !== 'undefined' && (navigator.product === 'ReactNative' ||
+                                           navigator.product === 'NativeScript' ||
+                                           navigator.product === 'NS')) {
+    return false;
+  }
+  return (
+    typeof window !== 'undefined' &&
+    typeof document !== 'undefined'
+  );
+}
+
+/**
+ * Iterate over an Array or an Object invoking a function for each item.
+ *
+ * If `obj` is an Array callback will be called passing
+ * the value, index, and complete array for each item.
+ *
+ * If 'obj' is an Object callback will be called passing
+ * the value, key, and complete object for each property.
+ *
+ * @param {Object|Array} obj The object to iterate
+ * @param {Function} fn The callback to invoke for each item
+ */
+function forEach(obj, fn) {
+  // Don't bother if no value provided
+  if (obj === null || typeof obj === 'undefined') {
+    return;
+  }
+
+  // Force an array if not already something iterable
+  if (typeof obj !== 'object') {
+    /*eslint no-param-reassign:0*/
+    obj = [obj];
+  }
+
+  if (isArray(obj)) {
+    // Iterate over array values
+    for (var i = 0, l = obj.length; i < l; i++) {
+      fn.call(null, obj[i], i, obj);
+    }
+  } else {
+    // Iterate over object keys
+    for (var key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        fn.call(null, obj[key], key, obj);
+      }
+    }
+  }
+}
+
+/**
+ * Accepts varargs expecting each argument to be an object, then
+ * immutably merges the properties of each object and returns result.
+ *
+ * When multiple objects contain the same key the later object in
+ * the arguments list will take precedence.
+ *
+ * Example:
+ *
+ * ```js
+ * var result = merge({foo: 123}, {foo: 456});
+ * console.log(result.foo); // outputs 456
+ * ```
+ *
+ * @param {Object} obj1 Object to merge
+ * @returns {Object} Result of all merge properties
+ */
+function merge(/* obj1, obj2, obj3, ... */) {
+  var result = {};
+  function assignValue(val, key) {
+    if (typeof result[key] === 'object' && typeof val === 'object') {
+      result[key] = merge(result[key], val);
+    } else {
+      result[key] = val;
+    }
+  }
+
+  for (var i = 0, l = arguments.length; i < l; i++) {
+    forEach(arguments[i], assignValue);
+  }
+  return result;
+}
+
+/**
+ * Function equal to merge with the difference being that no reference
+ * to original objects is kept.
+ *
+ * @see merge
+ * @param {Object} obj1 Object to merge
+ * @returns {Object} Result of all merge properties
+ */
+function deepMerge(/* obj1, obj2, obj3, ... */) {
+  var result = {};
+  function assignValue(val, key) {
+    if (typeof result[key] === 'object' && typeof val === 'object') {
+      result[key] = deepMerge(result[key], val);
+    } else if (typeof val === 'object') {
+      result[key] = deepMerge({}, val);
+    } else {
+      result[key] = val;
+    }
+  }
+
+  for (var i = 0, l = arguments.length; i < l; i++) {
+    forEach(arguments[i], assignValue);
+  }
+  return result;
+}
+
+/**
+ * Extends object a by mutably adding to it the properties of object b.
+ *
+ * @param {Object} a The object to be extended
+ * @param {Object} b The object to copy properties from
+ * @param {Object} thisArg The object to bind function to
+ * @return {Object} The resulting value of object a
+ */
+function extend(a, b, thisArg) {
+  forEach(b, function assignValue(val, key) {
+    if (thisArg && typeof val === 'function') {
+      a[key] = bind(val, thisArg);
+    } else {
+      a[key] = val;
+    }
+  });
+  return a;
+}
+
+module.exports = {
+  isArray: isArray,
+  isArrayBuffer: isArrayBuffer,
+  isBuffer: isBuffer,
+  isFormData: isFormData,
+  isArrayBufferView: isArrayBufferView,
+  isString: isString,
+  isNumber: isNumber,
+  isObject: isObject,
+  isUndefined: isUndefined,
+  isDate: isDate,
+  isFile: isFile,
+  isBlob: isBlob,
+  isFunction: isFunction,
+  isStream: isStream,
+  isURLSearchParams: isURLSearchParams,
+  isStandardBrowserEnv: isStandardBrowserEnv,
+  forEach: forEach,
+  merge: merge,
+  deepMerge: deepMerge,
+  extend: extend,
+  trim: trim
+};
+
+
+/***/ }),
+
 /***/ "./node_modules/computed-style/dist/computedStyle.commonjs.js":
 /*!********************************************************************!*\
   !*** ./node_modules/computed-style/dist/computedStyle.commonjs.js ***!
@@ -2581,7 +4394,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".thought-card-container {\n\tmargin-left: auto;\n\tmargin-right: auto;\n\tmax-width: 1050px;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tjustify-content: center;\n}\n\n.thought-card-animated {\n  animation-duration: 1.0s;\n }\n\n.thought-card {\n\tmax-width: 700px;\n\tflex-grow: 1;\n\tflex-basis:0;\n\tborder: 2px solid #E0E0E0;\n\tbox-shadow: 0px 0px 15px 0px #ededed;\n\tbox-sizing: border-box;\n\tborder-radius: 15px;\n\tpadding: 10px 20px 10px 20px;\n}\n\n.thought-top-box {\n\tdisplay: flex;\n\tflex: no-wrap;\n\tjustify-content: end;\n}\n\n.thought-review-addons {\n\tdisplay: flex;\n\tmargin-bottom: 5px;\n}\n\n.thought-created-at {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: #DDDDDD;\n}\n\n.thought-title-row {\n\tmax-width: 700px;\n\tflex-grow: 1;\n}\n\n.thought-title {\n\twidth: 100%;\n\tflex-grow: 1;\n\tresize: none;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 25px;\n\n\tcolor: #8C8C8C;\n\tborder: none;\n\tmargin-bottom: none;\n}\n\n.thought-title::placeholder {\n\tcolor: #8C8C8C;\n\tborder: none;\n}\n\n.thought-title:focus {\n\toutline: 0;\n}\n\n.thought-content-box {\n\tmin-height: 100px;\n\tmargin-top: 15px;\n\twidth: 100%;\n}\n\n.thought-content {\n\tresize: none;\n\twidth: 100%;\n\tfont-family: Roboto;\n\tfont-weight: 300;\n\tfont-size: 25px;\n\tcolor: #8C8C8C;\n\tborder: none;\n}\n\n.thought-content::placeholder {\n\tcolor: #8C8C8C;\n\tborder: none;\n}\n\n.thought-content:focus {\n\toutline: 0;\n}\n\n.thought-bottom-box {\n\tmin-height: 20px;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\twidth: 100%;\n\talign-items: center;\n}\n\n.thought-bottom-row {\n\tmargin-top: 5px;\n\tflex-shrink: 0;\n\twidth: 100%;\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: end;\n}\n\n.thought-tags-row {\n\tflex-shrink: 0;\n\twidth: 100%;\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: end;\n}\n\n.thought-tag-bubbles {\n\tflex-grow: 1;\n\tdisplay: flex;\n\tjustify-content: start;\n\tflex-wrap: wrap;\n\tpadding:5px;\n}\n\n.thought-tag-bubbles-limited {\n\tmax-width: 550px;\n}\n\n.thought-tag-bubble {\n\tdisplay: flex;\n\talign-items: center;\n\tmargin: 5px;\n\tborder-radius: 15px;\n\tbackground: #FAFAFA; \n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 17px;\n\tpadding: 2.5px 10px 5px 10px;\n\n\tcolor: #8C8C8C\n}\n\n.thought-tag-bubble-delete {\n\tmargin-left: 5px;\n\theight: 12px;\n}\n\n.thought-edited-at {\n\tdisplay: flex;\n\tflex-shrink: 0;\n\talign-self: flex-end;\n\twidth: auto;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\tjustify-content: flex-end;\n\n\tcolor: #DDDDDD;\n}\n\n.thought-edited-at-timestamp {\n}\n\n.thought-add-tags {\n\tmargin-left: 5px;\n\tdisplay: flex;\n\talign-items: center;\n}\n\n.thought-tag-icon {\n\theight: 30px;\n}\n\n.thought-checkmark {\n\theight: 20px;\n}\n\n.thought-checkmark-toggle {\n\tmargin-left: 10px;\n\theight: 15px;\n\twidth: 15px;\n\tborder-radius: 3px;\n\tborder: 2px solid #EDEDED;\n}\n\n.thought-completed {\n\tbackground-image: url(/img/checkmark.svg);\n\tbackground-size: contain;\n\tbackground-repeat: no-repeat;\n}\n\n.thought-tag-input {\n\tmargin-left: 5px;\n\tcolor: #8C8C8C;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 17px;\n\twidth: 150px;\n\tborder: none;\n\tborder-bottom: 1.5px solid #EDEDED;\n}\n\n.thought-tag-input::placeholder {\n\tcolor: #EDEDED;\n\tborder: none;\n\tborder-bottom: 1.5px solid #EDEDED;\n}\n\ninput:focus::placeholder { color: transparent; }\ninput:focus::-webkit-input-placeholder { color:transparent; }\ninput:focus:-moz-placeholder { color:transparent; } /* FF 4-18 */\ninput:focus::-moz-placeholder { color:transparent; } /* FF 19+ */\ninput:focus:-ms-input-placeholder { color:transparent; } /* IE 10+ */\n\n.thought-tag-input:focus {\n\toutline: 0;\n\tborder-bottom: 1.5px solid #EDEDED;\n}\n\n.thought-tag-input:hover {\n\tborder-bottom: 1.5px solid #EDEDED;\n}\n\n.thought-update {\n\tmargin-left: auto;\n\tfont-family: Roboto;\n\tfont-weight: 500;\n\tfont-size: 20px;\n\tcolor: rgba(255, 142, 142);\n}\n\n.thought-update-disabled {\n\tcolor: rgba(255, 142, 142, .37);\n}\n\n.thought-saving-loader {\n  border: 4px solid #f3f3f3; /* Light grey */\n  border-top: 4px solid #FF8E8E; /* Orange */\n  border-radius: 50%;\n  width: 20px;\n  height: 20px;\n  animation: spin 2s linear infinite;\n}\n\n@keyframes spin {\n  0% { transform: rotate(0deg); }\n  100% { transform: rotate(360deg); }\n}\n\n.thought-delete-enabled {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: #E15151;\n}\n\n.thought-delete-disabled {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: rgba(225, 81, 81, .37);\n}\n\n.thought-delete-overlay {\n\tbackground-color: rgba(196, 196, 196, 0.41);\n    position: fixed;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    overflow: scroll;\n}\n\n.thought-delete-modal-container {\n\tmargin-top: 200px;\n\twidth: 100%;\n\tdisplay: flex;\n\toutline: 0;\n}\n\n.thought-delete-modal {\n\tbackground-color: white;\n\tborder-radius: 10px;\n\tmax-width: 400px;\n\tmargin-left: auto;\n\tmargin-right: auto;\n\tpadding: 25px 20px 25px 20px;\n\toutline: 0;\n\tdisplay: flex;\n\theight: 200px;\n\tflex-direction: column;\n}\n\n.thought-delete-modal-title {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 25px;\n\tcolor: #959595;\n}\n\n.thought-delete-modal-content {\n\tdisplay: flex;\n\tflex-wrap: nowrap;\n\tmargin-top: 20px;\n}\n\n.thought-delete-modal-subtitle {\n\tfont-family: Roboto;\n\tfont-weight: 300;\n\tfont-size: 20px;\n\tcolor: #ACACAC;\n}\n\n.thought-delete-trash-can {\n\twidth: 75px;\n\tmargin: 0px 20px 0px 20px\n}\n\n.thought-delete-modal-buttons {\n\twidth: 100%;\n\tdisplay: flex;\n\tjustify-content: flex-end;\n\n}\n\n.thought-delete-cancel {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 20px;\n\tcolor: #959595;\n}\n\n.thought-delete-separator {\n\tmargin-left: 10px;\n\tmargin-right: 10px;\n\twidth: 1px;\n\tbackground-color: #EDEDED;\n\theight: 20px;\n}\n\n.thought-delete-confirm {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 20px;\n\tcolor: #E15151;\n}\n\n.thought-clear {\n\talign-self: flex-start;\n}\n\n.thought-replies {\n\twidth: 250px;\n\tdisplay: flex;\n\tmargin-left: 10px;\n\tmax-height: 300px;\n\toverflow: scroll;\n\talign-content: flex-end;\n\tflex-wrap: wrap;\n}\n\n.thought-reply-box {\n\twidth: 100%;\n\toutline: 0;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\tborder-radius: 8px;\n\tborder: 2px solid #E0E0E0;\n\toverflow: hidden;\n\tpadding: 5px;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n}\n\n.thought-reply-input {\n\tborder: none;\n\twidth: 100%;\n\toutline: 0;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\tcolor: #858585;\n\tresize: none;\n}\n\n.thought-reply-input::placeholder {\n\tcolor: #DDDDDD;\n}\n\n.thought-reply-delete {\n\tmargin-left: 2px;\n\tborder-radius: 5px;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\tcolor: #E15151;\n\tpadding: 5px;\n\tborder-radius: 8px;\n\tborder: 2px solid #E0E0E0;\n\tbackground-color: #FFFFFF;\n}\n\n.thought-reply-delete:hover {\n\tbackground-color: #F5F5F5;\n}\n\n.thought-reply-action {\n\twidth: 100%;\n\tjustify-content: flex-end;\n\tdisplay: flex;\n\tflex-wrap: nowrap;\n}\n\n.thought-reply-clear {\n\tcolor: #DDDDDD;\n\tmargin-right: 10px;\n}\n\n.thought-reply-submit {\n\tcolor: #FF8E8E;\n\tmargin-right: 5px;\n}\n\n.thought-reply-item {\n\tmargin-bottom: 10px;\n\twidth: 100%;\n\tcolor: #858585;\n}\n\n.thought-reply-timestamp {\n\twidth: 100%;\n\tcolor: #DDDDDD;\n\tdisplay: flex;\n\tjustify-content: space-between;\n}\n\n.thought-reply-options {\n\tbackground-image: url(/img/three_dots.svg);\n\tbackground-size: contain;\n\tbackground-repeat: no-repeat;\n\tcursor: pointer;\n\twidth: 3px;\n}\n", ""]);
+exports.push([module.i, ".thought-card-container {\n\tmargin-left: auto;\n\tmargin-right: auto;\n\tmax-width: 1050px;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tjustify-content: center;\n}\n\n.thought-card-animated {\n  animation-duration: 1.0s;\n }\n\n.thought-card {\n\tmax-width: 700px;\n\tflex-grow: 1;\n\tflex-basis:0;\n\tborder: 2px solid #E0E0E0;\n\tbox-shadow: 0px 0px 15px 0px #ededed;\n\tbox-sizing: border-box;\n\tborder-radius: 15px;\n\tpadding: 10px 20px 10px 20px;\n}\n\n.thought-top-box {\n\tdisplay: flex;\n\tflex: no-wrap;\n\tjustify-content: end;\n}\n\n.thought-review-addons {\n\tdisplay: flex;\n\tmargin-bottom: 5px;\n}\n\n.thought-created-at {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: #DDDDDD;\n}\n\n.thought-title-row {\n\tmax-width: 700px;\n\tflex-grow: 1;\n}\n\n.thought-title {\n\twidth: 100%;\n\tflex-grow: 1;\n\tresize: none;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 25px;\n\n\tcolor: #8C8C8C;\n\tborder: none;\n\tmargin-bottom: none;\n}\n\n.thought-title::placeholder {\n\tcolor: #8C8C8C;\n\tborder: none;\n}\n\n.thought-title:focus {\n\toutline: 0;\n}\n\n.thought-content-box {\n\tmin-height: 100px;\n\tmargin-top: 15px;\n\twidth: 100%;\n}\n\n.thought-content {\n\tresize: none;\n\twidth: 100%;\n\tfont-family: Roboto;\n\tfont-weight: 300;\n\tfont-size: 25px;\n\tcolor: #8C8C8C;\n\tborder: none;\n}\n\n.thought-content::placeholder {\n\tcolor: #8C8C8C;\n\tborder: none;\n}\n\n.thought-content:focus {\n\toutline: 0;\n}\n\n.thought-bottom-box {\n\tmin-height: 20px;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\twidth: 100%;\n\talign-items: center;\n}\n\n.thought-bottom-row {\n\tmargin-top: 5px;\n\tflex-shrink: 0;\n\twidth: 100%;\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: end;\n}\n\n.thought-tags-row {\n\tflex-shrink: 0;\n\twidth: 100%;\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: end;\n}\n\n.thought-tag-bubbles {\n\tflex-grow: 1;\n\tdisplay: flex;\n\tjustify-content: start;\n\tflex-wrap: wrap;\n\tpadding:5px;\n}\n\n.thought-tag-bubbles-limited {\n\tmax-width: 550px;\n}\n\n.thought-tag-bubble {\n\tdisplay: flex;\n\talign-items: center;\n\tmargin: 5px;\n\tborder-radius: 15px;\n\tbackground: #FAFAFA; \n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 17px;\n\tpadding: 2.5px 10px 5px 10px;\n\n\tcolor: #8C8C8C\n}\n\n.thought-plus-one {\n\tbackground: #FAFAFA\n}\n\n.thought-plus-one:hover {\n\tbackground: #E0E0E0\n}\n\n.thought-tag-bubble-delete {\n\tmargin-left: 5px;\n\theight: 12px;\n}\n\n.thought-edited-at {\n\tdisplay: flex;\n\tflex-shrink: 0;\n\talign-self: flex-end;\n\twidth: auto;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\tjustify-content: flex-end;\n\n\tcolor: #DDDDDD;\n}\n\n.thought-edited-at-timestamp {\n}\n\n.thought-add-tags {\n\tmargin-left: 5px;\n\tdisplay: flex;\n\talign-items: center;\n}\n\n.thought-tag-icon {\n\theight: 30px;\n}\n\n.thought-checkmark {\n\theight: 20px;\n}\n\n.thought-checkmark-toggle {\n\tmargin-left: 10px;\n\theight: 15px;\n\twidth: 15px;\n\tborder-radius: 3px;\n\tborder: 2px solid #EDEDED;\n}\n\n.thought-completed {\n\tbackground-image: url(/img/checkmark.svg);\n\tbackground-size: contain;\n\tbackground-repeat: no-repeat;\n}\n\n.thought-tag-input {\n\tmargin-left: 5px;\n\tcolor: #8C8C8C;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 17px;\n\twidth: 150px;\n\tborder: none;\n\tborder-bottom: 1px solid #EDEDED;\n}\n\n.thought-tag-input::placeholder {\n\tcolor: #EDEDED;\n\tborder: none;\n\tborder-bottom: 1px solid #EDEDED;\n}\n\ninput:focus::placeholder { color: transparent; }\ninput:focus::-webkit-input-placeholder { color:transparent; }\ninput:focus:-moz-placeholder { color:transparent; } /* FF 4-18 */\ninput:focus::-moz-placeholder { color:transparent; } /* FF 19+ */\ninput:focus:-ms-input-placeholder { color:transparent; } /* IE 10+ */\n\n.thought-tag-input:focus {\n\toutline: 0;\n\tborder-bottom: 1px solid #EDEDED;\n}\n\n.thought-tag-input:hover {\n\tborder-bottom: 1px solid #EDEDED;\n}\n\n.thought-update {\n\tmargin-left: auto;\n\tfont-family: Roboto;\n\tfont-weight: 500;\n\tfont-size: 20px;\n\tcolor: rgba(255, 142, 142);\n}\n\n.thought-update-disabled {\n\tcolor: rgba(255, 142, 142, .37);\n}\n\n.thought-saving-loader {\n  border: 4px solid #f3f3f3; /* Light grey */\n  border-top: 4px solid #FF8E8E; /* Orange */\n  border-radius: 50%;\n  width: 20px;\n  height: 20px;\n  animation: spin 2s linear infinite;\n}\n\n@keyframes spin {\n  0% { transform: rotate(0deg); }\n  100% { transform: rotate(360deg); }\n}\n\n.thought-delete-enabled {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: #E15151;\n}\n\n.thought-delete-disabled {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: rgba(225, 81, 81, .37);\n}\n\n.thought-delete-overlay {\n\tbackground-color: rgba(196, 196, 196, 0.41);\n    position: fixed;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    overflow: scroll;\n}\n\n.thought-delete-modal-container {\n\tmargin-top: 200px;\n\twidth: 100%;\n\tdisplay: flex;\n\toutline: 0;\n}\n\n.thought-delete-modal {\n\tbackground-color: white;\n\tborder-radius: 10px;\n\tmax-width: 400px;\n\tmargin-left: auto;\n\tmargin-right: auto;\n\tpadding: 25px 20px 25px 20px;\n\toutline: 0;\n\tdisplay: flex;\n\theight: 200px;\n\tflex-direction: column;\n}\n\n.thought-delete-modal-title {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 25px;\n\tcolor: #959595;\n}\n\n.thought-delete-modal-content {\n\tdisplay: flex;\n\tflex-wrap: nowrap;\n\tmargin-top: 20px;\n}\n\n.thought-delete-modal-subtitle {\n\tfont-family: Roboto;\n\tfont-weight: 300;\n\tfont-size: 20px;\n\tcolor: #ACACAC;\n}\n\n.thought-delete-trash-can {\n\twidth: 75px;\n\tmargin: 0px 20px 0px 20px\n}\n\n.thought-delete-modal-buttons {\n\twidth: 100%;\n\tdisplay: flex;\n\tjustify-content: flex-end;\n\n}\n\n.thought-delete-cancel {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 20px;\n\tcolor: #959595;\n}\n\n.thought-delete-separator {\n\tmargin-left: 10px;\n\tmargin-right: 10px;\n\twidth: 1px;\n\tbackground-color: #EDEDED;\n\theight: 20px;\n}\n\n.thought-delete-confirm {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 20px;\n\tcolor: #E15151;\n}\n\n.thought-clear {\n\talign-self: flex-start;\n}\n\n.thought-replies {\n\twidth: 250px;\n\tdisplay: flex;\n\tmargin-left: 10px;\n\tmax-height: 300px;\n\toverflow: scroll;\n\talign-content: flex-end;\n\tflex-wrap: wrap;\n}\n\n.thought-reply-box {\n\twidth: 100%;\n\toutline: 0;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\tborder-radius: 8px;\n\tborder: 2px solid #E0E0E0;\n\toverflow: hidden;\n\tpadding: 5px;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n}\n\n.thought-reply-input {\n\tborder: none;\n\twidth: 100%;\n\toutline: 0;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\tcolor: #858585;\n\tresize: none;\n}\n\n.thought-reply-input::placeholder {\n\tcolor: #DDDDDD;\n}\n\n.thought-reply-delete {\n\tmargin-left: 2px;\n\tborder-radius: 5px;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\tcolor: #E15151;\n\tpadding: 5px;\n\tborder-radius: 8px;\n\tborder: 2px solid #E0E0E0;\n\tbackground-color: #FFFFFF;\n}\n\n.thought-reply-delete:hover {\n\tbackground-color: #F5F5F5;\n}\n\n.thought-reply-action {\n\twidth: 100%;\n\tjustify-content: flex-end;\n\tdisplay: flex;\n\tflex-wrap: nowrap;\n}\n\n.thought-reply-clear {\n\tcolor: #DDDDDD;\n\tmargin-right: 10px;\n}\n\n.thought-reply-submit {\n\tcolor: #FF8E8E;\n\tmargin-right: 5px;\n}\n\n.thought-reply-item {\n\tmargin-bottom: 10px;\n\twidth: 100%;\n\tcolor: #858585;\n}\n\n.thought-reply-timestamp {\n\twidth: 100%;\n\tcolor: #DDDDDD;\n\tdisplay: flex;\n\tjustify-content: space-between;\n}\n\n.thought-reply-options {\n\tbackground-image: url(/img/three_dots.svg);\n\tbackground-size: contain;\n\tbackground-repeat: no-repeat;\n\tcursor: pointer;\n\twidth: 3px;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -2599,7 +4412,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "#app {\n}\nhtml {\n\theight: 100%;\n}\nbody {\n\tz-index: 0;\n\tmargin: 0;\n\tpadding: 0;\n}\n\n.noscroll {\n\theight: 100%;\n\toverflow: hidden;\n}\n\n.container {\n\theight: 100%;\n\tfont-family: Roboto;\n}\n\n.navbar {\n\twidth: 100%;\n\tdisplay: flex;\n}\n\n.menu-container {\n\tflex: 1;\n\tdisplay: flex;\n\talign-items: flex-start;\n\tjustify-content: flex-start;\n}\n\n.menu-overlay {\n\tbackground-color: #FF8E8E;\n}\n\n.bm-burger-button {\n\tmargin-top: 25px;\n\tposition: fixed;\n\theight: 60px;\n\twidth: 120px;\n\tdisplay: inline;\n\toutline: 0;\n}\n\n.bm-burger-button-inverted {\n\tmargin-left:40px;\n\tbackground-image: url(/img/logo_color_filled_inverted.svg);\n\tbackground-repeat: no-repeat;\n\tjustify-self: flex-start;\n\tmargin-top: 25px;\n\tmargin-bottom: 15px;\n\tbackground-size: contain;\n\theight: 40px;\n\toutline: 0;\n}\n\n/* Styling of overlay */\n.bm-overlay {\n}\n\n.list-item {\n\tmargin-left:auto;\n\tmargin-right: auto;\n\tmargin-top: 5px;\n\tcolor: #FFFFFF; \n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 17px;\n\twidth: 100px;\n\tpadding-bottom: 5px;\n\tborder-bottom: 1px solid white;\n\tdisplay: flex;\n\toutline: 0;\n}\n\n.list-item-text {\n\tjustify-content: flex-start;\n}\n\n.bm-icon {\n\tmax-height: 40px;\n}\n\n.icon-container {\n\tmargin-top: 25px;\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: center;\n}\n\n.icon-image {\n\theight: 80px;\n}\n\n.pointer {\n\tcursor: pointer;\n}\n\n.review-more-container {\n  margin-top: 150px;\n  display: flex;\n  align-content: center;\n  justify-content: center;\n  flex-wrap: wrap;\n}\n\n.review-more-text {\n\twidth: 100%;\n\ttext-align: center;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 35px;\n\n\tcolor: #FF8E8E;\n}\n\n.review-more-buttons {\n\tmargin-top: 20px;\n\twidth: 400px;\n\tdisplay: flex;\n\n\tjustify-content: center;\n\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: #858585;\n}\n\n.home-button {\n\tmargin-left: 8px;\n\tcolor: #FF8E8E;\n}\n\n.nav-button {\n\tborder-radius: 8px;\n\tborder: 2px solid #E0E0E0;\n\tjustify-content: center;\n\tpadding: 8px;\n\tcursor: pointer;\n}\n\n.italic {\n\tfont-style: italic;\n}\n\n.entry-container {\n\tmargin-top: 60px;\n}\n\n.all-entries-button {\n\tcolor: #FF8E8E;\n\twidth: 125px;\n}\n\n.back-button-container {\n\tjustify-self: flex-start;\n}\n\n.search-container {\n\tmargin-right: 50px;\n\tflex: 1;\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: flex-end;\n}", ""]);
+exports.push([module.i, "#app {\n}\nhtml {\n\theight: 100%;\n}\nbody {\n\tz-index: 0;\n\tmargin: 0;\n\tpadding: 0;\n}\n\n.noscroll {\n\theight: 100%;\n\toverflow: hidden;\n}\n\n.container {\n\theight: 100%;\n\tfont-family: Roboto;\n}\n\n.navbar {\n\twidth: 100%;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n}\n\n.menu-container {\n\tmin-width: 300px;\n\tflex: 1;\n\tdisplay: flex;\n\talign-items: flex-start;\n\tjustify-content: flex-start;\n}\n\n.menu-overlay {\n\tbackground-color: #FF8E8E;\n}\n\n.bm-burger-button {\n\tmargin-top: 25px;\n\tposition: fixed;\n\theight: 60px;\n\twidth: 120px;\n\tdisplay: inline;\n\toutline: 0;\n}\n\n.bm-burger-button-inverted {\n\tmargin-left:60px;\n\tbackground-image: url(/img/logo_color_filled_inverted.svg);\n\tbackground-repeat: no-repeat;\n\tjustify-self: flex-start;\n\tmargin-top: 25px;\n\tmargin-bottom: 15px;\n\tbackground-size: contain;\n\theight: 40px;\n\toutline: 0;\n}\n\n/* Styling of overlay */\n.bm-overlay {\n}\n\n.list-item {\n\ttext-align: left;\n\tmargin-left:auto;\n\tmargin-right: auto;\n\tmargin-top: 5px;\n\twidth: 180px;\n\tpadding-bottom: 10px;\n\tborder-bottom: 1.5px solid white;\n\tdisplay: flex;\n\toutline: 0;\n}\n\n.list-item-text {\n\tjustify-content: flex-start;\n\tcolor: #FFFFFF; \n\ttext-decoration: none;\n\tfont-family: Roboto;\n\tfont-weight: 300;\n\tfont-size: 17px;\n}\n\n.bm-icon {\n\tmax-height: 40px;\n}\n\n.icon-container {\n\tmin-width: 200px;\n\tflex: 1;\n\tmargin-top: 25px;\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: center;\n}\n\n.icon-image {\n\theight: 80px;\n}\n\n.pointer {\n\tcursor: pointer;\n}\n\n.review-more-container {\n  margin-top: 150px;\n  display: flex;\n  align-content: center;\n  justify-content: center;\n  flex-wrap: wrap;\n}\n\n.review-more-text {\n\twidth: 100%;\n\ttext-align: center;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 35px;\n\n\tcolor: #FF8E8E;\n}\n\n.review-more-buttons {\n\tmargin-top: 20px;\n\twidth: 400px;\n\tdisplay: flex;\n\n\tjustify-content: center;\n\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: #858585;\n}\n\n.home-button {\n\tmargin-left: 8px;\n\tcolor: #FF8E8E;\n}\n\n.nav-button {\n\tborder-radius: 8px;\n\tborder: 2px solid #E0E0E0;\n\tjustify-content: center;\n\tpadding: 8px;\n\tcursor: pointer;\n}\n\n.italic {\n\tfont-style: italic;\n}\n\n.entry-container {\n\tmargin-top: 60px;\n}\n\n.all-entries-button {\n\tcolor: #FF8E8E;\n\twidth: 125px;\n}\n\n.back-button-container {\n\tjustify-self: flex-start;\n}\n\n.search-email {\n\twidth: 100%;\n\tflex-grow: 1;\n\tcolor:  #FF8E8E;\n\tfontFamily: 'Roboto';\n\tfontWeight: '400';\n\tfontSize: '17px';\n\ttext-align: right;\n\tmargin-right: 50px;\n}\n\n.search-container {\n\tmin-width: 200px;\n\tflex: 1;\n\tdisplay: flex;\n\tflex-flow: wrap;\n\talign-items: center;\n\tjustify-content: flex-end;\n}\n\n.show-text-container {\n  margin-top: 150px;\n  display: flex;\n  align-content: center;\n  justify-content: center;\n  flex-wrap: wrap;\n}\n\n.show-text {\n\twidth: 100%;\n\ttext-align: center;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 35px;\n\n\tcolor: #FF8E8E;\n}\n\n.show-more-buttons {\n\tmargin-top: 20px;\n\twidth: 400px;\n\tdisplay: flex;\n\n\tjustify-content: center;\n\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: #858585;\n}", ""]);
 // Exports
 module.exports = exports;
 
@@ -2642,6 +4455,24 @@ module.exports = exports;
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/dist/cjs.js!./src/main/js/css/login.css":
+/*!*************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./src/main/js/css/login.css ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, "html {\n    height: 100%;\n}\n\n.login-container {\n\twidth: 100%;\n\tmin-height: 500px;\n\theight: 100vh;\n\tdisplay: flex;\n  \talign-items: center;\n  \tjustify-content: center;\n}\n\n.login-box {\n\tflex: none;\n\twidth: 500px;\n\theight: 400px;\n\tborder: 2px solid #E0E0E0;\n\tbox-shadow: 0px 0px 15px 0px #ededed;\n\tbox-sizing: border-box;\n\tborder-radius: 15px;\n\tpadding-top: 30px;\n}\n\n.login-logo-row {\n\tdisplay: flex;\n\twidth: 500px;\n\tjustify-content: center;\n\tmargin-bottom: 25px;\n}\n\n.login-logo {\n\tmargin-left: auto;\n\tmargin-right: auto;\n\twidth: 100px;\n}\n\n.login-title {\n\tcolor: #FF8E8E; \n\twidth: 100%;\n\ttext-align: center;\n\tfont-family: Roboto;\n\tfont-weight: 500;\n\tfont-size: 50px;\n}\n\n.login-subtitle {\n\tcolor: #D6D6D6; \n\twidth: 100%;\n\ttext-align: center;\n\tfont-family: Roboto;\n\tfont-weight: 300;\n\tfont-size: 25px;\n}\n\n.login-google-logo {\n\theight: 25px;\n\tmargin-right: 8px;\n}\n\n.login-button {\n\twidth: 200px;\n\tdisplay: flex;\n\talign-items: center;\n\tmargin-top: 50px;\n\tmargin-left: auto;\n\tmargin-right: auto;\n\tborder-radius: 2px;\n\tbox-shadow: 0 3px 4px 0 rgba(0,0,0,.25);\n\tjustify-content: center;\n\tcursor: pointer;\n\tpadding-top: 8px;\n\tpadding-bottom: 8px;\n\tpadding-left: 4px;\n\tpadding-right: 4px;\n\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 17px;\n\n\tcolor: #8C8C8C;\n\ttransition: box-shadow 300ms linear;\n\ttransition: background-color 750ms linear;\n}\n\n.login-button:hover {\n\ttransition: box-shadow 300ms linear;\n\tbox-shadow: 0 0 15px rgba(66,133,244,.25);\n}\n\n.login-button:active {\n\ttransition: box-shadow 300ms linear;\n\tbackground-color: rgba(0,0,0,.1);\n\tbox-shadow: 0 0 15px rgba(66,133,244,.25);\n}", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js!./src/main/js/css/navigate.css":
 /*!****************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js!./src/main/js/css/navigate.css ***!
@@ -2671,7 +4502,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".review-container {\n\theight: 100%;\n\tmargin-top: 30px;\n\twidth: 100%;\n}\n.nav-dots {\n\tmargin-left: auto;\n\tmargin-right: auto;\n\twidth: 75px;\n\tdisplay: flex;\n\tjustify-content: space-around;\n\tmargin-bottom: 25px; \n}\n\n.nav-dot {\n\twidth: 15px;\n\theight: 15px;\n\tborder-radius: 10px;\n\tborder: 1px solid #E0E0E0;\n}\n\n.nav-dot:hover {\n\tbackground: #FFB6B6;\n\tborder: 1px solid #FFB6B6;\n}\n\n.nav-active {\n\tbackground: #FF8E8E;\n\tborder: 1px solid #FF8E8E;\n}\n\n.nav-active:hover {\n\tbackground: #FF8E8E;\n\tborder: 1px solid #FF8E8E;\n}\n\n.nav-buttons {\n\tmargin-left: auto;\n\tmargin-right: auto;\n\tmargin-top: 40px;\n\twidth: 400px;\n\tdisplay: flex;\n\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: #858585;\n}\n\n.prev-button-container {\n\twidth: 200px;\n\tdisplay: flex;\n\tjustify-content: flex-end;\n}\n\n.next-button-container {\n\twidth: 200px;\n\tdisplay: flex;\n\tjustify-content: flex-start;\n}\n\n.nav-button {\n\tborder-radius: 8px;\n\tborder: 2px solid #E0E0E0;\n\tjustify-content: center;\n\tpadding: 8px;\n\tcursor: pointer;\n}\n\n.nav-button-active:hover {\n\tbackground: #EDEDED;\n}\n\n.nav-button-disabled {\n\tcursor: initial;\n\tcolor: #EDEDED;\n\tborder: 2px solid #EDEDED;\n}\n\n.prev-button {\n\tmargin-right: 4px;\n}\n\n.next-button {\n\tmargin-left: 4px;\n}\n\n.review-more-container {\n  margin-top: 150px;\n  display: flex;\n  align-content: center;\n  justify-content: center;\n  flex-wrap: wrap;\n}\n\n.review-more-text {\n\twidth: 100%;\n\ttext-align: center;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 35px;\n\n\tcolor: #FF8E8E;\n}\n\n.review-more-buttons {\n\tmargin-top: 20px;\n\twidth: 400px;\n\tdisplay: flex;\n\n\tjustify-content: center;\n\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: #858585;\n}\n\n.home-button {\n\tmargin-right: 8px;\n\tcolor: #FF8E8E;\n}", ""]);
+exports.push([module.i, ".review-container {\n\theight: 100%;\n\tmargin-top: 30px;\n\twidth: 100%;\n}\n.nav-dots {\n\tmargin-left: auto;\n\tmargin-right: auto;\n\twidth: 75px;\n\tdisplay: flex;\n\tjustify-content: space-around;\n\tmargin-bottom: 25px; \n}\n\n.nav-dot {\n\twidth: 15px;\n\theight: 15px;\n\tborder-radius: 10px;\n\tborder: 1px solid #E0E0E0;\n}\n\n.nav-dot:hover {\n\tbackground: #FFB6B6;\n\tborder: 1px solid #FFB6B6;\n}\n\n.nav-active {\n\tbackground: #FF8E8E;\n\tborder: 1px solid #FF8E8E;\n}\n\n.nav-active:hover {\n\tbackground: #FF8E8E;\n\tborder: 1px solid #FF8E8E;\n}\n\n.nav-buttons {\n\tmargin-left: auto;\n\tmargin-right: auto;\n\tmargin-top: 40px;\n\twidth: 400px;\n\tdisplay: flex;\n\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: #858585;\n}\n\n.prev-button-container {\n\twidth: 200px;\n\tdisplay: flex;\n\tjustify-content: flex-end;\n}\n\n.next-button-container {\n\twidth: 200px;\n\tdisplay: flex;\n\tjustify-content: flex-start;\n}\n\n.nav-button {\n\tborder-radius: 8px;\n\tborder: 2px solid #E0E0E0;\n\tjustify-content: center;\n\tpadding: 8px;\n\tcursor: pointer;\n}\n\n.nav-button-active:hover {\n\tbackground: #EDEDED;\n}\n\n.nav-button-disabled {\n\tcursor: initial;\n\tcolor: #EDEDED;\n\tborder: 2px solid #EDEDED;\n}\n\n.prev-button {\n\tmargin-right: 4px;\n}\n\n.next-button {\n\tmargin-left: 4px;\n}\n\n.home-button {\n\tmargin-right: 8px;\n\tcolor: #FF8E8E;\n}", ""]);
 // Exports
 module.exports = exports;
 
@@ -2780,6 +4611,112 @@ function toComment(sourceMap) {
   var data = "sourceMappingURL=data:application/json;charset=utf-8;base64,".concat(base64);
   return "/*# ".concat(data, " */");
 }
+
+/***/ }),
+
+/***/ "./node_modules/decode-uri-component/index.js":
+/*!****************************************************!*\
+  !*** ./node_modules/decode-uri-component/index.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var token = '%[a-f0-9]{2}';
+var singleMatcher = new RegExp(token, 'gi');
+var multiMatcher = new RegExp('(' + token + ')+', 'gi');
+
+function decodeComponents(components, split) {
+	try {
+		// Try to decode the entire string first
+		return decodeURIComponent(components.join(''));
+	} catch (err) {
+		// Do nothing
+	}
+
+	if (components.length === 1) {
+		return components;
+	}
+
+	split = split || 1;
+
+	// Split the array in 2 parts
+	var left = components.slice(0, split);
+	var right = components.slice(split);
+
+	return Array.prototype.concat.call([], decodeComponents(left), decodeComponents(right));
+}
+
+function decode(input) {
+	try {
+		return decodeURIComponent(input);
+	} catch (err) {
+		var tokens = input.match(singleMatcher);
+
+		for (var i = 1; i < tokens.length; i++) {
+			input = decodeComponents(tokens, i).join('');
+
+			tokens = input.match(singleMatcher);
+		}
+
+		return input;
+	}
+}
+
+function customDecodeURIComponent(input) {
+	// Keep track of all the replacements and prefill the map with the `BOM`
+	var replaceMap = {
+		'%FE%FF': '\uFFFD\uFFFD',
+		'%FF%FE': '\uFFFD\uFFFD'
+	};
+
+	var match = multiMatcher.exec(input);
+	while (match) {
+		try {
+			// Decode as big chunks as possible
+			replaceMap[match[0]] = decodeURIComponent(match[0]);
+		} catch (err) {
+			var result = decode(match[0]);
+
+			if (result !== match[0]) {
+				replaceMap[match[0]] = result;
+			}
+		}
+
+		match = multiMatcher.exec(input);
+	}
+
+	// Add `%C2` at the end of the map to make sure it does not replace the combinator before everything else
+	replaceMap['%C2'] = '\uFFFD';
+
+	var entries = Object.keys(replaceMap);
+
+	for (var i = 0; i < entries.length; i++) {
+		// Replace all decoded components
+		var key = entries[i];
+		input = input.replace(new RegExp(key, 'g'), replaceMap[key]);
+	}
+
+	return input;
+}
+
+module.exports = function (encodedURI) {
+	if (typeof encodedURI !== 'string') {
+		throw new TypeError('Expected `encodedURI` to be of type `string`, got `' + typeof encodedURI + '`');
+	}
+
+	try {
+		encodedURI = encodedURI.replace(/\+/g, ' ');
+
+		// Try the built in decoder first
+		return decodeURIComponent(encodedURI);
+	} catch (err) {
+		// Fallback to a more advanced decoder
+		return customDecodeURIComponent(encodedURI);
+	}
+};
+
 
 /***/ }),
 
@@ -6529,6 +8466,377 @@ if (true) {
 var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 module.exports = ReactPropTypesSecret;
+
+
+/***/ }),
+
+/***/ "./node_modules/query-string/index.js":
+/*!********************************************!*\
+  !*** ./node_modules/query-string/index.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+const strictUriEncode = __webpack_require__(/*! strict-uri-encode */ "./node_modules/strict-uri-encode/index.js");
+const decodeComponent = __webpack_require__(/*! decode-uri-component */ "./node_modules/decode-uri-component/index.js");
+const splitOnFirst = __webpack_require__(/*! split-on-first */ "./node_modules/split-on-first/index.js");
+
+const isNullOrUndefined = value => value === null || value === undefined;
+
+function encoderForArrayFormat(options) {
+	switch (options.arrayFormat) {
+		case 'index':
+			return key => (result, value) => {
+				const index = result.length;
+
+				if (
+					value === undefined ||
+					(options.skipNull && value === null) ||
+					(options.skipEmptyString && value === '')
+				) {
+					return result;
+				}
+
+				if (value === null) {
+					return [...result, [encode(key, options), '[', index, ']'].join('')];
+				}
+
+				return [
+					...result,
+					[encode(key, options), '[', encode(index, options), ']=', encode(value, options)].join('')
+				];
+			};
+
+		case 'bracket':
+			return key => (result, value) => {
+				if (
+					value === undefined ||
+					(options.skipNull && value === null) ||
+					(options.skipEmptyString && value === '')
+				) {
+					return result;
+				}
+
+				if (value === null) {
+					return [...result, [encode(key, options), '[]'].join('')];
+				}
+
+				return [...result, [encode(key, options), '[]=', encode(value, options)].join('')];
+			};
+
+		case 'comma':
+		case 'separator':
+			return key => (result, value) => {
+				if (value === null || value === undefined || value.length === 0) {
+					return result;
+				}
+
+				if (result.length === 0) {
+					return [[encode(key, options), '=', encode(value, options)].join('')];
+				}
+
+				return [[result, encode(value, options)].join(options.arrayFormatSeparator)];
+			};
+
+		default:
+			return key => (result, value) => {
+				if (
+					value === undefined ||
+					(options.skipNull && value === null) ||
+					(options.skipEmptyString && value === '')
+				) {
+					return result;
+				}
+
+				if (value === null) {
+					return [...result, encode(key, options)];
+				}
+
+				return [...result, [encode(key, options), '=', encode(value, options)].join('')];
+			};
+	}
+}
+
+function parserForArrayFormat(options) {
+	let result;
+
+	switch (options.arrayFormat) {
+		case 'index':
+			return (key, value, accumulator) => {
+				result = /\[(\d*)\]$/.exec(key);
+
+				key = key.replace(/\[\d*\]$/, '');
+
+				if (!result) {
+					accumulator[key] = value;
+					return;
+				}
+
+				if (accumulator[key] === undefined) {
+					accumulator[key] = {};
+				}
+
+				accumulator[key][result[1]] = value;
+			};
+
+		case 'bracket':
+			return (key, value, accumulator) => {
+				result = /(\[\])$/.exec(key);
+				key = key.replace(/\[\]$/, '');
+
+				if (!result) {
+					accumulator[key] = value;
+					return;
+				}
+
+				if (accumulator[key] === undefined) {
+					accumulator[key] = [value];
+					return;
+				}
+
+				accumulator[key] = [].concat(accumulator[key], value);
+			};
+
+		case 'comma':
+		case 'separator':
+			return (key, value, accumulator) => {
+				const isArray = typeof value === 'string' && value.split('').indexOf(options.arrayFormatSeparator) > -1;
+				const newValue = isArray ? value.split(options.arrayFormatSeparator).map(item => decode(item, options)) : value === null ? value : decode(value, options);
+				accumulator[key] = newValue;
+			};
+
+		default:
+			return (key, value, accumulator) => {
+				if (accumulator[key] === undefined) {
+					accumulator[key] = value;
+					return;
+				}
+
+				accumulator[key] = [].concat(accumulator[key], value);
+			};
+	}
+}
+
+function validateArrayFormatSeparator(value) {
+	if (typeof value !== 'string' || value.length !== 1) {
+		throw new TypeError('arrayFormatSeparator must be single character string');
+	}
+}
+
+function encode(value, options) {
+	if (options.encode) {
+		return options.strict ? strictUriEncode(value) : encodeURIComponent(value);
+	}
+
+	return value;
+}
+
+function decode(value, options) {
+	if (options.decode) {
+		return decodeComponent(value);
+	}
+
+	return value;
+}
+
+function keysSorter(input) {
+	if (Array.isArray(input)) {
+		return input.sort();
+	}
+
+	if (typeof input === 'object') {
+		return keysSorter(Object.keys(input))
+			.sort((a, b) => Number(a) - Number(b))
+			.map(key => input[key]);
+	}
+
+	return input;
+}
+
+function removeHash(input) {
+	const hashStart = input.indexOf('#');
+	if (hashStart !== -1) {
+		input = input.slice(0, hashStart);
+	}
+
+	return input;
+}
+
+function getHash(url) {
+	let hash = '';
+	const hashStart = url.indexOf('#');
+	if (hashStart !== -1) {
+		hash = url.slice(hashStart);
+	}
+
+	return hash;
+}
+
+function extract(input) {
+	input = removeHash(input);
+	const queryStart = input.indexOf('?');
+	if (queryStart === -1) {
+		return '';
+	}
+
+	return input.slice(queryStart + 1);
+}
+
+function parseValue(value, options) {
+	if (options.parseNumbers && !Number.isNaN(Number(value)) && (typeof value === 'string' && value.trim() !== '')) {
+		value = Number(value);
+	} else if (options.parseBooleans && value !== null && (value.toLowerCase() === 'true' || value.toLowerCase() === 'false')) {
+		value = value.toLowerCase() === 'true';
+	}
+
+	return value;
+}
+
+function parse(input, options) {
+	options = Object.assign({
+		decode: true,
+		sort: true,
+		arrayFormat: 'none',
+		arrayFormatSeparator: ',',
+		parseNumbers: false,
+		parseBooleans: false
+	}, options);
+
+	validateArrayFormatSeparator(options.arrayFormatSeparator);
+
+	const formatter = parserForArrayFormat(options);
+
+	// Create an object with no prototype
+	const ret = Object.create(null);
+
+	if (typeof input !== 'string') {
+		return ret;
+	}
+
+	input = input.trim().replace(/^[?#&]/, '');
+
+	if (!input) {
+		return ret;
+	}
+
+	for (const param of input.split('&')) {
+		let [key, value] = splitOnFirst(options.decode ? param.replace(/\+/g, ' ') : param, '=');
+
+		// Missing `=` should be `null`:
+		// http://w3.org/TR/2012/WD-url-20120524/#collect-url-parameters
+		value = value === undefined ? null : ['comma', 'separator'].includes(options.arrayFormat) ? value : decode(value, options);
+		formatter(decode(key, options), value, ret);
+	}
+
+	for (const key of Object.keys(ret)) {
+		const value = ret[key];
+		if (typeof value === 'object' && value !== null) {
+			for (const k of Object.keys(value)) {
+				value[k] = parseValue(value[k], options);
+			}
+		} else {
+			ret[key] = parseValue(value, options);
+		}
+	}
+
+	if (options.sort === false) {
+		return ret;
+	}
+
+	return (options.sort === true ? Object.keys(ret).sort() : Object.keys(ret).sort(options.sort)).reduce((result, key) => {
+		const value = ret[key];
+		if (Boolean(value) && typeof value === 'object' && !Array.isArray(value)) {
+			// Sort object keys, not values
+			result[key] = keysSorter(value);
+		} else {
+			result[key] = value;
+		}
+
+		return result;
+	}, Object.create(null));
+}
+
+exports.extract = extract;
+exports.parse = parse;
+
+exports.stringify = (object, options) => {
+	if (!object) {
+		return '';
+	}
+
+	options = Object.assign({
+		encode: true,
+		strict: true,
+		arrayFormat: 'none',
+		arrayFormatSeparator: ','
+	}, options);
+
+	validateArrayFormatSeparator(options.arrayFormatSeparator);
+
+	const shouldFilter = key => (
+		(options.skipNull && isNullOrUndefined(object[key])) ||
+		(options.skipEmptyString && object[key] === '')
+	);
+
+	const formatter = encoderForArrayFormat(options);
+
+	const objectCopy = {};
+
+	for (const key of Object.keys(object)) {
+		if (!shouldFilter(key)) {
+			objectCopy[key] = object[key];
+		}
+	}
+
+	const keys = Object.keys(objectCopy);
+
+	if (options.sort !== false) {
+		keys.sort(options.sort);
+	}
+
+	return keys.map(key => {
+		const value = object[key];
+
+		if (value === undefined) {
+			return '';
+		}
+
+		if (value === null) {
+			return encode(key, options);
+		}
+
+		if (Array.isArray(value)) {
+			return value
+				.reduce(formatter(key), [])
+				.join('&');
+		}
+
+		return encode(key, options) + '=' + encode(value, options);
+	}).filter(x => x.length > 0).join('&');
+};
+
+exports.parseUrl = (input, options) => {
+	return {
+		url: removeHash(input).split('?')[0] || '',
+		query: parse(extract(input), options)
+	};
+};
+
+exports.stringifyUrl = (input, options) => {
+	const url = removeHash(input.url).split('?')[0] || '';
+	const queryFromUrl = exports.extract(input.url);
+	const parsedQueryFromUrl = exports.parse(queryFromUrl);
+	const hash = getHash(input.url);
+	const query = Object.assign(parsedQueryFromUrl, input.query);
+	let queryString = exports.stringify(query, options);
+	if (queryString) {
+		queryString = `?${queryString}`;
+	}
+
+	return `${url}${queryString}${hash}`;
+};
 
 
 /***/ }),
@@ -55655,6 +57963,54 @@ module.exports = Snap
 
 /***/ }),
 
+/***/ "./node_modules/split-on-first/index.js":
+/*!**********************************************!*\
+  !*** ./node_modules/split-on-first/index.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = (string, separator) => {
+	if (!(typeof string === 'string' && typeof separator === 'string')) {
+		throw new TypeError('Expected the arguments to be of type `string`');
+	}
+
+	if (separator === '') {
+		return [string];
+	}
+
+	const separatorIndex = string.indexOf(separator);
+
+	if (separatorIndex === -1) {
+		return [string];
+	}
+
+	return [
+		string.slice(0, separatorIndex),
+		string.slice(separatorIndex + separator.length)
+	];
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/strict-uri-encode/index.js":
+/*!*************************************************!*\
+  !*** ./node_modules/strict-uri-encode/index.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.charCodeAt(0).toString(16).toUpperCase()}`);
+
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js":
 /*!****************************************************************************!*\
   !*** ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js ***!
@@ -59389,9 +61745,9 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/** @license MIT License (c) copyright 2010-20
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _TimeFormatUtils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TimeFormatUtils.js */ "./src/main/js/TimeFormatUtils.js");
-/* harmony import */ var _EntryViewComponent_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./EntryViewComponent.jsx */ "./src/main/js/EntryViewComponent.jsx");
-/* harmony import */ var _MiniCardComponent_jsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./MiniCardComponent.jsx */ "./src/main/js/MiniCardComponent.jsx");
+/* harmony import */ var _EntryViewComponent_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EntryViewComponent.jsx */ "./src/main/js/EntryViewComponent.jsx");
+/* harmony import */ var _MiniCardComponent_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./MiniCardComponent.jsx */ "./src/main/js/MiniCardComponent.jsx");
+/* harmony import */ var _TimeFormatUtils_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./TimeFormatUtils.js */ "./src/main/js/TimeFormatUtils.js");
 /* harmony import */ var _Storage_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Storage.js */ "./src/main/js/Storage.js");
 /* harmony import */ var _css_listMiniCards_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./css/listMiniCards.css */ "./src/main/js/css/listMiniCards.css");
 /* harmony import */ var _css_listMiniCards_css__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_css_listMiniCards_css__WEBPACK_IMPORTED_MODULE_5__);
@@ -59442,7 +61798,7 @@ var AllComponent = /*#__PURE__*/function (_Component) {
       var miniCards = [];
 
       for (var i = 0; i < _this.state.items.length; i++) {
-        miniCards.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_MiniCardComponent_jsx__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        miniCards.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_MiniCardComponent_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], {
           key: _this.state.items[i],
           thoughtId: _this.state.items[i],
           onClick: _this.goToEntry.bind(_assertThisInitialized(_this), i + 1)
@@ -59506,16 +61862,46 @@ var AllComponent = /*#__PURE__*/function (_Component) {
         }, function (err) {
           console.log(err);
         });
+        this.setState({
+          listView: true
+        });
       }
     }
   }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "all-list-container"
-      }, this.state.listView ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.state.listView ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.items.length == 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "show-text-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "show-text"
+      }, this.props.searchCriteria.size == 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "You haven't stored any thoughts!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "show-more-buttons"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "nav-button home-button",
+        style: {
+          marginRight: "0px"
+        },
+        onClick: function onClick() {
+          _this2.props.history.push("/");
+        }
+      }, "Back to home "))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "No thoughts found for query"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "show-more-buttons"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "nav-button home-button",
+        style: {
+          marginRight: "0px"
+        },
+        onClick: function onClick() {
+          _this2.props.history.push("/");
+        }
+      }, "Back to home "))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         "class": "all-mini-cards"
-      }, this.getMiniCards()) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_EntryViewComponent_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      }, this.getMiniCards())) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_EntryViewComponent_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        history: this.props.history,
         location: this.props.location,
         reviewIds: this.state.items,
         active: this.state.active,
@@ -59747,7 +62133,6 @@ var DeleteModal = /*#__PURE__*/function (_Component) {
       this.setState({
         showModal: false
       });
-      this.props.returnFocus();
     }
   }, {
     key: "deleteThought",
@@ -59921,6 +62306,7 @@ var EntryViewComponent = /*#__PURE__*/function (_Component) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "entry-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ThoughtCard_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        history: this.props.history,
         location: this.props.location,
         thoughtId: this.props.reviewIds[this.props.active - 1],
         toggleSavedContent: this.props.toggleSavedContent,
@@ -59969,7 +62355,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ThoughtCard_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ThoughtCard.jsx */ "./src/main/js/ThoughtCard.jsx");
 /* harmony import */ var _css_home_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./css/home.css */ "./src/main/js/css/home.css");
 /* harmony import */ var _css_home_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_css_home_css__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -59993,7 +62378,6 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 
 
@@ -60162,6 +62546,125 @@ var Icon = /*#__PURE__*/function (_Component) {
 
 /***/ }),
 
+/***/ "./src/main/js/LoginComponent.jsx":
+/*!****************************************!*\
+  !*** ./src/main/js/LoginComponent.jsx ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _css_login_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./css/login.css */ "./src/main/js/css/login.css");
+/* harmony import */ var _css_login_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_css_login_css__WEBPACK_IMPORTED_MODULE_1__);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["default"];
+
+
+
+var LoginComponent = /*#__PURE__*/function (_Component) {
+  _inherits(LoginComponent, _Component);
+
+  var _super = _createSuper(LoginComponent);
+
+  function LoginComponent(props) {
+    _classCallCheck(this, LoginComponent);
+
+    return _super.call(this, props);
+  }
+
+  _createClass(LoginComponent, [{
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      var component = this;
+      var element = document.getElementById("login-button");
+
+      if (prevProps.googleAuth == null || this.props.googleAuth != null) {
+        this.props.googleAuth.attachClickHandler(element, {}, function (googleUser) {
+          console.log(googleUser.getAuthResponse().id_token);
+          axios({
+            method: "post",
+            url: "/v2/authenticate",
+            data: googleUser.getAuthResponse().id_token
+          }).then(function (response) {
+            if (response.status === 200) {
+              if (response.data.error != "") {
+                alert(JSON.stringify(response.data.error, undefined, 2));
+              } else {
+                component.props.saveUserData(response.data.userId, response.data.userEmail);
+                component.props.history.push("/");
+              }
+            } else {
+              alert(JSON.stringify(response.data.error, undefined, 2));
+            }
+          })["catch"](function (err) {
+            console.log(err);
+            alert(JSON.stringify(err, undefined, 2));
+          });
+        }, function (error) {
+          alert(JSON.stringify(error, undefined, 2));
+        });
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "login-container"
+      }, this.props.googleAuth != null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "login-box"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        "class": "login-logo-row"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "login-logo",
+        src: "/img/logo_color_transparent.png",
+        alt: "Menu Logo"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "login-title"
+      }, "Pencyl"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "login-subtitle"
+      }, " Keep track of your thoughts. "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        "class": "login-button g-signin",
+        id: "login-button"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "login-google-logo",
+        src: "/img/google_logo.svg"
+      }), " Sign in with Google")) : null);
+    }
+  }]);
+
+  return LoginComponent;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+/* harmony default export */ __webpack_exports__["default"] = (LoginComponent);
+
+/***/ }),
+
 /***/ "./src/main/js/Menu.jsx":
 /*!******************************!*\
   !*** ./src/main/js/Menu.jsx ***!
@@ -60256,7 +62759,7 @@ var Menu = /*#__PURE__*/function (_Component) {
         menuClassName: "menu-overlay",
         disableAutoFocus: true,
         styles: styles,
-        width: 180,
+        width: 300,
         isOpen: this.state.isOpen,
         onStateChange: function onStateChange(state) {
           return _this2.handleStateChange(state);
@@ -60368,8 +62871,6 @@ var MiniCardComponent = /*#__PURE__*/function (_Component) {
       Object(_Storage_js__WEBPACK_IMPORTED_MODULE_2__["getThought"])(_this.props.thoughtId).then(function (thought) {
         component.setState({
           currentThought: thought
-        }, function () {
-          console.log(component.state.currentThought);
         });
       }, function (err) {
         console.log(err);
@@ -60697,11 +63198,11 @@ var ReviewComponent = /*#__PURE__*/function (_Component) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "review-container"
       }, this.state.showReviewMoreScreen ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "review-more-container"
+        className: "show-text-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "review-more-text"
+        className: "show-text"
       }, "\uD83C\uDF89  You reviewed ", this.state.reviewIds.length, " entries!  \uD83C\uDF89"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "review-more-buttons"
+        className: "show-more-buttons"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "nav-button home-button",
         onClick: function onClick() {
@@ -60713,6 +63214,7 @@ var ReviewComponent = /*#__PURE__*/function (_Component) {
       }, " Review More "))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.reviewIds.length > 0 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "nav-dots"
       }, this.getNavDots()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ThoughtCard_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        history: this.props.history,
         location: this.props.location,
         thoughtId: this.state.reviewIds[this.state.active - 1],
         toggleSavedContent: this.props.toggleSavedContent,
@@ -60845,6 +63347,14 @@ var Search = /*#__PURE__*/function (_Component) {
       }
     });
 
+    _defineProperty(_assertThisInitialized(_this), "getEmail", function () {
+      if (userEmail != null && userEmail != "") {
+        return userEmail;
+      }
+
+      return _this.props.userEmail;
+    });
+
     _this.state = {
       searchQuery: "",
       searchOptions: []
@@ -60858,7 +63368,9 @@ var Search = /*#__PURE__*/function (_Component) {
       var customStyles = {
         container: function container(provided, state) {
           return _objectSpread({}, provided, {
-            width: '300px'
+            marginRight: "50px",
+            flex: 1,
+            maxWidth: '300px'
           });
         },
         dropdownIndicator: function dropdownIndicator(provided, state) {
@@ -60896,19 +63408,15 @@ var Search = /*#__PURE__*/function (_Component) {
           };
         },
         multiValue: function multiValue(provided, state) {
-          return _objectSpread({}, provided, {
+          var _objectSpread2;
+
+          return _objectSpread({}, provided, (_objectSpread2 = {
             width: "auto",
-            color: '#858585',
+            color: '#8C8C8C',
             fontFamily: 'Roboto',
             fontWeight: '400',
-            fontSize: '17px',
-            backgroundColor: '#FAFAFA',
-            backgroundPosition: state.data.type === "tag" ? "left center" : "none",
-            backgroundImage: state.data.type === "tag" ? "url(/img/tag_mini.svg)" : "none",
-            backgroundSize: state.data.type === "tag" ? "30px 30px" : "none",
-            backgroundRepeat: state.data.type === "tag" ? "no-repeat" : "none",
-            paddingLeft: state.data.type === "tag" ? "30px" : "none"
-          });
+            fontSize: '17px'
+          }, _defineProperty(_objectSpread2, "fontFamily", "Roboto"), _defineProperty(_objectSpread2, "backgroundColor", '#FAFAFA'), _defineProperty(_objectSpread2, "borderRadius", "10px"), _defineProperty(_objectSpread2, "backgroundPosition", state.data.type === "tag" ? "left center" : "none"), _defineProperty(_objectSpread2, "backgroundImage", state.data.type === "tag" ? "url(/img/tag_mini.svg)" : "none"), _defineProperty(_objectSpread2, "backgroundSize", state.data.type === "tag" ? "30px 30px" : "none"), _defineProperty(_objectSpread2, "backgroundRepeat", state.data.type === "tag" ? "no-repeat" : "none"), _defineProperty(_objectSpread2, "paddingLeft", state.data.type === "tag" ? "30px" : "none"), _objectSpread2));
         },
         indicatorsContainer: function indicatorsContainer(provided, state) {
           return {};
@@ -60937,7 +63445,9 @@ var Search = /*#__PURE__*/function (_Component) {
       };
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "search-container"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_select__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "search-email"
+      }, this.getEmail()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_select__WEBPACK_IMPORTED_MODULE_1__["default"], {
         styles: customStyles,
         placeholder: "Search",
         options: this.state.searchOptions,
@@ -60961,19 +63471,34 @@ var Search = /*#__PURE__*/function (_Component) {
 /*!********************************!*\
   !*** ./src/main/js/Storage.js ***!
   \********************************/
-/*! exports provided: saveThought, getThought, getThoughtsToReview, finishReviewingThoughts, updateThought, searchThoughts */
+/*! exports provided: saveThought, getThought, deleteThought, getThoughtsToReview, finishReviewingThoughts, updateThought, searchThoughts */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveThought", function() { return saveThought; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getThought", function() { return getThought; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteThought", function() { return deleteThought; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getThoughtsToReview", function() { return getThoughtsToReview; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "finishReviewingThoughts", function() { return finishReviewingThoughts; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateThought", function() { return updateThought; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "searchThoughts", function() { return searchThoughts; });
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid */ "./node_modules/uuid/dist/esm-browser/index.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -60997,7 +63522,11 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["default"];
 
+
+
+var queryString = __webpack_require__(/*! query-string */ "./node_modules/query-string/index.js");
 
 var StorageClient = /*#__PURE__*/function () {
   function StorageClient() {
@@ -61027,20 +63556,357 @@ var StorageClient = /*#__PURE__*/function () {
   return StorageClient;
 }();
 
-var SessionStorageClient = /*#__PURE__*/function (_StorageClient) {
-  _inherits(SessionStorageClient, _StorageClient);
+var BackendStorageClient = /*#__PURE__*/function (_StorageClient) {
+  _inherits(BackendStorageClient, _StorageClient);
 
-  var _super = _createSuper(SessionStorageClient);
+  var _super = _createSuper(BackendStorageClient);
+
+  function BackendStorageClient() {
+    var _this;
+
+    _classCallCheck(this, BackendStorageClient);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _super.call.apply(_super, [this].concat(args));
+
+    _defineProperty(_assertThisInitialized(_this), "convertEntityToThought", function (entity) {
+      console.log(entity);
+      var thought = {
+        id: null,
+        title: null,
+        content: null,
+        creationTimestampMs: null,
+        tags: new Map(),
+        category: 0,
+        replies: new Map(),
+        plusOnes: 1,
+        completed: false,
+        lastEditedTimestampMs: null,
+        lastReviewedTimestampMs: null,
+        deleted: false
+      };
+      thought.id = entity.id;
+      thought.title = entity.title;
+      thought.content = entity.content;
+      thought.creationTimestampMs = entity.creation_timestamp_ms;
+
+      for (var i = 0; i < entity.tags.length; i++) {
+        thought.tags.set(entity.tags[i].tag_key, entity.tags[i].tag_content);
+      }
+
+      thought.category = entity.category;
+
+      for (var i = 0; i < entity.replies.length; i++) {
+        thought.replies.set(entity.replies[i].reply_timestamp_ms, entity.replies[i].reply_content);
+      }
+
+      thought.plusOnes = entity.plusOnes;
+      thought.completed = entity.completed;
+      thought.lastReviewedTimestampMs = entity.last_reviewed_timestamp_ms;
+      thought.lastEditedTimestampMs = entity.last_edited_timestamp_ms;
+      return thought;
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "convertThoughtToEntity", function (thought) {
+      console.log(thought);
+      var entity = {
+        tags: [],
+        replies: []
+      };
+
+      if (thought.id != null) {
+        entity.id = thought.id;
+        entity.creation_timestamp_ms = thought.creationTimestampMs;
+        entity.last_reviewed_timestamp_ms = thought.lastReviewedTimestampMs;
+      }
+
+      entity.title = thought.title;
+      entity.content = thought.content;
+
+      var _iterator = _createForOfIteratorHelper(thought.tags),
+          _step;
+
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var _step$value = _slicedToArray(_step.value, 2),
+              key = _step$value[0],
+              value = _step$value[1];
+
+          entity.tags.push({
+            "tag_key": key,
+            "tag_content": value
+          });
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+
+      entity.category = thought.category;
+
+      var _iterator2 = _createForOfIteratorHelper(thought.replies),
+          _step2;
+
+      try {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var _step2$value = _slicedToArray(_step2.value, 2),
+              _key2 = _step2$value[0],
+              _value = _step2$value[1];
+
+          entity.replies.push({
+            "reply_timestamp_ms": _key2,
+            "reply_content": _value
+          });
+        }
+      } catch (err) {
+        _iterator2.e(err);
+      } finally {
+        _iterator2.f();
+      }
+
+      entity.plusOnes = thought.plusOnes;
+      entity.completed = thought.completed;
+      console.log(entity);
+      return entity;
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "getThought", function (thoughtId) {
+      var backendClient = _assertThisInitialized(_this);
+
+      return new Promise(function (resolve, reject) {
+        axios({
+          method: 'get',
+          url: '/v2/get?id=' + thoughtId,
+          headers: {
+            'Cache-Control': 'max-stale=5s'
+          }
+        }).then(function (response) {
+          if (response.status === 200) {
+            if (response.data.error != "") {
+              reject(response.data.error);
+            } else {
+              try {
+                var thought = backendClient.convertEntityToThought(response.data.thought);
+                resolve(thought);
+              } catch (err) {
+                console.log(err);
+                reject("Encountered error while getting thought from database :{. Try agian later?");
+              }
+            }
+          } else {
+            reject("Encountered error while getting thought from database :(. Try again later?");
+          }
+        }, function (err) {
+          console.log(err);
+          reject("Encountered error while getting thought from database :(. Try again later?");
+        });
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "deleteThought", function (thoughtId) {
+      var backendClient = _assertThisInitialized(_this);
+
+      return new Promise(function (resolve, reject) {
+        axios({
+          method: 'delete',
+          url: '/v2/delete?id=' + thoughtId
+        }).then(function (response) {
+          if (response.status === 200) {
+            if (response.data.error != "") {
+              reject(response.data.error);
+            } else {
+              resolve();
+            }
+          } else {
+            reject("Encountered error while deleting thought from database :(. Try again later?");
+          }
+        }, function (err) {
+          console.log(err);
+          reject("Encountered error while deleting thought from database :(. Try again later?");
+        });
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "saveThought", function (newThought) {
+      var backendClient = _assertThisInitialized(_this);
+
+      return new Promise(function (resolve, reject) {
+        if (newThought == null) {
+          reject(Error("Cannot save empty thought"));
+          return;
+        }
+
+        var entity = backendClient.convertThoughtToEntity(newThought);
+        axios({
+          method: 'post',
+          url: '/v2/save',
+          data: entity
+        }).then(function (response) {
+          if (response.status === 200) {
+            if (response.data.error != "") {
+              reject(response.data.error);
+            } else {
+              resolve(response.data);
+            }
+          } else {
+            reject("Encountered error while saving thought in database :(. Try again later?");
+          }
+        })["catch"](function (err) {
+          console.log(err);
+          reject("Encountered error while saving thought in database :(. Try again later?");
+        });
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "getThoughtsToReview", function () {
+      var backendClient = _assertThisInitialized(_this);
+
+      return new Promise(function (resolve, reject) {
+        axios({
+          method: 'get',
+          url: '/v2/review'
+        }).then(function (response) {
+          if (response.status === 200) {
+            if (response.data.error != "") {
+              reject(response.data.error);
+            } else {
+              console.log(response.data);
+              resolve(response.data.thoughtsInReview);
+            }
+          } else {
+            reject("Encountered error while getting thoughts to review :(. Try again later?");
+          }
+        })["catch"](function (err) {
+          console.log(err);
+          reject("Encountered error while getting thoughts to review :(. Try again later?");
+        });
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "finishReviewingThoughts", function () {
+      var backendClient = _assertThisInitialized(_this);
+
+      return new Promise(function (resolve, reject) {
+        axios({
+          method: 'post',
+          url: '/v2/finishReview'
+        }).then(function (response) {
+          if (response.status === 200) {
+            if (response.data.error != "") {
+              reject(response.data.error);
+            } else {
+              resolve();
+            }
+          } else {
+            reject("Encountered error while finishing review :(");
+          }
+        })["catch"](function (err) {
+          console.log(err);
+          reject("Encountered error while finishing review :(");
+        });
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "updateThought", function (updatedThought) {
+      var backendClient = _assertThisInitialized(_this);
+
+      return new Promise(function (resolve, reject) {
+        if (backendClient == null) {
+          reject(Error("Cannot update empty thought"));
+          return;
+        }
+
+        var entity = backendClient.convertThoughtToEntity(updatedThought);
+        axios({
+          method: 'put',
+          url: '/v2/update',
+          data: entity
+        }).then(function (response) {
+          console.log(response);
+
+          if (response.status === 200) {
+            if (response.data.error != "") {
+              reject(response.data.error);
+            } else {
+              resolve(response.data.currentTime);
+            }
+          } else {
+            reject("Encountered error while updating thought in database :(. Try again later?");
+          }
+        })["catch"](function (err) {
+          console.log(err);
+          reject("Encountered error while updating thought in database :(. Try again later?");
+        });
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "searchThoughts", function (searchCriteria) {
+      var backendClient = _assertThisInitialized(_this);
+
+      var query = {};
+      searchCriteria.forEach(function (criteria, criteriaKey, map) {
+        if (criteria.type === "regular") {
+          if (!("regular" in query)) {
+            query["regular"] = [];
+          }
+
+          query["regular"].push(criteria.value);
+        } else if (criteria.type === "tag") {
+          if (!("tag" in query)) {
+            query["tag"] = [];
+          }
+
+          query["tag"].push(criteria.value);
+        }
+      });
+      query = queryString.stringify(query);
+      return new Promise(function (resolve, reject) {
+        axios({
+          method: 'get',
+          url: '/v2/search?' + query
+        }).then(function (response) {
+          console.log(response);
+
+          if (response.status === 200) {
+            if (response.data.error != "") {
+              reject(response.data.error);
+            } else {
+              resolve(response.data.thoughts);
+            }
+          } else {
+            reject("Encountered error while getting thoughts from database :(. Try again later?");
+          }
+        }, function (err) {
+          console.log(err);
+          reject("Encountered error while getting thoughts from database :(. Try again later?");
+        });
+      });
+    });
+
+    return _this;
+  }
+
+  return BackendStorageClient;
+}(StorageClient);
+
+var SessionStorageClient = /*#__PURE__*/function (_StorageClient2) {
+  _inherits(SessionStorageClient, _StorageClient2);
+
+  var _super2 = _createSuper(SessionStorageClient);
 
   function SessionStorageClient() {
-    var _this;
+    var _this2;
 
     _classCallCheck(this, SessionStorageClient);
 
-    _this = _super.call(this);
+    _this2 = _super2.call(this);
 
-    _defineProperty(_assertThisInitialized(_this), "saveThought", function (newThought) {
-      var localStorageSupported = _this.localStorageSupported;
+    _defineProperty(_assertThisInitialized(_this2), "saveThought", function (newThought) {
+      var localStorageSupported = _this2.localStorageSupported;
       return new Promise(function (resolve, reject) {
         if (newThought == null) {
           reject(Error("Cannot save empty thought"));
@@ -61068,7 +63934,6 @@ var SessionStorageClient = /*#__PURE__*/function (_StorageClient) {
           }
 
           thoughtsDictionary[id] = newThought;
-          console.log(newThought);
           localStorage.thoughts = JSON.stringify(thoughtsDictionary);
           setTimeout(function () {
             resolve({
@@ -61083,8 +63948,8 @@ var SessionStorageClient = /*#__PURE__*/function (_StorageClient) {
       });
     });
 
-    _defineProperty(_assertThisInitialized(_this), "getThought", function (thoughtId) {
-      var localStorageSupported = _this.localStorageSupported;
+    _defineProperty(_assertThisInitialized(_this2), "getThought", function (thoughtId) {
+      var localStorageSupported = _this2.localStorageSupported;
       return new Promise(function (resolve, reject) {
         if (!localStorageSupported) {
           reject(Error("Cannot pull thought in review. Browser does not support local storage. "));
@@ -61108,8 +63973,8 @@ var SessionStorageClient = /*#__PURE__*/function (_StorageClient) {
       });
     });
 
-    _defineProperty(_assertThisInitialized(_this), "getThoughtsToReview", function () {
-      var localStorageSupported = _this.localStorageSupported;
+    _defineProperty(_assertThisInitialized(_this2), "getThoughtsToReview", function () {
+      var localStorageSupported = _this2.localStorageSupported;
       return new Promise(function (resolve, reject) {
         if (!localStorageSupported) {
           reject(Error("Cannot pull thoughts in review. Browser does not support local storage. "));
@@ -61154,8 +64019,8 @@ var SessionStorageClient = /*#__PURE__*/function (_StorageClient) {
       });
     });
 
-    _defineProperty(_assertThisInitialized(_this), "finishReviewingThoughts", function () {
-      var localStorageSupported = _this.localStorageSupported;
+    _defineProperty(_assertThisInitialized(_this2), "finishReviewingThoughts", function () {
+      var localStorageSupported = _this2.localStorageSupported;
       return new Promise(function (resolve, reject) {
         if (!localStorageSupported) {
           reject(Error("Cannot finish reviewing thoughts. Browser does not support local storage."));
@@ -61174,9 +64039,9 @@ var SessionStorageClient = /*#__PURE__*/function (_StorageClient) {
       });
     });
 
-    _defineProperty(_assertThisInitialized(_this), "updateThought", function (updatedThought) {
+    _defineProperty(_assertThisInitialized(_this2), "updateThought", function (updatedThought) {
       updatedThought = Object.assign({}, updatedThought);
-      var localStorageSupported = _this.localStorageSupported;
+      var localStorageSupported = _this2.localStorageSupported;
       return new Promise(function (resolve, reject) {
         if (!localStorageSupported) {
           reject(Error("Cannot update thought. Browser does not support local storage."));
@@ -61204,8 +64069,8 @@ var SessionStorageClient = /*#__PURE__*/function (_StorageClient) {
       });
     });
 
-    _defineProperty(_assertThisInitialized(_this), "searchThoughts", function (searchCriteria) {
-      var localStorageSupported = _this.localStorageSupported;
+    _defineProperty(_assertThisInitialized(_this2), "searchThoughts", function (searchCriteria) {
+      var localStorageSupported = _this2.localStorageSupported;
       return new Promise(function (resolve, reject) {
         if (!localStorageSupported) {
           reject(Error("Cannot pull thoughts. Browser does not support local storage. "));
@@ -61231,15 +64096,12 @@ var SessionStorageClient = /*#__PURE__*/function (_StorageClient) {
                 }
 
                 thoughtTags.forEach(function (tag, tagKey, map) {
-                  console.log(tag);
-
                   if (tag === criteria.value) {
                     include = true;
                   }
                 });
               } else {
                 if (thoughtsDictionary[key].title.includes(criteria.value) || thoughtsDictionary[key].content.includes(criteria.value)) {
-                  console.log(thoughtsDictionary[key]);
                   include = true;
                 }
               }
@@ -61259,24 +64121,38 @@ var SessionStorageClient = /*#__PURE__*/function (_StorageClient) {
 
     if (typeof Storage == "undefined") {
       console.log("Cannot store to local storage");
-      _this.localStorageSupported = false;
+      _this2.localStorageSupported = false;
     } else {
-      _this.localStorageSupported = true;
+      _this2.localStorageSupported = true;
     }
 
-    return _this;
+    return _this2;
   }
 
   return SessionStorageClient;
 }(StorageClient);
 
+var BothStorageClient = function BothStorageClient() {
+  _classCallCheck(this, BothStorageClient);
+
+  this.sessionStorageClient = new SessionStorageClient();
+  this.backendStorageClient = new BackendStorageClient();
+} // getThoughtsToReview(){
+// }	
+// finishReviewingThoughts(){
+// }
+;
+
+var backendStorageClient = new BackendStorageClient();
 var storageClient = new SessionStorageClient();
-var saveThought = storageClient.saveThought;
-var getThought = storageClient.getThought;
-var getThoughtsToReview = storageClient.getThoughtsToReview;
-var finishReviewingThoughts = storageClient.finishReviewingThoughts;
-var updateThought = storageClient.updateThought;
-var searchThoughts = storageClient.searchThoughts;
+var bothStorageClient = new BothStorageClient();
+var saveThought = backendStorageClient.saveThought;
+var getThought = backendStorageClient.getThought;
+var deleteThought = backendStorageClient.deleteThought;
+var getThoughtsToReview = backendStorageClient.getThoughtsToReview;
+var finishReviewingThoughts = backendStorageClient.finishReviewingThoughts;
+var updateThought = backendStorageClient.updateThought;
+var searchThoughts = backendStorageClient.searchThoughts;
 
 /***/ }),
 
@@ -61291,14 +64167,14 @@ var searchThoughts = storageClient.searchThoughts;
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _CategoryComponent_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CategoryComponent.jsx */ "./src/main/js/CategoryComponent.jsx");
-/* harmony import */ var react_autosize_textarea__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-autosize-textarea */ "./node_modules/react-autosize-textarea/lib/index.js");
-/* harmony import */ var react_autosize_textarea__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_autosize_textarea__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _DeleteModal_jsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./DeleteModal.jsx */ "./src/main/js/DeleteModal.jsx");
-/* harmony import */ var immutability_helper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! immutability-helper */ "./node_modules/immutability-helper/index.js");
-/* harmony import */ var immutability_helper__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(immutability_helper__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var react_tiny_popover__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-tiny-popover */ "./node_modules/react-tiny-popover/dist/Popover.js");
-/* harmony import */ var react_tiny_popover__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_tiny_popover__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var react_autosize_textarea__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-autosize-textarea */ "./node_modules/react-autosize-textarea/lib/index.js");
+/* harmony import */ var react_autosize_textarea__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_autosize_textarea__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_tiny_popover__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-tiny-popover */ "./node_modules/react-tiny-popover/dist/Popover.js");
+/* harmony import */ var react_tiny_popover__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_tiny_popover__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var immutability_helper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! immutability-helper */ "./node_modules/immutability-helper/index.js");
+/* harmony import */ var immutability_helper__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(immutability_helper__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _CategoryComponent_jsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CategoryComponent.jsx */ "./src/main/js/CategoryComponent.jsx");
+/* harmony import */ var _DeleteModal_jsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./DeleteModal.jsx */ "./src/main/js/DeleteModal.jsx");
 /* harmony import */ var _Storage_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Storage.js */ "./src/main/js/Storage.js");
 /* harmony import */ var _TimeFormatUtils_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./TimeFormatUtils.js */ "./src/main/js/TimeFormatUtils.js");
 /* harmony import */ var animate_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! animate.css */ "./node_modules/animate.css/animate.css");
@@ -61370,16 +64246,17 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
       var component = _assertThisInitialized(_this);
 
       Object(_Storage_js__WEBPACK_IMPORTED_MODULE_6__["getThought"])(_this.props.thoughtId).then(function (thought) {
-        console.log(thought);
+        document.getElementById("thought-title-area").value = thought.title;
+        document.getElementById("thought-content-area").value = thought.content;
         component.setState({
           currentThought: thought,
           hasTitle: thought.title != "",
           hasContent: thought.content != "",
           hasTagContent: false,
-          hasTypedInfo: true
+          hasTypedInfo: true,
+          minRows: 4
         });
-        document.getElementById("thought-title-area").value = thought.title;
-        document.getElementById("thought-content-area").value = thought.content;
+        console.log(document.getElementById("thought-content-area").value);
       }, function (err) {
         console.log(err);
       });
@@ -61479,7 +64356,7 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "incrementPlusOnes", function () {
       _this.setState({
-        currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_4___default()(_this.state.currentThought, {
+        currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_3___default()(_this.state.currentThought, {
           plusOnes: {
             $set: _this.state.currentThought.plusOnes + 1
           }
@@ -61489,7 +64366,7 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "resetPlusOnes", function () {
       _this.setState({
-        currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_4___default()(_this.state.currentThought, {
+        currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_3___default()(_this.state.currentThought, {
           plusOnes: {
             $set: 0
           }
@@ -61514,7 +64391,7 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
             "class": "thought-reply-box thought-reply-item"
           }, content, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             "class": "thought-reply-timestamp"
-          }, Object(_TimeFormatUtils_js__WEBPACK_IMPORTED_MODULE_7__["quickFormat"])(timestamp), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_tiny_popover__WEBPACK_IMPORTED_MODULE_5___default.a, {
+          }, Object(_TimeFormatUtils_js__WEBPACK_IMPORTED_MODULE_7__["quickFormat"])(timestamp), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_tiny_popover__WEBPACK_IMPORTED_MODULE_2___default.a, {
             isOpen: _this.state.showPopoverReplyId == timestamp,
             position: 'right' // preferred position
             ,
@@ -61566,7 +64443,7 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
     _defineProperty(_assertThisInitialized(_this), "deleteReply", function (key) {
       _this.setState({
         showPopoverReplyId: "",
-        currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_4___default()(_this.state.currentThought, {
+        currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_3___default()(_this.state.currentThought, {
           replies: {
             $remove: [key]
           }
@@ -61586,13 +64463,11 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
 
       _this.setState({
         isDeletePopoverOpen: false,
-        currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_4___default()(_this.state.currentThought, {
+        currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_3___default()(_this.state.currentThought, {
           replies: {
             $add: [[currTimestamp, reply]]
           }
         })
-      }, function () {
-        console.log(_this.state.currentThought.replies);
       });
 
       _this.clearReply();
@@ -61609,10 +64484,7 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
 
       if (_this.props.location.pathname !== "/") {
         tagItems.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "thought-tag-bubble",
-          style: {
-            background: "#E0E0E0"
-          }
+          className: "thought-tag-bubble thought-plus-one"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: "pointer",
           onClick: _this.incrementPlusOnes
@@ -61651,7 +64523,13 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
       return tagItems;
     });
 
-    _defineProperty(_assertThisInitialized(_this), "checkTagValidity", function () {});
+    _defineProperty(_assertThisInitialized(_this), "clearTagContent", function () {
+      document.getElementById("tag-input").value = "";
+
+      _this.setState({
+        hasTagContent: false
+      });
+    });
 
     _defineProperty(_assertThisInitialized(_this), "getTagCheckmarkOrCross", function () {
       if (_this.state.hasTagContent) {
@@ -61674,7 +64552,8 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
 
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
             src: "/img/red_cross.svg",
-            className: "thought-checkmark"
+            className: "thought-checkmark pointer",
+            onClick: _this.clearTagContent
           });
         }
       }
@@ -61693,24 +64572,21 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
         var uniqueString = !_this.state.currentThought.tags.has(tagHash);
 
         if (uniqueString) {
+          _this.props.toggleSavedContent(true);
+
           tagInput.setCustomValidity('');
 
           _this.setState({
-            hasTagContent: false,
-            currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_4___default()(_this.state.currentThought, {
+            currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_3___default()(_this.state.currentThought, {
               tags: {
                 $add: [[tagHash, tagVal]]
               }
             })
-          });
-
-          document.getElementById("tag-input").value = "";
+          }, _this.clearTagContent);
         } else {
           tagInput.setCustomValidity('This tag already exists for this thought!');
           tagInput.reportValidity();
         }
-
-        _this.props.toggleSavedContent(true);
 
         if (_this.props.location.pathname !== "/") {
           _this.updateThought();
@@ -61721,7 +64597,7 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
     _defineProperty(_assertThisInitialized(_this), "deleteTag", function (key) {
       if (_this.state.currentThought.tags.has(key)) {
         _this.setState({
-          currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_4___default()(_this.state.currentThought, {
+          currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_3___default()(_this.state.currentThought, {
             tags: {
               $remove: [key]
             }
@@ -61737,10 +64613,8 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "changeCategory", function (newCategory) {
-      console.log(newCategory);
-
       _this.setState({
-        currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_4___default()(_this.state.currentThought, {
+        currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_3___default()(_this.state.currentThought, {
           completed: {
             $set: false
           },
@@ -61759,7 +64633,7 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "toggleThoughtComplete", function () {
       _this.setState({
-        currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_4___default()(_this.state.currentThought, {
+        currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_3___default()(_this.state.currentThought, {
           completed: {
             $set: !_this.state.currentThought.completed
           }
@@ -61785,10 +64659,17 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
         });
       } else {
         if (_this.props.location.pathname !== "/") {
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            className: "thought-update pointer",
-            onClick: _this.updateThought.bind(_assertThisInitialized(_this), true)
-          }, "Update Thought");
+          if (_this.props.hasUnsavedContent) {
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              className: "thought-update pointer",
+              onClick: _this.updateThought.bind(_assertThisInitialized(_this), true)
+            }, "Update Thought");
+          } else {
+            return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+              className: "thought-update-disabled pointer",
+              onClick: _this.updateThought.bind(_assertThisInitialized(_this), true)
+            }, "Update Thought");
+          }
         } else if (_this.state.hasTypedInfo) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "thought-update pointer",
@@ -61806,14 +64687,17 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
       var forceUpdate = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
       var currTime = new Date().getTime();
 
-      if (forceUpdate || (_this.state.reviewLastUpdated == null || currTime > _this.state.reviewLastUpdated + 5000) && _this.props.hasUnsavedContent) {
+      if (forceUpdate || (_this.state.reviewLastUpdated == null || currTime > _this.state.reviewLastUpdated + 5000) && _this.props.hasUnsavedContent && !_this.state.currentlySaving) {
+        console.log(currTime);
+        console.log(_this.state.reviewLastUpdated);
+
         var component = _assertThisInitialized(_this);
 
         var title = document.getElementById("thought-title-area").value;
         var content = document.getElementById("thought-content-area").value;
         component.setState({
           currentlySaving: true,
-          currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_4___default()(component.state.currentThought, {
+          currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_3___default()(component.state.currentThought, {
             title: {
               $set: title
             },
@@ -61826,7 +64710,7 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
             component.props.toggleSavedContent(false);
             component.setState({
               reviewLastUpdated: currTime,
-              currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_4___default()(component.state.currentThought, {
+              currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_3___default()(component.state.currentThought, {
                 lastEditedTimestampMs: {
                   $set: editTimestamp
                 }
@@ -61840,7 +64724,6 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
               currentlySaving: false,
               saveSuccess: true
             }, function () {
-              console.log("let it be");
               setTimeout(function () {
                 component.setState({
                   saveSuccess: false
@@ -61860,7 +64743,7 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
 
       _this.setState({
         currentlySaving: true,
-        currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_4___default()(_this.state.currentThought, {
+        currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_3___default()(_this.state.currentThought, {
           title: {
             $set: title
           },
@@ -61931,7 +64814,7 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "getClearOrDelete", function () {
-      if (_this.props.location === "/") {
+      if (_this.props.location.pathname === "/" || _this.props.location.pathname === "") {
         if (_this.state.hasTypedInfo) {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             className: "thought-delete-enabled pointer",
@@ -61943,7 +64826,7 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
           }, "Clear");
         }
       } else {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_DeleteModal_jsx__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_DeleteModal_jsx__WEBPACK_IMPORTED_MODULE_5__["default"], {
           deleteThought: _this.deleteThought
         });
       }
@@ -61969,22 +64852,27 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "deleteThought", function () {
-      _this.props.toggleSavedContent(false);
-
-      _this.resetThoughtData();
+      var component = _assertThisInitialized(_this);
 
       _this.setState({
         hasTitle: false,
         hasContent: false,
         hasTagContent: false,
         hasTypedInfo: false
+      }, function () {
+        Object(_Storage_js__WEBPACK_IMPORTED_MODULE_6__["deleteThought"])(_this.state.currentThought.id).then(function (result) {
+          component.props.toggleSavedContent(false);
+          component.resetThoughtData();
+          document.getElementById("tag-input").value = "";
+          document.getElementById("thought-title-area").value = "";
+          document.getElementById("thought-content-area").value = "";
+          component.setFocusToContent();
+          console.log(component.props);
+          component.props.history.push("/");
+        }, function (err) {
+          console.log(err);
+        });
       });
-
-      document.getElementById("tag-input").value = "";
-      document.getElementById("thought-title-area").value = "";
-      document.getElementById("thought-content-area").value = "";
-
-      _this.setFocusToContent();
     });
 
     _this.state = {
@@ -62010,7 +64898,8 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
       currentlySaving: false,
       saveSuccess: false,
       showPopoverReplyId: "",
-      reviewLastUpdated: null
+      reviewLastUpdated: null,
+      minRows: 3
     };
     return _this;
   }
@@ -62057,15 +64946,21 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
   }, {
     key: "getTagColor",
     value: function getTagColor(tagHash) {
-      if (tagHash % 100 < 33) {
+      if (tagHash % 100 < 25) {
         return {
           background: "#FFF48E"
         };
       }
 
-      if (tagHash % 100 < 66) {
+      if (tagHash % 100 < 50) {
         return {
           background: "#90DBAE"
+        };
+      }
+
+      if (tagHash % 100 < 75) {
+        return {
+          background: "#f5a798"
         };
       }
 
@@ -62099,7 +64994,7 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
         className: "thought-created-at"
       }, "Created at ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         id: "created-at-formatted"
-      }, Object(_TimeFormatUtils_js__WEBPACK_IMPORTED_MODULE_7__["prettyFormat"])(this.state.currentThought.creationTimestampMs)))) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_autosize_textarea__WEBPACK_IMPORTED_MODULE_2___default.a, {
+      }, Object(_TimeFormatUtils_js__WEBPACK_IMPORTED_MODULE_7__["prettyFormat"])(this.state.currentThought.creationTimestampMs)))) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_autosize_textarea__WEBPACK_IMPORTED_MODULE_1___default.a, {
         className: "thought-title",
         placeholder: "Title",
         onChange: this.onTitleUpdate,
@@ -62109,13 +65004,13 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
         className: "thought-clear"
       }, this.getClearOrDelete())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "thought-content-box"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_autosize_textarea__WEBPACK_IMPORTED_MODULE_2___default.a, {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_autosize_textarea__WEBPACK_IMPORTED_MODULE_1___default.a, {
         className: "thought-content",
         placeholder: "What's on your mind?",
         onChange: this.onContentUpdate,
+        minRows: this.state.minRows,
         maxRows: 15,
-        id: "thought-content-area",
-        minrows: 3
+        id: "thought-content-area"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "thought-bottom-box"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -62143,7 +65038,7 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
         onKeyUp: this.onTagKeyUp,
         id: "tag-input",
         maxLength: "25"
-      }), this.getTagCheckmarkOrCross()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CategoryComponent_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      }), this.getTagCheckmarkOrCross()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CategoryComponent_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], {
         updateCategory: this.changeCategory,
         defaultCategory: this.state.currentThought.category
       }), this.props.location.pathname !== "/" && this.state.currentThought.category == 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -62157,7 +65052,7 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
         className: "thought-replies"
       }, this.getReplies(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "thought-reply-box"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_autosize_textarea__WEBPACK_IMPORTED_MODULE_2___default.a, {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_autosize_textarea__WEBPACK_IMPORTED_MODULE_1___default.a, {
         className: "thought-reply-input",
         placeholder: "Reply",
         maxRows: 3,
@@ -62355,25 +65250,26 @@ var __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_RESULT__ = (function (r
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Menu_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Menu.jsx */ "./src/main/js/Menu.jsx");
-/* harmony import */ var _Icon_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Icon.jsx */ "./src/main/js/Icon.jsx");
-/* harmony import */ var _Search_jsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Search.jsx */ "./src/main/js/Search.jsx");
-/* harmony import */ var _HomeComponent_jsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./HomeComponent.jsx */ "./src/main/js/HomeComponent.jsx");
-/* harmony import */ var _ReviewComponent_jsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ReviewComponent.jsx */ "./src/main/js/ReviewComponent.jsx");
-/* harmony import */ var _AllComponent_jsx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./AllComponent.jsx */ "./src/main/js/AllComponent.jsx");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _client__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./client */ "./src/main/js/client.js");
-/* harmony import */ var _client__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_client__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var react_modal__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-modal */ "./node_modules/react-modal/lib/index.js");
-/* harmony import */ var react_modal__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react_modal__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var immutability_helper__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! immutability-helper */ "./node_modules/immutability-helper/index.js");
-/* harmony import */ var immutability_helper__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(immutability_helper__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _css_app_css__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./css/app.css */ "./src/main/js/css/app.css");
-/* harmony import */ var _css_app_css__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_css_app_css__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _css_navigate_css__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./css/navigate.css */ "./src/main/js/css/navigate.css");
-/* harmony import */ var _css_navigate_css__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_css_navigate_css__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_modal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-modal */ "./node_modules/react-modal/lib/index.js");
+/* harmony import */ var react_modal__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_modal__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var immutability_helper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! immutability-helper */ "./node_modules/immutability-helper/index.js");
+/* harmony import */ var immutability_helper__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(immutability_helper__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _Menu_jsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Menu.jsx */ "./src/main/js/Menu.jsx");
+/* harmony import */ var _Icon_jsx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Icon.jsx */ "./src/main/js/Icon.jsx");
+/* harmony import */ var _Search_jsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Search.jsx */ "./src/main/js/Search.jsx");
+/* harmony import */ var _HomeComponent_jsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./HomeComponent.jsx */ "./src/main/js/HomeComponent.jsx");
+/* harmony import */ var _ReviewComponent_jsx__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ReviewComponent.jsx */ "./src/main/js/ReviewComponent.jsx");
+/* harmony import */ var _AllComponent_jsx__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./AllComponent.jsx */ "./src/main/js/AllComponent.jsx");
+/* harmony import */ var _LoginComponent_jsx__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./LoginComponent.jsx */ "./src/main/js/LoginComponent.jsx");
+/* harmony import */ var _client__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./client */ "./src/main/js/client.js");
+/* harmony import */ var _client__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_client__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _css_app_css__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./css/app.css */ "./src/main/js/css/app.css");
+/* harmony import */ var _css_app_css__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_css_app_css__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var _css_navigate_css__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./css/navigate.css */ "./src/main/js/css/navigate.css");
+/* harmony import */ var _css_navigate_css__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_css_navigate_css__WEBPACK_IMPORTED_MODULE_14__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
@@ -62415,88 +65311,179 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 var App = /*#__PURE__*/function (_Component) {
   _inherits(App, _Component);
 
   var _super = _createSuper(App);
 
-  function App(props) {
+  function App(_props) {
     var _this;
 
     _classCallCheck(this, App);
 
-    _this = _super.call(this, props);
+    _this = _super.call(this, _props);
 
-    _defineProperty(_assertThisInitialized(_this), "toggleSavedContent", function () {
+    _defineProperty(_assertThisInitialized(_this), "toggleSavedContent", function (hasUnsavedContent) {
       _this.setState({
-        hasUnsavedContent: !_this.state.hasUnsavedContent
+        hasUnsavedContent: hasUnsavedContent
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "saveUserData", function (userEmail, userId) {
+      console.log("hi");
+
+      _this.setState({
+        isLoggedIn: true,
+        userEmail: userEmail,
+        userId: userId
       });
     });
 
     _defineProperty(_assertThisInitialized(_this), "updateSearch", function (item, action) {
       if (action.action === "select-option") {
         _this.setState({
-          searchCriteria: immutability_helper__WEBPACK_IMPORTED_MODULE_10___default()(_this.state.searchCriteria, {
+          searchCriteria: immutability_helper__WEBPACK_IMPORTED_MODULE_3___default()(_this.state.searchCriteria, {
             $add: [[item.label, item]]
           })
-        }, function () {
-          console.log(item);
-          console.log(_this.state.searchCriteria);
         });
       } else if (action.action === "remove-value") {
         _this.setState({
-          searchCriteria: immutability_helper__WEBPACK_IMPORTED_MODULE_10___default()(_this.state.searchCriteria, {
+          searchCriteria: immutability_helper__WEBPACK_IMPORTED_MODULE_3___default()(_this.state.searchCriteria, {
             $remove: [item.label]
           })
         });
       }
     });
 
+    _defineProperty(_assertThisInitialized(_this), "getReviewComponent", function (props) {
+      console.log(_this.state.isLoggedIn);
+
+      if (_this.state.googleAuth == null) {
+        return "loading";
+      }
+
+      if (_this.state.isLoggedIn) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ReviewComponent_jsx__WEBPACK_IMPORTED_MODULE_9__["default"], _extends({}, props, {
+          toggleSavedContent: _this.toggleSavedContent,
+          hasUnsavedContent: _this.state.hasUnsavedContent
+        }));
+      } else {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Redirect"], {
+          to: "/login"
+        });
+      }
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "getViewComponent", function (props) {
+      console.log(_this.state.isLoggedIn);
+
+      if (_this.state.googleAuth == null) {
+        return "loading";
+      }
+
+      if (_this.state.isLoggedIn) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AllComponent_jsx__WEBPACK_IMPORTED_MODULE_10__["default"], _extends({}, props, {
+          toggleSavedContent: _this.toggleSavedContent,
+          hasUnsavedContent: _this.state.hasUnsavedContent,
+          searchCriteria: _this.state.searchCriteria
+        }));
+      } else {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Redirect"], {
+          to: "/login"
+        });
+      }
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "getHomeComponent", function (props) {
+      if (_this.state.googleAuth == null) {
+        return "loading";
+      }
+
+      if (_this.state.isLoggedIn) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_HomeComponent_jsx__WEBPACK_IMPORTED_MODULE_8__["default"], _extends({}, props, {
+          toggleSavedContent: _this.toggleSavedContent
+        }));
+      } else {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Redirect"], {
+          to: "/login"
+        });
+      }
+    });
+
+    var isLoggedIn = false;
+
+    if (userId != null && userEmail != null && userId != "" && userEmail != "") {
+      isLoggedIn = true;
+    }
+
     _this.state = {
       page: "home",
       newPage: null,
       hasUnsavedContent: false,
-      searchCriteria: new Map()
+      searchCriteria: new Map(),
+      newSearchQuery: false,
+      isLoggedIn: isLoggedIn,
+      userEmail: "",
+      userId: "",
+      googleAuth: null
     };
     return _this;
   }
 
   _createClass(App, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var component = this;
+      gapi.load('auth2', function () {
+        // Retrieve the singleton for the GoogleAuth library and set up the client.
+        gapi.auth2.init({
+          client_id: GCS_CLIENT_ID,
+          cookiepolicy: 'single_host_origin'
+        }).then(function () {
+          var auth2 = gapi.auth2.getAuthInstance();
+          component.setState({
+            googleAuth: auth2
+          });
+        });
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__["BrowserRouter"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["BrowserRouter"], null, this.state.isLoggedIn ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "navbar"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Menu_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Icon_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Menu_jsx__WEBPACK_IMPORTED_MODULE_5__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Icon_jsx__WEBPACK_IMPORTED_MODULE_6__["default"], {
         page: this.state.page
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Search_jsx__WEBPACK_IMPORTED_MODULE_3__["default"], {
-        updateSearch: this.updateSearch
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__["Route"], {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Search_jsx__WEBPACK_IMPORTED_MODULE_7__["default"], {
+        updateSearch: this.updateSearch,
+        userEmail: this.userEmail
+      })) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Route"], {
         path: "/review",
         render: function render(props) {
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ReviewComponent_jsx__WEBPACK_IMPORTED_MODULE_5__["default"], _extends({}, props, {
-            toggleSavedContent: _this2.toggleSavedContent,
-            hasUnsavedContent: _this2.state.hasUnsavedContent
+          return _this2.getReviewComponent(props);
+        }
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Route"], {
+        path: "/login",
+        render: function render(props) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_LoginComponent_jsx__WEBPACK_IMPORTED_MODULE_11__["default"], _extends({}, props, {
+            googleAuth: _this2.state.googleAuth,
+            saveUserData: _this2.saveUserData
           }));
         }
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__["Route"], {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Route"], {
         path: "/view",
         render: function render(props) {
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AllComponent_jsx__WEBPACK_IMPORTED_MODULE_6__["default"], _extends({}, props, {
-            toggleSavedContent: _this2.toggleSavedContent,
-            hasUnsavedContent: _this2.state.hasUnsavedContent,
-            searchCriteria: _this2.state.searchCriteria
-          }));
+          return _this2.getViewComponent(props);
         }
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__["Route"], {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Route"], {
         path: "/",
         render: function render(props) {
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_HomeComponent_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], _extends({}, props, {
-            toggleSavedContent: _this2.toggleSavedContent
-          }));
+          return _this2.getHomeComponent(props);
         }
       }))));
     }
@@ -62505,8 +65492,8 @@ var App = /*#__PURE__*/function (_Component) {
   return App;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
-react_modal__WEBPACK_IMPORTED_MODULE_9___default.a.setAppElement('#app');
-react_dom__WEBPACK_IMPORTED_MODULE_7___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(App, null), document.getElementById('app'));
+react_modal__WEBPACK_IMPORTED_MODULE_2___default.a.setAppElement('#app');
+react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(App, null), document.getElementById('app'));
 
 /***/ }),
 
@@ -62633,6 +65620,32 @@ module.exports = exported;
 var api = __webpack_require__(/*! ../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
 
 var content = __webpack_require__(/*! !../../../../node_modules/css-loader/dist/cjs.js!./listMiniCards.css */ "./node_modules/css-loader/dist/cjs.js!./src/main/js/css/listMiniCards.css");
+
+content = content.__esModule ? content["default"] : content;
+
+if (typeof content === 'string') {
+  content = [[module.i, content, '']];
+}
+
+var options = {};
+options.insert = "head";
+options.singleton = false;
+var update = api(content, options);
+var exported = content.locals ? content.locals : {};
+module.exports = exported;
+
+/***/ }),
+
+/***/ "./src/main/js/css/login.css":
+/*!***********************************!*\
+  !*** ./src/main/js/css/login.css ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var api = __webpack_require__(/*! ../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader/dist/cjs.js!./login.css */ "./node_modules/css-loader/dist/cjs.js!./src/main/js/css/login.css");
 
 content = content.__esModule ? content["default"] : content;
 

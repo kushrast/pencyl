@@ -45,12 +45,21 @@ class Search extends Component {
 		}
 	}
 
+	getEmail = () => {
+		if (userEmail != null && userEmail != "") {
+			return userEmail;
+		}
+		return this.props.userEmail;
+	}
+
   render() {
 
 const customStyles = {
 		container: (provided, state) => ({
 			...provided,
-			width: '300px',
+			marginRight: "50px",
+			flex: 1,
+			maxWidth: '300px',
 		}),
 		dropdownIndicator: (provided, state) => ({
 			display: "none",
@@ -83,11 +92,13 @@ const customStyles = {
 		multiValue: (provided, state) => ({
 			...provided,
 			width: "auto",
-			color: '#858585',
+			color: '#8C8C8C',
 			fontFamily: 'Roboto',
 			fontWeight: '400',
 			fontSize: '17px',
+			fontFamily: "Roboto",
 			backgroundColor: '#FAFAFA', 
+			borderRadius: "10px",
 			backgroundPosition: state.data.type === "tag" ? "left center" : "none",
 			backgroundImage: state.data.type === "tag" ? "url(/img/tag_mini.svg)" : "none",
 			backgroundSize: state.data.type === "tag" ? "30px 30px" : "none",
@@ -120,6 +131,9 @@ const customStyles = {
 
   	return (
 	  	<div className="search-container">
+	  		<div className="search-email">
+	  			{this.getEmail()}
+	  		</div>
 	  		<Select styles={customStyles} placeholder="Search" options={this.state.searchOptions} isClearable={false} isSearchable={true} onInputChange={this.updateSearchOptions} isMulti={true} onChange={this.onChange} />
 	  	</div>
   	);

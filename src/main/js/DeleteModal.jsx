@@ -21,7 +21,6 @@ class DeleteModal extends Component {
   handleCloseModal () {
     document.body.classList.remove("noscroll");
     this.setState({ showModal: false });
-    this.props.returnFocus();
   }
 
   deleteThought () {
