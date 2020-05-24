@@ -4455,24 +4455,6 @@ module.exports = exports;
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js!./src/main/js/css/login.css":
-/*!*************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js!./src/main/js/css/login.css ***!
-  \*************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, "html {\n    height: 100%;\n}\n\n.login-container {\n\twidth: 100%;\n\tmin-height: 500px;\n\theight: 100vh;\n\tdisplay: flex;\n  \talign-items: center;\n  \tjustify-content: center;\n}\n\n.login-box {\n\tflex: none;\n\twidth: 500px;\n\theight: 400px;\n\tborder: 2px solid #E0E0E0;\n\tbox-shadow: 0px 0px 15px 0px #ededed;\n\tbox-sizing: border-box;\n\tborder-radius: 15px;\n\tpadding-top: 30px;\n}\n\n.login-logo-row {\n\tdisplay: flex;\n\twidth: 500px;\n\tjustify-content: center;\n\tmargin-bottom: 25px;\n}\n\n.login-logo {\n\tmargin-left: auto;\n\tmargin-right: auto;\n\twidth: 100px;\n}\n\n.login-title {\n\tcolor: #FF8E8E; \n\twidth: 100%;\n\ttext-align: center;\n\tfont-family: Roboto;\n\tfont-weight: 500;\n\tfont-size: 50px;\n}\n\n.login-subtitle {\n\tcolor: #D6D6D6; \n\twidth: 100%;\n\ttext-align: center;\n\tfont-family: Roboto;\n\tfont-weight: 300;\n\tfont-size: 25px;\n}\n\n.login-google-logo {\n\theight: 25px;\n\tmargin-right: 8px;\n}\n\n.login-button {\n\twidth: 200px;\n\tdisplay: flex;\n\talign-items: center;\n\tmargin-top: 50px;\n\tmargin-left: auto;\n\tmargin-right: auto;\n\tborder-radius: 2px;\n\tbox-shadow: 0 3px 4px 0 rgba(0,0,0,.25);\n\tjustify-content: center;\n\tcursor: pointer;\n\tpadding-top: 8px;\n\tpadding-bottom: 8px;\n\tpadding-left: 4px;\n\tpadding-right: 4px;\n\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 17px;\n\n\tcolor: #8C8C8C;\n\ttransition: box-shadow 300ms linear;\n\ttransition: background-color 750ms linear;\n}\n\n.login-button:hover {\n\ttransition: box-shadow 300ms linear;\n\tbox-shadow: 0 0 15px rgba(66,133,244,.25);\n}\n\n.login-button:active {\n\ttransition: box-shadow 300ms linear;\n\tbackground-color: rgba(0,0,0,.1);\n\tbox-shadow: 0 0 15px rgba(66,133,244,.25);\n}", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
 /***/ "./node_modules/css-loader/dist/cjs.js!./src/main/js/css/navigate.css":
 /*!****************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js!./src/main/js/css/navigate.css ***!
@@ -4484,7 +4466,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.thought-nav-overlay {\n\tbackground-color: rgba(196, 196, 196, 0.41);\n    position: fixed;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    overflow: scroll;\n}\n\n.thought-nav-modal-container {\n\tmargin-top: 200px;\n\twidth: 100%;\n\tdisplay: flex;\n\toutline: 0;\n}\n\n.thought-nav-modal {\n\tbackground-color: white;\n\tborder-radius: 10px;\n\tmax-width: 400px;\n\tmargin-left: auto;\n\tmargin-right: auto;\n\tpadding: 25px 20px 25px 20px;\n\toutline: 0;\n\tdisplay: flex;\n\theight: 150px;\n\tflex-direction: column;\n}\n\n.thought-nav-modal-title {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 25px;\n\tcolor: #959595;\n}\n\n.thought-delete-modal-content {\n\tdisplay: flex;\n\tflex-wrap: nowrap;\n\tmargin-top: 20px;\n}\n\n.thought-nav-modal-subtitle {\n\tfont-family: Roboto;\n\tfont-weight: 300;\n\tfont-size: 20px;\n\tcolor: #ACACAC;\n}\n\n.thought-nav-modal-buttons {\n\twidth: 100%;\n\tdisplay: flex;\n\tjustify-content: flex-end;\n\n}\n\n.thought-nav-cancel {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 20px;\n\tcolor: #959595;\n}\n\n.thought-nav-separator {\n\tmargin-left: 10px;\n\tmargin-right: 10px;\n\twidth: 1px;\n\tbackground-color: #EDEDED;\n\theight: 20px;\n}\n\n.thought-nav-confirm {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 20px;\n\tcolor: #E15151;\n}", ""]);
+exports.push([module.i, "\n.thought-nav-overlay {\n\tbackground-color: rgba(196, 196, 196, 0.41);\n    position: fixed;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    overflow: scroll;\n}\n\n.thought-nav-modal-container {\n\tmargin-top: 200px;\t\n\twidth: 100%;\n\tdisplay: flex;\n\toutline: 0;\n}\n\n.thought-nav-modal {\n\tbackground-color: white;\n\tborder-radius: 10px;\n\tmax-width: 400px;\n\tmargin-left: auto;\n\tmargin-right: auto;\n\tpadding: 25px 20px 25px 20px;\n\toutline: 0;\n\tdisplay: flex;\n\theight: 150px;\n\tflex-direction: column;\n}\n\n.thought-nav-modal-title {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 25px;\n\tcolor: #959595;\n}\n\n.thought-delete-modal-content {\n\tdisplay: flex;\n\tflex-wrap: nowrap;\n\tmargin-top: 20px;\n}\n\n.thought-nav-modal-subtitle {\n\tfont-family: Roboto;\n\tfont-weight: 300;\n\tfont-size: 20px;\n\tcolor: #ACACAC;\n}\n\n.thought-nav-modal-buttons {\n\twidth: 100%;\n\tdisplay: flex;\n\tjustify-content: flex-end;\n\n}\n\n.thought-nav-cancel {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 20px;\n\tcolor: #959595;\n}\n\n.thought-nav-separator {\n\tmargin-left: 10px;\n\tmargin-right: 10px;\n\twidth: 1px;\n\tbackground-color: #EDEDED;\n\theight: 20px;\n}\n\n.thought-nav-confirm {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 20px;\n\tcolor: #E15151;\n}", ""]);
 // Exports
 module.exports = exports;
 
@@ -62546,125 +62528,6 @@ var Icon = /*#__PURE__*/function (_Component) {
 
 /***/ }),
 
-/***/ "./src/main/js/LoginComponent.jsx":
-/*!****************************************!*\
-  !*** ./src/main/js/LoginComponent.jsx ***!
-  \****************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _css_login_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./css/login.css */ "./src/main/js/css/login.css");
-/* harmony import */ var _css_login_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_css_login_css__WEBPACK_IMPORTED_MODULE_1__);
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-
-
-var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["default"];
-
-
-
-var LoginComponent = /*#__PURE__*/function (_Component) {
-  _inherits(LoginComponent, _Component);
-
-  var _super = _createSuper(LoginComponent);
-
-  function LoginComponent(props) {
-    _classCallCheck(this, LoginComponent);
-
-    return _super.call(this, props);
-  }
-
-  _createClass(LoginComponent, [{
-    key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps) {
-      var component = this;
-      var element = document.getElementById("login-button");
-
-      if (prevProps.googleAuth == null || this.props.googleAuth != null) {
-        this.props.googleAuth.attachClickHandler(element, {}, function (googleUser) {
-          console.log(googleUser.getAuthResponse().id_token);
-          axios({
-            method: "post",
-            url: "/v2/authenticate",
-            data: googleUser.getAuthResponse().id_token
-          }).then(function (response) {
-            if (response.status === 200) {
-              if (response.data.error != "") {
-                alert(JSON.stringify(response.data.error, undefined, 2));
-              } else {
-                component.props.saveUserData(response.data.userId, response.data.userEmail);
-                component.props.history.push("/");
-              }
-            } else {
-              alert(JSON.stringify(response.data.error, undefined, 2));
-            }
-          })["catch"](function (err) {
-            console.log(err);
-            alert(JSON.stringify(err, undefined, 2));
-          });
-        }, function (error) {
-          alert(JSON.stringify(error, undefined, 2));
-        });
-      }
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "login-container"
-      }, this.props.googleAuth != null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "login-box"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        "class": "login-logo-row"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        className: "login-logo",
-        src: "/img/logo_color_transparent.png",
-        alt: "Menu Logo"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "login-title"
-      }, "Pencyl"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "login-subtitle"
-      }, " Keep track of your thoughts. "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        "class": "login-button g-signin",
-        id: "login-button"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        className: "login-google-logo",
-        src: "/img/google_logo.svg"
-      }), " Sign in with Google")) : null);
-    }
-  }]);
-
-  return LoginComponent;
-}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
-
-/* harmony default export */ __webpack_exports__["default"] = (LoginComponent);
-
-/***/ }),
-
 /***/ "./src/main/js/Menu.jsx":
 /*!******************************!*\
   !*** ./src/main/js/Menu.jsx ***!
@@ -65263,13 +65126,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _HomeComponent_jsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./HomeComponent.jsx */ "./src/main/js/HomeComponent.jsx");
 /* harmony import */ var _ReviewComponent_jsx__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ReviewComponent.jsx */ "./src/main/js/ReviewComponent.jsx");
 /* harmony import */ var _AllComponent_jsx__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./AllComponent.jsx */ "./src/main/js/AllComponent.jsx");
-/* harmony import */ var _LoginComponent_jsx__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./LoginComponent.jsx */ "./src/main/js/LoginComponent.jsx");
-/* harmony import */ var _client__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./client */ "./src/main/js/client.js");
-/* harmony import */ var _client__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_client__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _css_app_css__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./css/app.css */ "./src/main/js/css/app.css");
-/* harmony import */ var _css_app_css__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_css_app_css__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _css_navigate_css__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./css/navigate.css */ "./src/main/js/css/navigate.css");
-/* harmony import */ var _css_navigate_css__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_css_navigate_css__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _client__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./client */ "./src/main/js/client.js");
+/* harmony import */ var _client__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_client__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _css_app_css__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./css/app.css */ "./src/main/js/css/app.css");
+/* harmony import */ var _css_app_css__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_css_app_css__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _css_navigate_css__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./css/navigate.css */ "./src/main/js/css/navigate.css");
+/* harmony import */ var _css_navigate_css__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_css_navigate_css__WEBPACK_IMPORTED_MODULE_13__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
@@ -65311,7 +65173,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-
 var App = /*#__PURE__*/function (_Component) {
   _inherits(App, _Component);
 
@@ -65327,16 +65188,6 @@ var App = /*#__PURE__*/function (_Component) {
     _defineProperty(_assertThisInitialized(_this), "toggleSavedContent", function (hasUnsavedContent) {
       _this.setState({
         hasUnsavedContent: hasUnsavedContent
-      });
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "saveUserData", function (userEmail, userId) {
-      console.log("hi");
-
-      _this.setState({
-        isLoggedIn: true,
-        userEmail: userEmail,
-        userId: userId
       });
     });
 
@@ -65357,65 +65208,25 @@ var App = /*#__PURE__*/function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "getReviewComponent", function (props) {
-      console.log(_this.state.isLoggedIn);
-
-      if (_this.state.googleAuth == null) {
-        return "loading";
-      }
-
-      if (_this.state.isLoggedIn) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ReviewComponent_jsx__WEBPACK_IMPORTED_MODULE_9__["default"], _extends({}, props, {
-          toggleSavedContent: _this.toggleSavedContent,
-          hasUnsavedContent: _this.state.hasUnsavedContent
-        }));
-      } else {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Redirect"], {
-          to: "/login"
-        });
-      }
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ReviewComponent_jsx__WEBPACK_IMPORTED_MODULE_9__["default"], _extends({}, props, {
+        toggleSavedContent: _this.toggleSavedContent,
+        hasUnsavedContent: _this.state.hasUnsavedContent
+      }));
     });
 
     _defineProperty(_assertThisInitialized(_this), "getViewComponent", function (props) {
-      console.log(_this.state.isLoggedIn);
-
-      if (_this.state.googleAuth == null) {
-        return "loading";
-      }
-
-      if (_this.state.isLoggedIn) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AllComponent_jsx__WEBPACK_IMPORTED_MODULE_10__["default"], _extends({}, props, {
-          toggleSavedContent: _this.toggleSavedContent,
-          hasUnsavedContent: _this.state.hasUnsavedContent,
-          searchCriteria: _this.state.searchCriteria
-        }));
-      } else {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Redirect"], {
-          to: "/login"
-        });
-      }
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AllComponent_jsx__WEBPACK_IMPORTED_MODULE_10__["default"], _extends({}, props, {
+        toggleSavedContent: _this.toggleSavedContent,
+        hasUnsavedContent: _this.state.hasUnsavedContent,
+        searchCriteria: _this.state.searchCriteria
+      }));
     });
 
     _defineProperty(_assertThisInitialized(_this), "getHomeComponent", function (props) {
-      if (_this.state.googleAuth == null) {
-        return "loading";
-      }
-
-      if (_this.state.isLoggedIn) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_HomeComponent_jsx__WEBPACK_IMPORTED_MODULE_8__["default"], _extends({}, props, {
-          toggleSavedContent: _this.toggleSavedContent
-        }));
-      } else {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Redirect"], {
-          to: "/login"
-        });
-      }
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_HomeComponent_jsx__WEBPACK_IMPORTED_MODULE_8__["default"], _extends({}, props, {
+        toggleSavedContent: _this.toggleSavedContent
+      }));
     });
-
-    var isLoggedIn = false;
-
-    if (userId != null && userEmail != null && userId != "" && userEmail != "") {
-      isLoggedIn = true;
-    }
 
     _this.state = {
       page: "home",
@@ -65423,57 +65234,30 @@ var App = /*#__PURE__*/function (_Component) {
       hasUnsavedContent: false,
       searchCriteria: new Map(),
       newSearchQuery: false,
-      isLoggedIn: isLoggedIn,
       userEmail: "",
-      userId: "",
-      googleAuth: null
+      userId: ""
     };
     return _this;
   }
 
   _createClass(App, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var component = this;
-      gapi.load('auth2', function () {
-        // Retrieve the singleton for the GoogleAuth library and set up the client.
-        gapi.auth2.init({
-          client_id: GCS_CLIENT_ID,
-          cookiepolicy: 'single_host_origin'
-        }).then(function () {
-          var auth2 = gapi.auth2.getAuthInstance();
-          component.setState({
-            googleAuth: auth2
-          });
-        });
-      });
-    }
-  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["BrowserRouter"], null, this.state.isLoggedIn ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["BrowserRouter"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "navbar"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Menu_jsx__WEBPACK_IMPORTED_MODULE_5__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Icon_jsx__WEBPACK_IMPORTED_MODULE_6__["default"], {
         page: this.state.page
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Search_jsx__WEBPACK_IMPORTED_MODULE_7__["default"], {
         updateSearch: this.updateSearch,
         userEmail: this.userEmail
-      })) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Route"], {
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Route"], {
         path: "/review",
         render: function render(props) {
           return _this2.getReviewComponent(props);
-        }
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Route"], {
-        path: "/login",
-        render: function render(props) {
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_LoginComponent_jsx__WEBPACK_IMPORTED_MODULE_11__["default"], _extends({}, props, {
-            googleAuth: _this2.state.googleAuth,
-            saveUserData: _this2.saveUserData
-          }));
         }
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Route"], {
         path: "/view",
@@ -65620,32 +65404,6 @@ module.exports = exported;
 var api = __webpack_require__(/*! ../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
 
 var content = __webpack_require__(/*! !../../../../node_modules/css-loader/dist/cjs.js!./listMiniCards.css */ "./node_modules/css-loader/dist/cjs.js!./src/main/js/css/listMiniCards.css");
-
-content = content.__esModule ? content["default"] : content;
-
-if (typeof content === 'string') {
-  content = [[module.i, content, '']];
-}
-
-var options = {};
-options.insert = "head";
-options.singleton = false;
-var update = api(content, options);
-var exported = content.locals ? content.locals : {};
-module.exports = exported;
-
-/***/ }),
-
-/***/ "./src/main/js/css/login.css":
-/*!***********************************!*\
-  !*** ./src/main/js/css/login.css ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var api = __webpack_require__(/*! ../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-
-var content = __webpack_require__(/*! !../../../../node_modules/css-loader/dist/cjs.js!./login.css */ "./node_modules/css-loader/dist/cjs.js!./src/main/js/css/login.css");
 
 content = content.__esModule ? content["default"] : content;
 
