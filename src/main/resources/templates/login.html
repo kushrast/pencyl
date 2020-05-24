@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head lang="en">
+        <meta charset="UTF-8"/>
+        <title>Pencyl</title>
+        <link href="css/login.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="login-container">
+            <div class="login-box">
+                <div class="login-logo-row"><img class="login-logo" src="/img/logo_color_transparent.png" alt="Menu Logo" /></div>
+                <div class="login-title">Pencyl</div>
+                <div class="login-subtitle"> Keep track of your thoughts. </div>
+                <div class="login-button g-signin" id="login-button"><img class="login-google-logo" src="/img/google_logo.svg"/> Sign in with Google</div>
+            </div>
+        </div>
+    </body>
+
+    <script src="https://apis.google.com/js/api:client.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+    <script>
+        var GCS_CLIENT_ID = "[[${GCS_CLIENT_ID}]]";
+        var element = document.getElementById("login-button");
+
+        gapi.load('auth2', function(){
+	        // Retrieve the singleton for the GoogleAuth library and set up the client.
+	      	gapi.auth2.init({
+		        client_id: GCS_CLIENT_ID,
+		        cookiepolicy: 'single_host_origin',
+	      	})
+	      	.then(function() {
+	      		var auth2 = gapi.auth2.getAuthInstance();
+
+	      		auth2.attachClickHandler(element, {},
+			        function(googleUser) {
+			    	    console.log(googleUser.getAuthResponse().id_token);
+                        axios({
+                            method: "post",
+                            url: "/v2/authenticate",
+                            data: googleUser.getAuthResponse().id_token
+                        }).then(function(response) {
+						    if (response.status === 200) {
+							    if (response.data.error != "") {
+								    alert(JSON.stringify(response.data.error, undefined, 2));
+							    } else {
+							        window.location.href="../";
+							    }
+						    } else {
+							    alert(JSON.stringify(response.data.error, undefined, 2));
+						    }
+					    }).catch(function(err) {
+						    console.log(err);
+						    alert(JSON.stringify(err, undefined, 2));
+					    });
+			        }, function(error) {
+			            alert(JSON.stringify(error, undefined, 2));
+			        }
+			    );
+	      	});
+	    });
+    </script>
+</html>
