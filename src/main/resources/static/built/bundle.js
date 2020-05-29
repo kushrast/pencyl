@@ -63310,7 +63310,10 @@ var Search = /*#__PURE__*/function (_Component) {
         className: "search-container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "search-email"
-      }, this.getEmail()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_select__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      }, this.getEmail(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "search-sign-out",
+        onClick: this.props.logOut
+      }, " Log out ")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_select__WEBPACK_IMPORTED_MODULE_1__["default"], {
         styles: customStyles,
         placeholder: "Search",
         options: this.state.searchOptions,
@@ -65164,6 +65167,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["default"];
+
+
 
 
 
@@ -65205,6 +65211,17 @@ var App = /*#__PURE__*/function (_Component) {
           })
         });
       }
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "logOut", function () {
+      axios({
+        method: 'post',
+        url: '/v2/logout'
+      }).then(function (response) {
+        location.reload();
+      }, function (err) {
+        location.reload();
+      });
     });
 
     _defineProperty(_assertThisInitialized(_this), "getReviewComponent", function (props) {
@@ -65253,7 +65270,8 @@ var App = /*#__PURE__*/function (_Component) {
         page: this.state.page
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Search_jsx__WEBPACK_IMPORTED_MODULE_7__["default"], {
         updateSearch: this.updateSearch,
-        userEmail: this.userEmail
+        userEmail: this.userEmail,
+        logOut: this.logOut
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Route"], {
         path: "/review",
         render: function render(props) {

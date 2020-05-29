@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * Controller for home page
  */
@@ -14,8 +16,8 @@ public class HomeController {
     /**
      * Direct requests for the home page towards the index template
      */
-    @RequestMapping(value={"", "/", "/view", "/review"})
-    public ModelAndView index(@CookieValue(name="userId", defaultValue = "") String userId, @CookieValue(name="userEmail", defaultValue = "") String userEmail) {
+    @RequestMapping(value = {"", "/", "/view", "/review"})
+    public ModelAndView index(@CookieValue(name = "userId", defaultValue = "") String userId, @CookieValue(name = "userEmail", defaultValue = "") String userEmail) {
         if (userId == null || userId.equals("") || userEmail == null || userEmail.equals("")) {
             return new ModelAndView("redirect:/login");
         }
@@ -31,8 +33,8 @@ public class HomeController {
     /**
      * Direct requests for the login page to the login template unless already logged in.
      */
-    @RequestMapping(value={"/login"})
-    public ModelAndView login(@CookieValue(name="userId", defaultValue = "") String userId, @CookieValue(name="userEmail", defaultValue = "") String userEmail) {
+    @RequestMapping(value = {"/login"})
+    public ModelAndView login(@CookieValue(name = "userId", defaultValue = "") String userId, @CookieValue(name = "userEmail", defaultValue = "") String userEmail) {
 
         if (userId != null && !userId.equals("") && userEmail != null && !userEmail.equals("")) {
             return new ModelAndView("redirect:/");
@@ -43,4 +45,5 @@ public class HomeController {
 
             return mv;
         }
-    }}
+    }
+}
