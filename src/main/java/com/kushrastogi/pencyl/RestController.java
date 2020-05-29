@@ -10,6 +10,7 @@ import com.kushrastogi.pencyl.schema.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -355,5 +356,28 @@ public class RestController {
             response.put("error", "Invalid ID token.");
         }
         return response;
+    }
+
+    /**
+     * Direct requests for logging out here
+     */
+    @PostMapping(value = "/v2/logout", produces = "application/json")
+    public ResponseEntity logout(HttpServletResponse httpServletResponse) {
+        System.out.println("yo");
+        Cookie cookie = new Cookie("userId", null);
+        cookie.setPath("/");
+        cookie.setHttpOnly(true);
+        cookie.setMaxAge(0);
+
+        httpServletResponse.addCookie(cookie);
+
+        cookie = new Cookie("userEmail", null);
+        cookie.setPath("/");
+        cookie.setHttpOnly(true);
+        cookie.setMaxAge(0);
+
+        httpServletResponse.addCookie(cookie);
+
+        return ResponseEntity.ok().build();
     }
 }

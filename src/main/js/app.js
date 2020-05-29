@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 import update from 'immutability-helper';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+const axios = require('axios').default;
 
 import Menu from './Menu.jsx';
 import Icon from './Icon.jsx';
@@ -51,6 +52,18 @@ class App extends Component {
 		}
 	}
 
+	logOut = () => {
+		axios({
+		  method: 'post',
+		  url: '/v2/logout',
+		})
+		.then(function(response) {
+			location.reload();
+		}, function(err) {
+			location.reload();
+		});
+	}
+
 	getReviewComponent = (props) => {
 		return <ReviewComponent {...props} toggleSavedContent={this.toggleSavedContent}  hasUnsavedContent={this.state.hasUnsavedContent}/>;
 	}
@@ -70,7 +83,7 @@ class App extends Component {
 					<div className="navbar">
 							<Menu />
 							<Icon page={this.state.page}/>
-							<Search updateSearch={this.updateSearch} userEmail={this.userEmail}/>
+							<Search updateSearch={this.updateSearch} userEmail={this.userEmail} logOut={this.logOut}/>
 						</div>
 					
 					<Switch>
