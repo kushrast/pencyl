@@ -4,13 +4,11 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.common.collect.ImmutableMap;
 import com.kushrastogi.pencyl.schema.Thought;
 import com.kushrastogi.pencyl.schema.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -300,7 +298,8 @@ public class RestController {
         Map<String, String> response = new HashMap<>();
         GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(GoogleNetHttpTransport.newTrustedTransport(), jacksonFactory)
                 // Specify the CLIENT_ID of the app that accesses the backend:
-                .setAudience(Collections.singletonList(System.getenv("GCS_CLIENT_ID")))
+//                .setAudience(Collections.singletonList(System.getenv("GCS_CLIENT_ID")))
+                .setAudience(Collections.singletonList("27381813571-r33bvi2ktlka5u13fufoa043s29kf3c7.apps.googleusercontent.com"))
                 // Or, if multiple clients access the backend:
                 //.setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3))
                 .build();

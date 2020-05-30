@@ -3,7 +3,6 @@ import TextareaAutosize from 'react-autosize-textarea';
 import Popover from 'react-tiny-popover'
 import update from 'immutability-helper';
 
-import CategoryComponent from './CategoryComponent.jsx';
 import DeleteModal from './DeleteModal.jsx';
 import {saveThought, getThought, updateThought, deleteThought} from "./Storage.js";
 import {quickFormat, prettyFormat, dateAwareFormat} from "./TimeFormatUtils.js";
@@ -20,7 +19,6 @@ class ThoughtCard extends Component {
 				content: null,
 				creationTimestampMs: null,
 				tags: new Map(),
-				category : 0,
 				replies: new Map(),
 				plusOnes: 1,
 				completed: false,
@@ -38,6 +36,7 @@ class ThoughtCard extends Component {
 			showPopoverReplyId: "",
 			reviewLastUpdated: null,
 			minRows: 3,
+			dataFinishedLoading: false
 		}
 	}
 
@@ -53,7 +52,11 @@ class ThoughtCard extends Component {
 
 	componentDidUpdate(prevProps) {
 		if (this.props.location.pathname !== "/" && prevProps.thoughtId != this.props.thoughtId) {
-			this.loadThought();
+			this.setState({
+				dataFinishedLoading: false
+			}, () => {
+				this.loadThought();
+			});
 		}
 	}
 
@@ -67,17 +70,25 @@ class ThoughtCard extends Component {
 		const component = this;
 		getThought(this.props.thoughtId).then(
 			function(thought) {
-				document.getElementById("thought-title-area").value = thought.title;
-				document.getElementById("thought-content-area").value = thought.content;
 
-				component.setState({
-					currentThought: thought,
-					hasTitle: thought.title != "",
-					hasContent: thought.content != "",
-					hasTagContent: false,
-					hasTypedInfo: true,
-					minRows: 4,
-				});
+				setTimeout(
+					() => {
+						console.log("prutu");
+						component.setState({
+							currentThought: thought,
+							hasTitle: thought.title != "",
+							hasContent: thought.content != "",
+							hasTagContent: false,
+							hasTypedInfo: true,
+							minRows: 4,
+							dataFinishedLoading: true
+						}, () => {
+							document.getElementById("thought-title-area").value = thought.title;
+							document.getElementById("thought-content-area").value = thought.content;
+						});
+					},
+					750
+				);
 
 				console.log(document.getElementById("thought-content-area").value);
 			}, function(err) {
@@ -371,22 +382,6 @@ class ThoughtCard extends Component {
 		}
 	}
 
-	/* Changes the selected category */
-	changeCategory = (newCategory) => {
-		this.setState({
-			currentThought: update(this.state.currentThought, 
-				{
-					completed: {$set: false},
-					category: {$set: newCategory.value},
-				}),
-		}, ()=>{
-			this.props.toggleSavedContent(true);
-			if (this.props.location.pathname !== "/"){
-				this.updateThought();
-			}
-		});
-	}
-
 	toggleThoughtComplete = () => {
 		this.setState({
 			currentThought: update(this.state.currentThought, 
@@ -534,7 +529,6 @@ class ThoughtCard extends Component {
 				content: null,
 				creationTimestampMs: null,
 				tags: new Map(),
-				category : 0,
 				replies: new Map(),
 				plusOnes: 1,
 				lastEditedTimestampMs: null,
@@ -609,48 +603,47 @@ class ThoughtCard extends Component {
 	  	return ( 
 	  		<div className="thought-card-container" id="thought-container">
 		  		<div className="thought-card" id="thought-card">
-		  			<div className="thought-top-box">
-		  				<div className="thought-title-row">
+		  			{
+		  				(this.props.location.pathname == "/" || this.state.dataFinishedLoading) ? 
+		  				<div>
+			  				<div className="thought-top-box">
+				  				<div className="thought-title-row">
 
-		  					{this.props.location.pathname !== "/" ? 
-		  					<div className="thought-review-addons">
-		  						<div className="thought-created-at">Created at <span id="created-at-formatted">{prettyFormat(this.state.currentThought.creationTimestampMs)}</span></div>
-		  					</div> : null}
-		  					<TextareaAutosize className="thought-title" placeholder="Title" onChange={this.onTitleUpdate} maxRows={3} id="thought-title-area"/>
-		  				</div>
-		  				<div className="thought-clear">
-		  				{this.getClearOrDelete()}
-		  				</div>
-		  			</div>
-		  			<div className="thought-content-box"><TextareaAutosize className="thought-content" placeholder="What's on your mind?" onChange={this.onContentUpdate} minRows={this.state.minRows} maxRows={15} id="thought-content-area"/></div>
-		  			<div className="thought-bottom-box">
-		  				<div className="thought-bottom-row">
-		  					<div className={this.props.location.pathname !== "/" ? "thought-tag-bubbles thought-tag-bubbles-limited" : "thought-tag-bubbles"}>
-		  						{this.getTags()}
-		  					</div>
-		  					{this.props.location.pathname !== "/" ? 
-		  						<div className="thought-edited-at"><div className="thought-edited-at-timestamp">Edited <span id="edited-at-formatted">{dateAwareFormat(this.state.currentThought.lastEditedTimestampMs)}</span></div></div>
-		  					 : null}
-		  				</div>
-		  				<div className="thought-bottom-row">
-			  				<div className="thought-add-tags">
-			  					<img src="/img/tag.svg" className="thought-tag-icon"/>
-			  					<input type="text" className="thought-tag-input" placeholder="Add New Tag..." onChange={this.onTagUpdate} onKeyUp={this.onTagKeyUp} id="tag-input" maxLength="25"/>
-			  					{this.getTagCheckmarkOrCross()}
-			  				</div>
-			  				<CategoryComponent updateCategory={this.changeCategory} defaultCategory={this.state.currentThought.category}/>
-			  				{
-			  					this.props.location.pathname !== "/" && this.state.currentThought.category == 1 ?
-			  					<div className="thought-complete" onClick={this.toggleThoughtComplete}>
-			  						<div className={this.state.currentThought.completed ? "thought-checkmark-toggle thought-completed" : "thought-checkmark-toggle"}></div>
-			  					</div>
-			  					: null
-			  				}
-			  				<div className="thought-update">
-			  					{this.getFinishOrUpdateButton()}
-			  				</div>
-		  				</div>
-		  			</div>
+				  					{this.props.location.pathname !== "/" ? 
+				  					<div className="thought-review-addons">
+				  						<div className="thought-created-at">Created at <span id="created-at-formatted">{prettyFormat(this.state.currentThought.creationTimestampMs)}</span></div>
+				  					</div> : null}
+				  					<TextareaAutosize className="thought-title" placeholder="Title" onChange={this.onTitleUpdate} maxRows={3} id="thought-title-area"/>
+				  				</div>
+				  				<div className="thought-clear">
+				  				{this.getClearOrDelete()}
+				  				</div>
+				  			</div>
+				  			<div className="thought-content-box"><TextareaAutosize className="thought-content" placeholder="What's on your mind?" onChange={this.onContentUpdate} minRows={this.state.minRows} maxRows={15} id="thought-content-area"/></div>
+				  			<div className="thought-bottom-box">
+				  				<div className="thought-bottom-row">
+				  					<div className={this.props.location.pathname !== "/" ? "thought-tag-bubbles thought-tag-bubbles-limited" : "thought-tag-bubbles"}>
+				  						{this.getTags()}
+				  					</div>
+				  					{this.props.location.pathname !== "/" ? 
+				  						<div className="thought-edited-at"><div className="thought-edited-at-timestamp">Edited <span id="edited-at-formatted">{dateAwareFormat(this.state.currentThought.lastEditedTimestampMs)}</span></div></div>
+				  					 : null}
+				  				</div>
+				  				<div className="thought-bottom-row">
+					  				<div className="thought-add-tags">
+					  					<img src="/img/tag.svg" className="thought-tag-icon"/>
+					  					<input type="text" className="thought-tag-input" placeholder="Add New Tag..." onChange={this.onTagUpdate} onKeyUp={this.onTagKeyUp} id="tag-input" maxLength="25"/>
+					  					{this.getTagCheckmarkOrCross()}
+					  				</div>
+					  				<div className="thought-update">
+					  					{this.getFinishOrUpdateButton()}
+					  				</div>
+				  				</div>
+				  			</div>
+				  		</div>
+				  		:
+				  		<div className="card-loading thought-card-loading"></div>
+		  			}
 		  		</div>
 		  		{this.props.location.pathname !== "/" ? 
 		  			<div className="thought-replies">

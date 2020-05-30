@@ -28,7 +28,6 @@ class BackendStorageClient extends StorageClient{
 			content: null,
 			creationTimestampMs: null,
 			tags: new Map(),
-			category : 0,
 			replies: new Map(),
 			plusOnes: 1,
 			completed: false,
@@ -46,7 +45,6 @@ class BackendStorageClient extends StorageClient{
 			thought.tags.set(entity.tags[i].tag_key, entity.tags[i].tag_content);
 		}
 
-		thought.category = entity.category;
 		for (var i = 0; i < entity.replies.length; i++) {
 			thought.replies.set(entity.replies[i].reply_timestamp_ms, entity.replies[i].reply_content);
 		}
@@ -80,7 +78,6 @@ class BackendStorageClient extends StorageClient{
 			entity.tags.push({"tag_key": key, "tag_content": value})
 		}
 
-		entity.category = thought.category;
 		for (let [key, value] of thought.replies) {
 			entity.replies.push({"reply_timestamp_ms": key, "reply_content":value})
 		}
