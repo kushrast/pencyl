@@ -63182,7 +63182,7 @@ var Search = /*#__PURE__*/function (_Component) {
         onClick: this.props.logOut
       }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         style: {
-          "color": "8C8C8C"
+          color: "8C8C8C"
         }
       }, " | "), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "pointer"
