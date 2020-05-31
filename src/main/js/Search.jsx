@@ -133,7 +133,7 @@ const customStyles = {
 	  	<div className="search-container">
 	  		<div className="search-email">
 	  		{this.getEmail()}
-	  		<span className="search-sign-out" onClick={this.props.logOut}> | Log out </span>
+	  		<span className="search-sign-out" onClick={this.props.logOut}> <span style={{color:"8C8C8C"}}> | </span> <span className="pointer"> Log out </span> </span>
 	  		</div>
 	  		<Select styles={customStyles} placeholder="Search" options={this.state.searchOptions} isClearable={false} isSearchable={true} onInputChange={this.updateSearchOptions} isMulti={true} onChange={this.onChange} />
 	  	</div>

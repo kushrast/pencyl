@@ -23,6 +23,7 @@ class MiniCardComponent extends Component {
 				lastReviewedTimestampMs: null,
 				deleted: false,
 			},
+			dataFinishedLoading: false
 		}
 	}
 
@@ -34,9 +35,16 @@ class MiniCardComponent extends Component {
 		const component = this;
 		getThought(this.props.thoughtId).then(
 			function(thought) {
-				component.setState({
-					currentThought: thought,
-				})
+				setTimeout(
+					() => {
+						console.log("prutu");
+						component.setState({
+							currentThought: thought,
+							dataFinishedLoading: true
+						});
+					},
+					750
+				);
 			}, function(err) {
 				console.log(err);
 			}
@@ -108,25 +116,31 @@ class MiniCardComponent extends Component {
   render() {
   	return (
 		<div class="mini-card" onClick={this.props.onClick}>
-  			<div className="thought-top-box">
-  				<div className="mini-card-title-row">
-  					<div className="mini-card-created-at">Created at <span id="created-at-formatted">{prettyFormat(this.state.currentThought.creationTimestampMs)}</span></div>
-  					<div className={this.getTitleClasses()}>{this.getTitle()}</div>
-  				</div>
-  			</div>
-  			<div className={this.getContentClasses()} id="thought-content-area">{this.getContent()}</div>
-  			<div className="mini-card-bottom-box">
-				<div className="mini-card-tag-bubbles">
-					{this.getTags()}
-				</div>
-				<div className="mini-card-category">{this.state.currentThought.category == 0 ? "Just a thought" : "Action Item"}
-				{
-					this.state.currentThought.category == 1 ? 
-					<div className={this.state.currentThought.completed ? "thought-checkmark-toggle thought-completed" : "thought-checkmark-toggle"}></div>
-					: null
-				}
-				</div>
-  			</div>
+			{ this.state.dataFinishedLoading ? 
+				<div>
+					<div className="thought-top-box">
+		  				<div className="mini-card-title-row">
+		  					<div className="mini-card-created-at">Created at <span id="created-at-formatted">{prettyFormat(this.state.currentThought.creationTimestampMs)}</span></div>
+		  					<div className={this.getTitleClasses()}>{this.getTitle()}</div>
+		  				</div>
+		  			</div>
+		  			<div className={this.getContentClasses()} id="thought-content-area">{this.getContent()}</div>
+		  			<div className="mini-card-bottom-box">
+						<div className="mini-card-tag-bubbles">
+							{this.getTags()}
+						</div>
+						<div className="mini-card-category">{this.state.currentThought.category == 0 ? "Just a thought" : "Action Item"}
+						{
+							this.state.currentThought.category == 1 ? 
+							<div className={this.state.currentThought.completed ? "thought-checkmark-toggle thought-completed" : "thought-checkmark-toggle"}></div>
+							: null
+						}
+						</div>
+		  			</div>
+	  			</div>
+	  			:
+	  			<div className="card-loading"></div>
+			}
 		</div>
   	);
   }

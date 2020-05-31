@@ -4394,7 +4394,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".thought-card-container {\n\tmargin-left: auto;\n\tmargin-right: auto;\n\tmax-width: 1050px;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tjustify-content: center;\n}\n\n.thought-card-animated {\n  animation-duration: 1.0s;\n }\n\n.thought-card {\n\tmax-width: 700px;\n\tflex-grow: 1;\n\tflex-basis:0;\n\tborder: 2px solid #E0E0E0;\n\tbox-shadow: 0px 0px 15px 0px #ededed;\n\tbox-sizing: border-box;\n\tborder-radius: 15px;\n\tpadding: 10px 20px 10px 20px;\n}\n\n.thought-top-box {\n\tdisplay: flex;\n\tflex: no-wrap;\n\tjustify-content: end;\n}\n\n.thought-review-addons {\n\tdisplay: flex;\n\tmargin-bottom: 5px;\n}\n\n.thought-created-at {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: #DDDDDD;\n}\n\n.thought-title-row {\n\tmax-width: 700px;\n\tflex-grow: 1;\n}\n\n.thought-title {\n\twidth: 100%;\n\tflex-grow: 1;\n\tresize: none;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 25px;\n\n\tcolor: #8C8C8C;\n\tborder: none;\n\tmargin-bottom: none;\n}\n\n.thought-title::placeholder {\n\tcolor: #8C8C8C;\n\tborder: none;\n}\n\n.thought-title:focus {\n\toutline: 0;\n}\n\n.thought-content-box {\n\tmin-height: 100px;\n\tmargin-top: 15px;\n\twidth: 100%;\n}\n\n.thought-content {\n\tresize: none;\n\twidth: 100%;\n\tfont-family: Roboto;\n\tfont-weight: 300;\n\tfont-size: 25px;\n\tcolor: #8C8C8C;\n\tborder: none;\n}\n\n.thought-content::placeholder {\n\tcolor: #8C8C8C;\n\tborder: none;\n}\n\n.thought-content:focus {\n\toutline: 0;\n}\n\n.thought-bottom-box {\n\tmin-height: 20px;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\twidth: 100%;\n\talign-items: center;\n}\n\n.thought-bottom-row {\n\tmargin-top: 5px;\n\tflex-shrink: 0;\n\twidth: 100%;\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: end;\n}\n\n.thought-tags-row {\n\tflex-shrink: 0;\n\twidth: 100%;\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: end;\n}\n\n.thought-tag-bubbles {\n\tflex-grow: 1;\n\tdisplay: flex;\n\tjustify-content: start;\n\tflex-wrap: wrap;\n\tpadding:5px;\n}\n\n.thought-tag-bubbles-limited {\n\tmax-width: 550px;\n}\n\n.thought-tag-bubble {\n\tdisplay: flex;\n\talign-items: center;\n\tmargin: 5px;\n\tborder-radius: 15px;\n\tbackground: #FAFAFA; \n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 17px;\n\tpadding: 2.5px 10px 5px 10px;\n\n\tcolor: #8C8C8C\n}\n\n.thought-plus-one {\n\tbackground: #FAFAFA\n}\n\n.thought-plus-one:hover {\n\tbackground: #E0E0E0\n}\n\n.thought-tag-bubble-delete {\n\tmargin-left: 5px;\n\theight: 12px;\n}\n\n.thought-edited-at {\n\tdisplay: flex;\n\tflex-shrink: 0;\n\talign-self: flex-end;\n\twidth: auto;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\tjustify-content: flex-end;\n\n\tcolor: #DDDDDD;\n}\n\n.thought-edited-at-timestamp {\n}\n\n.thought-add-tags {\n\tmargin-left: 5px;\n\tdisplay: flex;\n\talign-items: center;\n}\n\n.thought-tag-icon {\n\theight: 30px;\n}\n\n.thought-checkmark {\n\theight: 20px;\n}\n\n.thought-checkmark-toggle {\n\tmargin-left: 10px;\n\theight: 15px;\n\twidth: 15px;\n\tborder-radius: 3px;\n\tborder: 2px solid #EDEDED;\n}\n\n.thought-completed {\n\tbackground-image: url(/img/checkmark.svg);\n\tbackground-size: contain;\n\tbackground-repeat: no-repeat;\n}\n\n.thought-tag-input {\n\tmargin-left: 5px;\n\tcolor: #8C8C8C;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 17px;\n\twidth: 150px;\n\tborder: none;\n\tborder-bottom: 1px solid #EDEDED;\n}\n\n.thought-tag-input::placeholder {\n\tcolor: #EDEDED;\n\tborder: none;\n\tborder-bottom: 1px solid #EDEDED;\n}\n\ninput:focus::placeholder { color: transparent; }\ninput:focus::-webkit-input-placeholder { color:transparent; }\ninput:focus:-moz-placeholder { color:transparent; } /* FF 4-18 */\ninput:focus::-moz-placeholder { color:transparent; } /* FF 19+ */\ninput:focus:-ms-input-placeholder { color:transparent; } /* IE 10+ */\n\n.thought-tag-input:focus {\n\toutline: 0;\n\tborder-bottom: 1px solid #EDEDED;\n}\n\n.thought-tag-input:hover {\n\tborder-bottom: 1px solid #EDEDED;\n}\n\n.thought-update {\n\tmargin-left: auto;\n\tfont-family: Roboto;\n\tfont-weight: 500;\n\tfont-size: 20px;\n\tcolor: rgba(255, 142, 142);\n}\n\n.thought-update-disabled {\n\tcolor: rgba(255, 142, 142, .37);\n}\n\n.thought-saving-loader {\n  border: 4px solid #f3f3f3; /* Light grey */\n  border-top: 4px solid #FF8E8E; /* Orange */\n  border-radius: 50%;\n  width: 20px;\n  height: 20px;\n  animation: spin 2s linear infinite;\n}\n\n@keyframes spin {\n  0% { transform: rotate(0deg); }\n  100% { transform: rotate(360deg); }\n}\n\n.thought-delete-enabled {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: #E15151;\n}\n\n.thought-delete-disabled {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: rgba(225, 81, 81, .37);\n}\n\n.thought-delete-overlay {\n\tbackground-color: rgba(196, 196, 196, 0.41);\n    position: fixed;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    overflow: scroll;\n}\n\n.thought-delete-modal-container {\n\tmargin-top: 200px;\n\twidth: 100%;\n\tdisplay: flex;\n\toutline: 0;\n}\n\n.thought-delete-modal {\n\tbackground-color: white;\n\tborder-radius: 10px;\n\tmax-width: 400px;\n\tmargin-left: auto;\n\tmargin-right: auto;\n\tpadding: 25px 20px 25px 20px;\n\toutline: 0;\n\tdisplay: flex;\n\theight: 200px;\n\tflex-direction: column;\n}\n\n.thought-delete-modal-title {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 25px;\n\tcolor: #959595;\n}\n\n.thought-delete-modal-content {\n\tdisplay: flex;\n\tflex-wrap: nowrap;\n\tmargin-top: 20px;\n}\n\n.thought-delete-modal-subtitle {\n\tfont-family: Roboto;\n\tfont-weight: 300;\n\tfont-size: 20px;\n\tcolor: #ACACAC;\n}\n\n.thought-delete-trash-can {\n\twidth: 75px;\n\tmargin: 0px 20px 0px 20px\n}\n\n.thought-delete-modal-buttons {\n\twidth: 100%;\n\tdisplay: flex;\n\tjustify-content: flex-end;\n\n}\n\n.thought-delete-cancel {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 20px;\n\tcolor: #959595;\n}\n\n.thought-delete-separator {\n\tmargin-left: 10px;\n\tmargin-right: 10px;\n\twidth: 1px;\n\tbackground-color: #EDEDED;\n\theight: 20px;\n}\n\n.thought-delete-confirm {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 20px;\n\tcolor: #E15151;\n}\n\n.thought-clear {\n\talign-self: flex-start;\n}\n\n.thought-replies {\n\twidth: 250px;\n\tdisplay: flex;\n\tmargin-left: 10px;\n\tmax-height: 300px;\n\toverflow: scroll;\n\talign-content: flex-end;\n\tflex-wrap: wrap;\n}\n\n.thought-reply-box {\n\twidth: 100%;\n\toutline: 0;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\tborder-radius: 8px;\n\tborder: 2px solid #E0E0E0;\n\toverflow: hidden;\n\tpadding: 5px;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n}\n\n.thought-reply-input {\n\tborder: none;\n\twidth: 100%;\n\toutline: 0;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\tcolor: #858585;\n\tresize: none;\n}\n\n.thought-reply-input::placeholder {\n\tcolor: #DDDDDD;\n}\n\n.thought-reply-delete {\n\tmargin-left: 2px;\n\tborder-radius: 5px;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\tcolor: #E15151;\n\tpadding: 5px;\n\tborder-radius: 8px;\n\tborder: 2px solid #E0E0E0;\n\tbackground-color: #FFFFFF;\n}\n\n.thought-reply-delete:hover {\n\tbackground-color: #F5F5F5;\n}\n\n.thought-reply-action {\n\twidth: 100%;\n\tjustify-content: flex-end;\n\tdisplay: flex;\n\tflex-wrap: nowrap;\n}\n\n.thought-reply-clear {\n\tcolor: #DDDDDD;\n\tmargin-right: 10px;\n}\n\n.thought-reply-submit {\n\tcolor: #FF8E8E;\n\tmargin-right: 5px;\n}\n\n.thought-reply-item {\n\tmargin-bottom: 10px;\n\twidth: 100%;\n\tcolor: #858585;\n}\n\n.thought-reply-timestamp {\n\twidth: 100%;\n\tcolor: #DDDDDD;\n\tdisplay: flex;\n\tjustify-content: space-between;\n}\n\n.thought-reply-options {\n\tbackground-image: url(/img/three_dots.svg);\n\tbackground-size: contain;\n\tbackground-repeat: no-repeat;\n\tcursor: pointer;\n\twidth: 3px;\n}\n", ""]);
+exports.push([module.i, ".thought-card-container {\n\tmargin-left: auto;\n\tmargin-right: auto;\n\tmax-width: 1050px;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tjustify-content: center;\n}\n\n.thought-card-animated {\n  animation-duration: 1.0s;\n }\n\n.thought-card {\n\tmax-width: 700px;\n\tflex-grow: 1;\n\tflex-basis:0;\n\tborder: 2px solid #E0E0E0;\n\tbox-shadow: 0px 0px 15px 0px #ededed;\n\tbox-sizing: border-box;\n\tborder-radius: 15px;\n\tpadding: 10px 20px 10px 20px;\n}\n\n.thought-card-loading {\n\twidth: 100%;\n\tflex-grow: 1;\n}\n\n.thought-top-box {\n\tdisplay: flex;\n\tflex: no-wrap;\n\tjustify-content: end;\n}\n\n.thought-review-addons {\n\tdisplay: flex;\n\tmargin-bottom: 5px;\n}\n\n.thought-created-at {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: #DDDDDD;\n}\n\n.thought-title-row {\n\tmax-width: 700px;\n\tflex-grow: 1;\n}\n\n.thought-title {\n\twidth: 100%;\n\tflex-grow: 1;\n\tresize: none;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 25px;\n\n\tcolor: #8C8C8C;\n\tborder: none;\n\tmargin-bottom: none;\n}\n\n.thought-title::placeholder {\n\tcolor: #8C8C8C;\n\tborder: none;\n}\n\n.thought-title:focus {\n\toutline: 0;\n}\n\n.thought-content-box {\n\tmin-height: 100px;\n\tmargin-top: 15px;\n\twidth: 100%;\n}\n\n.thought-content {\n\tresize: none;\n\twidth: 100%;\n\tfont-family: Roboto;\n\tfont-weight: 300;\n\tfont-size: 25px;\n\tcolor: #8C8C8C;\n\tborder: none;\n}\n\n.thought-content::placeholder {\n\tcolor: #8C8C8C;\n\tborder: none;\n}\n\n.thought-content:focus {\n\toutline: 0;\n}\n\n.thought-bottom-box {\n\tmin-height: 20px;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\twidth: 100%;\n\talign-items: center;\n}\n\n.thought-bottom-row {\n\tmargin-top: 5px;\n\tflex-shrink: 0;\n\twidth: 100%;\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: end;\n}\n\n.thought-tags-row {\n\tflex-shrink: 0;\n\twidth: 100%;\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: end;\n}\n\n.thought-tag-bubbles {\n\tflex-grow: 1;\n\tdisplay: flex;\n\tjustify-content: start;\n\tflex-wrap: wrap;\n\tpadding:5px;\n}\n\n.thought-tag-bubbles-limited {\n\tmax-width: 550px;\n}\n\n.thought-tag-bubble {\n\tdisplay: flex;\n\talign-items: center;\n\tmargin: 5px;\n\tborder-radius: 15px;\n\tbackground: #FAFAFA; \n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 17px;\n\tpadding: 2.5px 10px 5px 10px;\n\n\tcolor: #8C8C8C\n}\n\n.thought-plus-one {\n\tbackground: #FAFAFA\n}\n\n.thought-plus-one:hover {\n\tbackground: #E0E0E0\n}\n\n.thought-tag-bubble-delete {\n\tmargin-left: 5px;\n\theight: 12px;\n}\n\n.thought-edited-at {\n\tdisplay: flex;\n\tflex-shrink: 0;\n\talign-self: flex-end;\n\twidth: auto;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\tjustify-content: flex-end;\n\n\tcolor: #DDDDDD;\n}\n\n.thought-edited-at-timestamp {\n}\n\n.thought-add-tags {\n\tmargin-left: 5px;\n\tdisplay: flex;\n\talign-items: center;\n}\n\n.thought-tag-icon {\n\theight: 30px;\n}\n\n.thought-checkmark {\n\theight: 20px;\n}\n\n.thought-checkmark-toggle {\n\tmargin-left: 10px;\n\theight: 15px;\n\twidth: 15px;\n\tborder-radius: 3px;\n\tborder: 2px solid #EDEDED;\n}\n\n.thought-completed {\n\tbackground-image: url(/img/checkmark.svg);\n\tbackground-size: contain;\n\tbackground-repeat: no-repeat;\n}\n\n.thought-tag-input {\n\tmargin-left: 5px;\n\tcolor: #8C8C8C;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 17px;\n\twidth: 150px;\n\tborder: none;\n\tborder-bottom: 1px solid #EDEDED;\n}\n\n.thought-tag-input::placeholder {\n\tcolor: #EDEDED;\n\tborder: none;\n\tborder-bottom: 1px solid #EDEDED;\n}\n\ninput:focus::placeholder { color: transparent; }\ninput:focus::-webkit-input-placeholder { color:transparent; }\ninput:focus:-moz-placeholder { color:transparent; } /* FF 4-18 */\ninput:focus::-moz-placeholder { color:transparent; } /* FF 19+ */\ninput:focus:-ms-input-placeholder { color:transparent; } /* IE 10+ */\n\n.thought-tag-input:focus {\n\toutline: 0;\n\tborder-bottom: 1px solid #EDEDED;\n}\n\n.thought-tag-input:hover {\n\tborder-bottom: 1px solid #EDEDED;\n}\n\n.thought-update {\n\tmargin-left: auto;\n\tfont-family: Roboto;\n\tfont-weight: 500;\n\tfont-size: 20px;\n\tcolor: rgba(255, 142, 142);\n}\n\n.thought-update-disabled {\n\tcolor: rgba(255, 142, 142, .37);\n}\n\n.thought-saving-loader {\n  border: 4px solid #f3f3f3; /* Light grey */\n  border-top: 4px solid #FF8E8E; /* Orange */\n  border-radius: 50%;\n  width: 20px;\n  height: 20px;\n  animation: spin 2s linear infinite;\n}\n\n@keyframes spin {\n  0% { transform: rotate(0deg); }\n  100% { transform: rotate(360deg); }\n}\n\n.thought-delete-enabled {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: #E15151;\n}\n\n.thought-delete-disabled {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: rgba(225, 81, 81, .37);\n}\n\n.thought-delete-overlay {\n\tbackground-color: rgba(196, 196, 196, 0.41);\n    position: fixed;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    overflow: scroll;\n}\n\n.thought-delete-modal-container {\n\tmargin-top: 200px;\n\twidth: 100%;\n\tdisplay: flex;\n\toutline: 0;\n}\n\n.thought-delete-modal {\n\tbackground-color: white;\n\tborder-radius: 10px;\n\tmax-width: 400px;\n\tmargin-left: auto;\n\tmargin-right: auto;\n\tpadding: 25px 20px 25px 20px;\n\toutline: 0;\n\tdisplay: flex;\n\theight: 200px;\n\tflex-direction: column;\n}\n\n.thought-delete-modal-title {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 25px;\n\tcolor: #959595;\n}\n\n.thought-delete-modal-content {\n\tdisplay: flex;\n\tflex-wrap: nowrap;\n\tmargin-top: 20px;\n}\n\n.thought-delete-modal-subtitle {\n\tfont-family: Roboto;\n\tfont-weight: 300;\n\tfont-size: 20px;\n\tcolor: #ACACAC;\n}\n\n.thought-delete-trash-can {\n\twidth: 75px;\n\tmargin: 0px 20px 0px 20px\n}\n\n.thought-delete-modal-buttons {\n\twidth: 100%;\n\tdisplay: flex;\n\tjustify-content: flex-end;\n\n}\n\n.thought-delete-cancel {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 20px;\n\tcolor: #959595;\n}\n\n.thought-delete-separator {\n\tmargin-left: 10px;\n\tmargin-right: 10px;\n\twidth: 1px;\n\tbackground-color: #EDEDED;\n\theight: 20px;\n}\n\n.thought-delete-confirm {\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 20px;\n\tcolor: #E15151;\n}\n\n.thought-clear {\n\talign-self: flex-start;\n}\n\n.thought-replies {\n\twidth: 250px;\n\tdisplay: flex;\n\tmargin-left: 10px;\n\tmax-height: 300px;\n\toverflow: scroll;\n\talign-content: flex-end;\n\tflex-wrap: wrap;\n}\n\n.thought-reply-box {\n\twidth: 100%;\n\toutline: 0;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\tborder-radius: 8px;\n\tborder: 2px solid #E0E0E0;\n\toverflow: hidden;\n\tpadding: 5px;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n}\n\n.thought-reply-input {\n\tborder: none;\n\twidth: 100%;\n\toutline: 0;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\tcolor: #858585;\n\tresize: none;\n}\n\n.thought-reply-input::placeholder {\n\tcolor: #DDDDDD;\n}\n\n.thought-reply-delete {\n\tmargin-left: 2px;\n\tborder-radius: 5px;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\tcolor: #E15151;\n\tpadding: 5px;\n\tborder-radius: 8px;\n\tborder: 2px solid #E0E0E0;\n\tbackground-color: #FFFFFF;\n}\n\n.thought-reply-delete:hover {\n\tbackground-color: #F5F5F5;\n}\n\n.thought-reply-action {\n\twidth: 100%;\n\tjustify-content: flex-end;\n\tdisplay: flex;\n\tflex-wrap: nowrap;\n}\n\n.thought-reply-clear {\n\tcolor: #DDDDDD;\n\tmargin-right: 10px;\n}\n\n.thought-reply-submit {\n\tcolor: #FF8E8E;\n\tmargin-right: 5px;\n}\n\n.thought-reply-item {\n\tmargin-bottom: 10px;\n\twidth: 100%;\n\tcolor: #858585;\n}\n\n.thought-reply-timestamp {\n\twidth: 100%;\n\tcolor: #DDDDDD;\n\tdisplay: flex;\n\tjustify-content: space-between;\n}\n\n.thought-reply-options {\n\tbackground-image: url(/img/three_dots.svg);\n\tbackground-size: contain;\n\tbackground-repeat: no-repeat;\n\tcursor: pointer;\n\twidth: 3px;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -4412,7 +4412,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "#app {\n}\nhtml {\n\theight: 100%;\n}\nbody {\n\tz-index: 0;\n\tmargin: 0;\n\tpadding: 0;\n}\n\n.noscroll {\n\theight: 100%;\n\toverflow: hidden;\n}\n\n.container {\n\theight: 100%;\n\tfont-family: Roboto;\n}\n\n.navbar {\n\twidth: 100%;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n}\n\n.menu-container {\n\tmin-width: 300px;\n\tflex: 1;\n\tdisplay: flex;\n\talign-items: flex-start;\n\tjustify-content: flex-start;\n}\n\n.menu-overlay {\n\tbackground-color: #FF8E8E;\n}\n\n.bm-burger-button {\n\tmargin-top: 25px;\n\tposition: fixed;\n\theight: 60px;\n\twidth: 120px;\n\tdisplay: inline;\n\toutline: 0;\n}\n\n.bm-burger-button-inverted {\n\tmargin-left:60px;\n\tbackground-image: url(/img/logo_color_filled_inverted.svg);\n\tbackground-repeat: no-repeat;\n\tjustify-self: flex-start;\n\tmargin-top: 25px;\n\tmargin-bottom: 15px;\n\tbackground-size: contain;\n\theight: 40px;\n\toutline: 0;\n}\n\n/* Styling of overlay */\n.bm-overlay {\n}\n\n.list-item {\n\ttext-align: left;\n\tmargin-left:auto;\n\tmargin-right: auto;\n\tmargin-top: 5px;\n\twidth: 180px;\n\tpadding-bottom: 10px;\n\tborder-bottom: 1.5px solid white;\n\tdisplay: flex;\n\toutline: 0;\n}\n\n.list-item-text {\n\tjustify-content: flex-start;\n\tcolor: #FFFFFF; \n\ttext-decoration: none;\n\tfont-family: Roboto;\n\tfont-weight: 300;\n\tfont-size: 17px;\n}\n\n.bm-icon {\n\tmax-height: 40px;\n}\n\n.icon-container {\n\tmin-width: 200px;\n\tflex: 1;\n\tmargin-top: 25px;\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: center;\n}\n\n.icon-image {\n\theight: 80px;\n}\n\n.pointer {\n\tcursor: pointer;\n}\n\n.review-more-container {\n  margin-top: 150px;\n  display: flex;\n  align-content: center;\n  justify-content: center;\n  flex-wrap: wrap;\n}\n\n.review-more-text {\n\twidth: 100%;\n\ttext-align: center;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 35px;\n\n\tcolor: #FF8E8E;\n}\n\n.review-more-buttons {\n\tmargin-top: 20px;\n\twidth: 400px;\n\tdisplay: flex;\n\n\tjustify-content: center;\n\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: #858585;\n}\n\n.home-button {\n\tmargin-left: 8px;\n\tcolor: #FF8E8E;\n}\n\n.nav-button {\n\tborder-radius: 8px;\n\tborder: 2px solid #E0E0E0;\n\tjustify-content: center;\n\tpadding: 8px;\n\tcursor: pointer;\n}\n\n.italic {\n\tfont-style: italic;\n}\n\n.entry-container {\n\tmargin-top: 60px;\n}\n\n.all-entries-button {\n\tcolor: #FF8E8E;\n\twidth: 125px;\n}\n\n.back-button-container {\n\tjustify-self: flex-start;\n}\n\n.search-email {\n\twidth: 100%;\n\tflex-grow: 1;\n\tcolor:  #FF8E8E;\n\tfontFamily: 'Roboto';\n\tfontWeight: '400';\n\tfontSize: '17px';\n\ttext-align: right;\n\tmargin-right: 50px;\n}\n\n.search-container {\n\tmin-width: 200px;\n\tflex: 1;\n\tdisplay: flex;\n\tflex-flow: wrap;\n\talign-items: center;\n\tjustify-content: flex-end;\n}\n\n.show-text-container {\n  margin-top: 150px;\n  display: flex;\n  align-content: center;\n  justify-content: center;\n  flex-wrap: wrap;\n}\n\n.show-text {\n\twidth: 100%;\n\ttext-align: center;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 35px;\n\n\tcolor: #FF8E8E;\n}\n\n.show-more-buttons {\n\tmargin-top: 20px;\n\twidth: 400px;\n\tdisplay: flex;\n\n\tjustify-content: center;\n\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: #858585;\n}", ""]);
+exports.push([module.i, "#app {\n}\nhtml {\n\theight: 100%;\n}\nbody {\n\tz-index: 0;\n\tmargin: 0;\n\tpadding: 0;\n}\n\n.noscroll {\n\theight: 100%;\n\toverflow: hidden;\n}\n\n.container {\n\theight: 100%;\n\tfont-family: Roboto;\n}\n\n.navbar {\n\twidth: 100%;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n}\n\n.menu-container {\n\tmin-width: 300px;\n\tflex: 1;\n\tdisplay: flex;\n\talign-items: flex-start;\n\tjustify-content: flex-start;\n}\n\n.menu-overlay {\n\tbackground-color: #FF8E8E;\n}\n\n.bm-burger-button {\n\tmargin-top: 25px;\n\tposition: fixed;\n\theight: 60px;\n\twidth: 120px;\n\tdisplay: inline;\n\toutline: 0;\n}\n\n.bm-burger-button-inverted {\n\tmargin-left:60px;\n\tbackground-image: url(/img/logo_color_filled_inverted.svg);\n\tbackground-repeat: no-repeat;\n\tjustify-self: flex-start;\n\tmargin-top: 25px;\n\tmargin-bottom: 15px;\n\tbackground-size: contain;\n\theight: 40px;\n\toutline: 0;\n}\n\n/* Styling of overlay */\n.bm-overlay {\n}\n\n.list-item {\n\ttext-align: left;\n\tmargin-left:auto;\n\tmargin-right: auto;\n\tmargin-top: 5px;\n\twidth: 180px;\n\tpadding-bottom: 10px;\n\tborder-bottom: 1.5px solid white;\n\tdisplay: flex;\n\toutline: 0;\n}\n\n.list-item-text {\n\tjustify-content: flex-start;\n\tcolor: #FFFFFF; \n\ttext-decoration: none;\n\tfont-family: Roboto;\n\tfont-weight: 300;\n\tfont-size: 17px;\n}\n\n.bm-icon {\n\tmax-height: 40px;\n}\n\n.icon-container {\n\tmin-width: 200px;\n\tflex: 1;\n\tmargin-top: 25px;\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: center;\n}\n\n.icon-image {\n\theight: 80px;\n}\n\n.pointer {\n\tcursor: pointer;\n}\n\n.review-more-container {\n  margin-top: 150px;\n  display: flex;\n  align-content: center;\n  justify-content: center;\n  flex-wrap: wrap;\n}\n\n.review-more-text {\n\twidth: 100%;\n\ttext-align: center;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 35px;\n\n\tcolor: #FF8E8E;\n}\n\n.review-more-buttons {\n\tmargin-top: 20px;\n\twidth: 400px;\n\tdisplay: flex;\n\n\tjustify-content: center;\n\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: #858585;\n}\n\n.home-button {\n\tmargin-left: 8px;\n\tcolor: #FF8E8E;\n}\n\n.nav-button {\n\tborder-radius: 8px;\n\tborder: 2px solid #E0E0E0;\n\tjustify-content: center;\n\tpadding: 8px;\n\tcursor: pointer;\n}\n\n.italic {\n\tfont-style: italic;\n}\n\n.entry-container {\n\tmargin-top: 60px;\n}\n\n.all-entries-button {\n\tcolor: #FF8E8E;\n\twidth: 125px;\n}\n\n.back-button-container {\n\tjustify-self: flex-start;\n}\n\n.search-email {\n\twidth: 100%;\n\tflex-grow: 1;\n\tcolor:  #FF8E8E;\n\tfontFamily: 'Roboto';\n\tfontWeight: '400';\n\tfontSize: '17px';\n\ttext-align: right;\n\tmargin-right: 50px;\n}\n\n.search-container {\n\tmin-width: 200px;\n\tflex: 1;\n\tdisplay: flex;\n\tflex-flow: wrap;\n\talign-items: center;\n\tjustify-content: flex-end;\n}\n\n.show-text-container {\n  margin-top: 150px;\n  display: flex;\n  align-content: center;\n  justify-content: center;\n  flex-wrap: wrap;\n}\n\n.show-text {\n\twidth: 100%;\n\ttext-align: center;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 35px;\n\n\tcolor: #FF8E8E;\n}\n\n.show-more-buttons {\n\tmargin-top: 20px;\n\twidth: 400px;\n\tdisplay: flex;\n\n\tjustify-content: center;\n\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: #858585;\n}\n\n.card-loading {\n\tmargin-left: auto;\n\tmargin-right: auto;\n\talign-self: center;\n\tborder: 4px solid #f3f3f3; /* Light grey */\n\tborder-top: 4px solid #FF8E8E; /* Orange */\n\tborder-radius: 50%;\n\twidth: 20px;\n\theight: 20px;\n\tanimation: spin 2s linear infinite;\n}", ""]);
 // Exports
 module.exports = exports;
 
@@ -4448,7 +4448,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".all-list-container {\n\twidth: 100%;\n\tdisplay: flex;\n\tjustify-content: center;\n}\n\n.all-mini-cards {\n\tjustify-content: center;\n\tmargin-top: 35px;\n\tpadding: 15px;\n\theight: 100%;\n\toverflow: scroll;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n}\n\n.mini-card {\n\tcursor: pointer;\n\twidth: 350px;\n\tmargin: 15px;\n\tborder: 1px solid #E0E0E0;\n\tbox-shadow: 0px 0px 15px 0px #ededed;\n\tbox-sizing: border-box;\n\tborder-radius: 10px;\n\tpadding: 10px 20px 10px 20px;\n}\n\n.mini-card:hover {\n\tbackground: #EDEDED;\n}\n\n.mini-card-created-at {\n\twidth: 100%;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 12px;\n\n\tcolor: #DDDDDD;\n}\n\n.mini-card-title {\n\twidth: 100%;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 20px;\n\n\tcolor: #8C8C8C;\n}\n\n.mini-card-content {\n\tmargin-top: 5px;\n\theight: 90px;\n\toverflow: hidden;\n\tfont-family: Roboto;\n\tfont-weight: 300;\n\tfont-size: 20px;\n\tcolor: #8C8C8C;\n}\n\n.mini-card-bottom-box {\n\talign-self: flex-end;\n}\n\n.mini-card-tag-bubbles {\n\twidth: 100%;\n\tdisplay: flex;\n\tjustify-content: start;\n\tflex-wrap: wrap;\n\tpadding:5px;\n\tmargin-right: 10px;\n}\n\n.mini-card-tag-bubble {\n\tdisplay: flex;\n\talign-items: center;\n\tmargin-top: 5px;\n\tmargin-right: 5px;\n\tborder-radius: 15px;\n\tbackground: #FAFAFA; \n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\tpadding: 2px 8px 4px 8px;\n\n\tcolor: #8C8C8C\n}\n\n.mini-card-category {\n\tmargin-top: 5px;\n\twidth: 100%;\n\tdisplay: flex;\n\theight: 20px;\n\talign-items: center;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: #8C8C8C;\n}", ""]);
+exports.push([module.i, ".all-list-container {\n\twidth: 100%;\n\tdisplay: flex;\n\tjustify-content: center;\n}\n\n.all-mini-cards {\n\tjustify-content: center;\n\tmargin-top: 35px;\n\tpadding: 15px;\n\theight: 100%;\n\toverflow: scroll;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n}\n\n.mini-card {\n\tcursor: pointer;\n\twidth: 350px;\n\tmargin: 15px;\n\tborder: 1px solid #E0E0E0;\n\tbox-shadow: 0px 0px 15px 0px #ededed;\n\tbox-sizing: border-box;\n\tborder-radius: 10px;\n\tpadding: 10px 20px 10px 20px;\n\tdisplay: flex;\n}\n\n.mini-card:hover {\n\tbackground: #EDEDED;\n}\n\n.mini-card-created-at {\n\twidth: 100%;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 12px;\n\n\tcolor: #DDDDDD;\n}\n\n.mini-card-title {\n\twidth: 100%;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 20px;\n\n\tcolor: #8C8C8C;\n}\n\n.mini-card-content {\n\tmargin-top: 5px;\n\theight: 90px;\n\toverflow: hidden;\n\tfont-family: Roboto;\n\tfont-weight: 300;\n\tfont-size: 20px;\n\tcolor: #8C8C8C;\n}\n\n.mini-card-bottom-box {\n\talign-self: flex-end;\n}\n\n.mini-card-tag-bubbles {\n\twidth: 100%;\n\tdisplay: flex;\n\tjustify-content: start;\n\tflex-wrap: wrap;\n\tpadding:5px;\n\tmargin-right: 10px;\n}\n\n.mini-card-tag-bubble {\n\tdisplay: flex;\n\talign-items: center;\n\tmargin-top: 5px;\n\tmargin-right: 5px;\n\tborder-radius: 15px;\n\tbackground: #FAFAFA; \n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\tpadding: 2px 8px 4px 8px;\n\n\tcolor: #8C8C8C\n}\n\n.mini-card-category {\n\tmargin-top: 5px;\n\twidth: 100%;\n\tdisplay: flex;\n\theight: 20px;\n\talign-items: center;\n\tfont-family: Roboto;\n\tfont-weight: 400;\n\tfont-size: 15px;\n\n\tcolor: #8C8C8C;\n}", ""]);
 // Exports
 module.exports = exports;
 
@@ -61902,146 +61902,6 @@ var AllComponent = /*#__PURE__*/function (_Component) {
 
 /***/ }),
 
-/***/ "./src/main/js/CategoryComponent.jsx":
-/*!*******************************************!*\
-  !*** ./src/main/js/CategoryComponent.jsx ***!
-  \*******************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_select__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-select */ "./node_modules/react-select/dist/react-select.browser.esm.js");
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-
-
-
-var CategoryComponent = /*#__PURE__*/function (_Component) {
-  _inherits(CategoryComponent, _Component);
-
-  var _super = _createSuper(CategoryComponent);
-
-  function CategoryComponent() {
-    _classCallCheck(this, CategoryComponent);
-
-    return _super.apply(this, arguments);
-  }
-
-  _createClass(CategoryComponent, [{
-    key: "render",
-    value: function render() {
-      var customStyles = {
-        container: function container(provided, state) {
-          return _objectSpread({}, provided, {
-            width: 'auto',
-            marginLeft: '15px',
-            maxHeight: '60px'
-          });
-        },
-        control: function control(provided, state) {
-          return _objectSpread({}, provided, {
-            border: 'none',
-            borderColor: "#FFFFFF",
-            color: '#8C8C8C',
-            fontFamily: 'Roboto',
-            fontWeight: '400',
-            fontSize: '20px',
-            paddingRight: '0px',
-            outline: 0,
-            cursor: 'pointer'
-          });
-        },
-        singleValue: function singleValue(provided, state) {
-          return {
-            color: '#8C8C8C',
-            fontFamily: 'Roboto',
-            fontWeight: '400',
-            fontSize: '20px'
-          };
-        },
-        input: function input(provided, state) {
-          return {
-            webkitUserSelect: 'none',
-            mozUserSelect: 'none',
-            msUserSelect: 'none',
-            userSelect: 'none'
-          };
-        },
-        indicatorsContainer: function indicatorsContainer(provided, state) {
-          return {};
-        },
-        valueContainer: function valueContainer(provided, state) {
-          return _objectSpread({}, provided, {
-            paddingRight: '0px',
-            border: 'none'
-          });
-        },
-        option: function option(provided, state) {
-          return _objectSpread({}, provided, {
-            color: state.isFocused ? '#5C8DD7' : '#8C8C8C',
-            fontFamily: 'Roboto',
-            fontWeight: '400',
-            fontSize: '20px',
-            background: state.isFocused ? '#F5F5F5' : '#FFFFFF',
-            width: 'auto',
-            cursor: 'pointer'
-          });
-        }
-      };
-      var dropdownOptions = [{
-        label: "Just a thought",
-        value: 0
-      }, {
-        label: "Action Item",
-        value: 1
-      }];
-      var defaultOption = dropdownOptions[this.props.defaultCategory];
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_select__WEBPACK_IMPORTED_MODULE_1__["default"], {
-        options: dropdownOptions,
-        value: defaultOption,
-        styles: customStyles,
-        isSearchable: false,
-        onChange: this.props.updateCategory
-      });
-    }
-  }]);
-
-  return CategoryComponent;
-}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
-
-/* harmony default export */ __webpack_exports__["default"] = (CategoryComponent);
-
-/***/ }),
-
 /***/ "./src/main/js/DeleteModal.jsx":
 /*!*************************************!*\
   !*** ./src/main/js/DeleteModal.jsx ***!
@@ -62732,9 +62592,13 @@ var MiniCardComponent = /*#__PURE__*/function (_Component) {
       var component = _assertThisInitialized(_this);
 
       Object(_Storage_js__WEBPACK_IMPORTED_MODULE_2__["getThought"])(_this.props.thoughtId).then(function (thought) {
-        component.setState({
-          currentThought: thought
-        });
+        setTimeout(function () {
+          console.log("prutu");
+          component.setState({
+            currentThought: thought,
+            dataFinishedLoading: true
+          });
+        }, 750);
       }, function (err) {
         console.log(err);
       });
@@ -62822,7 +62686,8 @@ var MiniCardComponent = /*#__PURE__*/function (_Component) {
         lastEditedTimestampMs: null,
         lastReviewedTimestampMs: null,
         deleted: false
-      }
+      },
+      dataFinishedLoading: false
     };
     return _this;
   }
@@ -62859,7 +62724,7 @@ var MiniCardComponent = /*#__PURE__*/function (_Component) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         "class": "mini-card",
         onClick: this.props.onClick
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.state.dataFinishedLoading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "thought-top-box"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "mini-card-title-row"
@@ -62880,7 +62745,9 @@ var MiniCardComponent = /*#__PURE__*/function (_Component) {
         className: "mini-card-category"
       }, this.state.currentThought.category == 0 ? "Just a thought" : "Action Item", this.state.currentThought.category == 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: this.state.currentThought.completed ? "thought-checkmark-toggle thought-completed" : "thought-checkmark-toggle"
-      }) : null)));
+      }) : null))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card-loading"
+      }));
     }
   }]);
 
@@ -63313,7 +63180,13 @@ var Search = /*#__PURE__*/function (_Component) {
       }, this.getEmail(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "search-sign-out",
         onClick: this.props.logOut
-      }, " Log out ")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_select__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        style: {
+          color: "8C8C8C"
+        }
+      }, " | "), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "pointer"
+      }, " Log out "), " ")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_select__WEBPACK_IMPORTED_MODULE_1__["default"], {
         styles: customStyles,
         placeholder: "Search",
         options: this.state.searchOptions,
@@ -63446,7 +63319,6 @@ var BackendStorageClient = /*#__PURE__*/function (_StorageClient) {
         content: null,
         creationTimestampMs: null,
         tags: new Map(),
-        category: 0,
         replies: new Map(),
         plusOnes: 1,
         completed: false,
@@ -63462,8 +63334,6 @@ var BackendStorageClient = /*#__PURE__*/function (_StorageClient) {
       for (var i = 0; i < entity.tags.length; i++) {
         thought.tags.set(entity.tags[i].tag_key, entity.tags[i].tag_content);
       }
-
-      thought.category = entity.category;
 
       for (var i = 0; i < entity.replies.length; i++) {
         thought.replies.set(entity.replies[i].reply_timestamp_ms, entity.replies[i].reply_content);
@@ -63511,8 +63381,6 @@ var BackendStorageClient = /*#__PURE__*/function (_StorageClient) {
       } finally {
         _iterator.f();
       }
-
-      entity.category = thought.category;
 
       var _iterator2 = _createForOfIteratorHelper(thought.replies),
           _step2;
@@ -64039,14 +63907,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_tiny_popover__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_tiny_popover__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var immutability_helper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! immutability-helper */ "./node_modules/immutability-helper/index.js");
 /* harmony import */ var immutability_helper__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(immutability_helper__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _CategoryComponent_jsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CategoryComponent.jsx */ "./src/main/js/CategoryComponent.jsx");
-/* harmony import */ var _DeleteModal_jsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./DeleteModal.jsx */ "./src/main/js/DeleteModal.jsx");
-/* harmony import */ var _Storage_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Storage.js */ "./src/main/js/Storage.js");
-/* harmony import */ var _TimeFormatUtils_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./TimeFormatUtils.js */ "./src/main/js/TimeFormatUtils.js");
-/* harmony import */ var animate_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! animate.css */ "./node_modules/animate.css/animate.css");
-/* harmony import */ var animate_css__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(animate_css__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _css_ThoughtCard_css__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./css/ThoughtCard.css */ "./src/main/js/css/ThoughtCard.css");
-/* harmony import */ var _css_ThoughtCard_css__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_css_ThoughtCard_css__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _DeleteModal_jsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./DeleteModal.jsx */ "./src/main/js/DeleteModal.jsx");
+/* harmony import */ var _Storage_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Storage.js */ "./src/main/js/Storage.js");
+/* harmony import */ var _TimeFormatUtils_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./TimeFormatUtils.js */ "./src/main/js/TimeFormatUtils.js");
+/* harmony import */ var animate_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! animate.css */ "./node_modules/animate.css/animate.css");
+/* harmony import */ var animate_css__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(animate_css__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _css_ThoughtCard_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./css/ThoughtCard.css */ "./src/main/js/css/ThoughtCard.css");
+/* harmony import */ var _css_ThoughtCard_css__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_css_ThoughtCard_css__WEBPACK_IMPORTED_MODULE_8__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
@@ -64095,7 +63962,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-
 var ThoughtCard = /*#__PURE__*/function (_Component) {
   _inherits(ThoughtCard, _Component);
 
@@ -64111,17 +63977,22 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
     _defineProperty(_assertThisInitialized(_this), "loadThought", function () {
       var component = _assertThisInitialized(_this);
 
-      Object(_Storage_js__WEBPACK_IMPORTED_MODULE_6__["getThought"])(_this.props.thoughtId).then(function (thought) {
-        document.getElementById("thought-title-area").value = thought.title;
-        document.getElementById("thought-content-area").value = thought.content;
-        component.setState({
-          currentThought: thought,
-          hasTitle: thought.title != "",
-          hasContent: thought.content != "",
-          hasTagContent: false,
-          hasTypedInfo: true,
-          minRows: 4
-        });
+      Object(_Storage_js__WEBPACK_IMPORTED_MODULE_5__["getThought"])(_this.props.thoughtId).then(function (thought) {
+        setTimeout(function () {
+          console.log("prutu");
+          component.setState({
+            currentThought: thought,
+            hasTitle: thought.title != "",
+            hasContent: thought.content != "",
+            hasTagContent: false,
+            hasTypedInfo: true,
+            minRows: 4,
+            dataFinishedLoading: true
+          }, function () {
+            document.getElementById("thought-title-area").value = thought.title;
+            document.getElementById("thought-content-area").value = thought.content;
+          });
+        }, 750);
         console.log(document.getElementById("thought-content-area").value);
       }, function (err) {
         console.log(err);
@@ -64257,7 +64128,7 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
             "class": "thought-reply-box thought-reply-item"
           }, content, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             "class": "thought-reply-timestamp"
-          }, Object(_TimeFormatUtils_js__WEBPACK_IMPORTED_MODULE_7__["quickFormat"])(timestamp), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_tiny_popover__WEBPACK_IMPORTED_MODULE_2___default.a, {
+          }, Object(_TimeFormatUtils_js__WEBPACK_IMPORTED_MODULE_6__["quickFormat"])(timestamp), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_tiny_popover__WEBPACK_IMPORTED_MODULE_2___default.a, {
             isOpen: _this.state.showPopoverReplyId == timestamp,
             position: 'right' // preferred position
             ,
@@ -64478,25 +64349,6 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
       }
     });
 
-    _defineProperty(_assertThisInitialized(_this), "changeCategory", function (newCategory) {
-      _this.setState({
-        currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_3___default()(_this.state.currentThought, {
-          completed: {
-            $set: false
-          },
-          category: {
-            $set: newCategory.value
-          }
-        })
-      }, function () {
-        _this.props.toggleSavedContent(true);
-
-        if (_this.props.location.pathname !== "/") {
-          _this.updateThought();
-        }
-      });
-    });
-
     _defineProperty(_assertThisInitialized(_this), "toggleThoughtComplete", function () {
       _this.setState({
         currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_3___default()(_this.state.currentThought, {
@@ -64572,7 +64424,7 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
             }
           })
         }, function () {
-          Object(_Storage_js__WEBPACK_IMPORTED_MODULE_6__["updateThought"])(component.state.currentThought).then(function (editTimestamp) {
+          Object(_Storage_js__WEBPACK_IMPORTED_MODULE_5__["updateThought"])(component.state.currentThought).then(function (editTimestamp) {
             component.props.toggleSavedContent(false);
             component.setState({
               reviewLastUpdated: currTime,
@@ -64618,7 +64470,7 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
           }
         })
       }, function () {
-        Object(_Storage_js__WEBPACK_IMPORTED_MODULE_6__["saveThought"])(this.state.currentThought).then(function (result) {
+        Object(_Storage_js__WEBPACK_IMPORTED_MODULE_5__["saveThought"])(this.state.currentThought).then(function (result) {
           if (result.showSuggestReviewScreen) {
             component.clearThought();
             component.setState({
@@ -64669,7 +64521,6 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
           content: null,
           creationTimestampMs: null,
           tags: new Map(),
-          category: 0,
           replies: new Map(),
           plusOnes: 1,
           lastEditedTimestampMs: null,
@@ -64692,7 +64543,7 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
           }, "Clear");
         }
       } else {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_DeleteModal_jsx__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_DeleteModal_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], {
           deleteThought: _this.deleteThought
         });
       }
@@ -64726,7 +64577,7 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
         hasTagContent: false,
         hasTypedInfo: false
       }, function () {
-        Object(_Storage_js__WEBPACK_IMPORTED_MODULE_6__["deleteThought"])(_this.state.currentThought.id).then(function (result) {
+        Object(_Storage_js__WEBPACK_IMPORTED_MODULE_5__["deleteThought"])(_this.state.currentThought.id).then(function (result) {
           component.props.toggleSavedContent(false);
           component.resetThoughtData();
           document.getElementById("tag-input").value = "";
@@ -64748,7 +64599,6 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
         content: null,
         creationTimestampMs: null,
         tags: new Map(),
-        category: 0,
         replies: new Map(),
         plusOnes: 1,
         completed: false,
@@ -64765,7 +64615,8 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
       saveSuccess: false,
       showPopoverReplyId: "",
       reviewLastUpdated: null,
-      minRows: 3
+      minRows: 3,
+      dataFinishedLoading: false
     };
     return _this;
   }
@@ -64785,8 +64636,14 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
+      var _this2 = this;
+
       if (this.props.location.pathname !== "/" && prevProps.thoughtId != this.props.thoughtId) {
-        this.loadThought();
+        this.setState({
+          dataFinishedLoading: false
+        }, function () {
+          _this2.loadThought();
+        });
       }
     }
   }, {
@@ -64850,7 +64707,7 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "thought-card",
         id: "thought-card"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.props.location.pathname == "/" || this.state.dataFinishedLoading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "thought-top-box"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "thought-title-row"
@@ -64860,7 +64717,7 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
         className: "thought-created-at"
       }, "Created at ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         id: "created-at-formatted"
-      }, Object(_TimeFormatUtils_js__WEBPACK_IMPORTED_MODULE_7__["prettyFormat"])(this.state.currentThought.creationTimestampMs)))) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_autosize_textarea__WEBPACK_IMPORTED_MODULE_1___default.a, {
+      }, Object(_TimeFormatUtils_js__WEBPACK_IMPORTED_MODULE_6__["prettyFormat"])(this.state.currentThought.creationTimestampMs)))) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_autosize_textarea__WEBPACK_IMPORTED_MODULE_1___default.a, {
         className: "thought-title",
         placeholder: "Title",
         onChange: this.onTitleUpdate,
@@ -64889,7 +64746,7 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
         className: "thought-edited-at-timestamp"
       }, "Edited ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         id: "edited-at-formatted"
-      }, Object(_TimeFormatUtils_js__WEBPACK_IMPORTED_MODULE_7__["dateAwareFormat"])(this.state.currentThought.lastEditedTimestampMs)))) : null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, Object(_TimeFormatUtils_js__WEBPACK_IMPORTED_MODULE_6__["dateAwareFormat"])(this.state.currentThought.lastEditedTimestampMs)))) : null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "thought-bottom-row"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "thought-add-tags"
@@ -64904,17 +64761,11 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
         onKeyUp: this.onTagKeyUp,
         id: "tag-input",
         maxLength: "25"
-      }), this.getTagCheckmarkOrCross()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CategoryComponent_jsx__WEBPACK_IMPORTED_MODULE_4__["default"], {
-        updateCategory: this.changeCategory,
-        defaultCategory: this.state.currentThought.category
-      }), this.props.location.pathname !== "/" && this.state.currentThought.category == 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "thought-complete",
-        onClick: this.toggleThoughtComplete
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: this.state.currentThought.completed ? "thought-checkmark-toggle thought-completed" : "thought-checkmark-toggle"
-      })) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }), this.getTagCheckmarkOrCross()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "thought-update"
-      }, this.getFinishOrUpdateButton())))), this.props.location.pathname !== "/" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, this.getFinishOrUpdateButton())))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card-loading thought-card-loading"
+      })), this.props.location.pathname !== "/" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "thought-replies"
       }, this.getReplies(), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "thought-reply-box"

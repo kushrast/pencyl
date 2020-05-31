@@ -12,11 +12,6 @@ import java.util.Objects;
  */
 @Entity
 public class Thought {
-    public enum Categories {
-        REGULAR,
-        ACTION_ITEM
-    }
-
     private @Id
     @GeneratedValue
     Long id;
@@ -62,7 +57,6 @@ public class Thought {
 
     @ElementCollection
     private List<Tag> tags = new ArrayList<>();
-    private int category;
 
     @Embeddable
     public static class Reply {
@@ -109,13 +103,12 @@ public class Thought {
     public Thought() {
     }
 
-    public Thought(long userId, String title, String content, long creation_timestamp_ms, List<Tag> tags, int category, List<Reply> replies, int plusOnes) {
+    public Thought(long userId, String title, String content, long creation_timestamp_ms, List<Tag> tags, List<Reply> replies, int plusOnes) {
         this.user_id = userId;
         this.title = title;
         this.content = content;
         this.creation_timestamp_ms = creation_timestamp_ms;
         this.tags = tags;
-        this.category = category;
         this.replies = replies;
         this.plusOnes = plusOnes;
         this.completed = false;
@@ -169,14 +162,6 @@ public class Thought {
 
     public void setTags(List<Tag> tags) {
         this.tags = tags;
-    }
-
-    public int getCategory() {
-        return category;
-    }
-
-    public void setCategory(int category) {
-        this.category = category;
     }
 
     public List<Reply> getReplies() {
@@ -234,7 +219,6 @@ public class Thought {
         Thought thought = (Thought) o;
         return user_id == thought.user_id &&
                 creation_timestamp_ms == thought.creation_timestamp_ms &&
-                category == thought.category &&
                 plusOnes == thought.plusOnes &&
                 last_edited_timestamp_ms == thought.last_edited_timestamp_ms &&
                 last_reviewed_timestamp_ms == thought.last_reviewed_timestamp_ms &&
@@ -256,7 +240,6 @@ public class Thought {
                 ", content='" + content + '\'' +
                 ", creation_timestamp_ms=" + creation_timestamp_ms +
                 ", tags=" + tags +
-                ", category=" + category +
                 ", replies=" + replies +
                 ", plusOnes=" + plusOnes +
                 ", last_edited_timestamp_ms=" + last_edited_timestamp_ms +
@@ -270,13 +253,12 @@ public class Thought {
         setTitle(updated.title);
         setContent(updated.content);
         setTags(updated.tags);
-        setCategory(updated.category);
         setReplies(updated.replies);
         setPlusOnes(updated.plusOnes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user_id, title, content, creation_timestamp_ms, tags, category, replies, plusOnes, last_edited_timestamp_ms, last_reviewed_timestamp_ms, completed, version);
+        return Objects.hash(id, user_id, title, content, creation_timestamp_ms, tags, replies, plusOnes, last_edited_timestamp_ms, last_reviewed_timestamp_ms, completed, version);
     }
 }

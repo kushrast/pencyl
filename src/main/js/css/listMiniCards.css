@@ -23,6 +23,7 @@
 	box-sizing: border-box;
 	border-radius: 10px;
 	padding: 10px 20px 10px 20px;
+	display: flex;
 }
 
 .mini-card:hover {
