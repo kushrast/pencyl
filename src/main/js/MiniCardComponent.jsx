@@ -15,7 +15,6 @@ class MiniCardComponent extends Component {
 				content: null,
 				creationTimestampMs: null,
 				tags: new Map(),
-				category : 0,
 				replies: new Map(),
 				plusOnes: 1,
 				completed: false,
@@ -128,13 +127,6 @@ class MiniCardComponent extends Component {
 		  			<div className="mini-card-bottom-box">
 						<div className="mini-card-tag-bubbles">
 							{this.getTags()}
-						</div>
-						<div className="mini-card-category">{this.state.currentThought.category == 0 ? "Just a thought" : "Action Item"}
-						{
-							this.state.currentThought.category == 1 ? 
-							<div className={this.state.currentThought.completed ? "thought-checkmark-toggle thought-completed" : "thought-checkmark-toggle"}></div>
-							: null
-						}
 						</div>
 		  			</div>
 	  			</div>

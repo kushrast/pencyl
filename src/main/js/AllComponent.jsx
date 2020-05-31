@@ -90,20 +90,13 @@ class AllComponent extends Component {
 		  					<div className="show-text-container">
 			  					<div className="show-text">
 			  					{this.props.searchCriteria.size == 0 ? 
-			  						<div>
-				  						<span>You haven't stored any thoughts!</span>
-				  						<div className="show-more-buttons">
-							  				<div className="nav-button home-button" style={{marginRight:"0px"}} onClick={()=>{this.props.history.push("/")}}>Back to home </div>
-							  			</div>
-						  			</div>
+				  					<span>You haven't stored any thoughts!</span>
 			  						:
-			  						<div>
-				  						<span>No thoughts found for query</span>
-				  						<div className="show-more-buttons">
-							  				<div className="nav-button home-button" style={{marginRight:"0px"}} onClick={()=>{this.props.history.push("/")}}>Back to home </div>
-							  			</div>
-						  			</div>
+				  					<span>No thoughts found for query</span>
 						  			} 
+			  						<div className="show-more-buttons">
+						  				<div className="nav-button" style={{marginRight:"0px"}} onClick={()=>{this.props.history.push("/")}}>Back to home </div>
+						  			</div>
 			  					</div>
 		  					</div>
 	  					:
