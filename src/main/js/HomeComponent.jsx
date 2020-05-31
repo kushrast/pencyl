@@ -33,8 +33,8 @@ class HomeComponent extends Component {
 		  				Would you like to review some old thoughts?
 		  			</div>
 		  			<div className="review-more-buttons">
-		  				<div className="nav-button" onClick={this.denyReviewScreen}>Not right now</div>
-		  				<div className="nav-button home-button" onClick={()=>{this.props.history.push("/review")}}> Sure, let's do it </div>
+		  				<div className="nav-button" style={{"marginRight":"8px"}} onClick={this.denyReviewScreen}>Not right now</div>
+		  				<div className="inverted-button" onClick={()=>{this.props.history.push("/review")}}> Sure, let's do it </div>
 		  			</div>
 		  		</div>
 		  		:

@@ -2,6 +2,7 @@
 }
 html {
 	height: 100%;
+	color: #f2f2f2;
 }
 body {
 	z-index: 0;
@@ -123,7 +124,7 @@ body {
 }
 
 .review-more-buttons {
-	margin-top: 20px;
+	margin-top: 120px;
 	width: 400px;
 	display: flex;
 
@@ -137,16 +138,47 @@ body {
 }
 
 .home-button {
-	margin-left: 8px;
 	color: #FF8E8E;
 }
 
 .nav-button {
-	border-radius: 8px;
-	border: 2px solid #E0E0E0;
+	border-radius: 6px;
+	border: 1px solid #CCCCCC;
+	box-shadow: 0px 1px 5px 0px #dbdbdb;
 	justify-content: center;
-	padding: 8px;
+	padding: 10px;
 	cursor: pointer;
+	-webkit-transition : background-color 250ms ease-out;
+}
+
+.nav-button:hover {
+	border: 1px solid #D6D6D6;
+	background-color: #f5f5f5;
+}
+
+.nav-button:active {
+	border: 1px solid #D6D6D6;
+	background-color: #e6e6e6;
+}
+
+.inverted-button {
+	background-color: #FF8E8E;
+	color: white;
+	border-radius: 6px;
+	border: none;
+	justify-content: center;
+	padding: 10px;
+	cursor: pointer;
+	box-shadow: 0px 2px 5px 0px #dbdbdb;
+	-webkit-transition : background-color 250ms ease-out;
+}
+
+.inverted-button:hover {
+	background-color: #EB8D8D;
+}
+
+.inverted-button:active {
+	background-color: #CD6F6F;
 }
 
 .italic {
@@ -158,7 +190,6 @@ body {
 }
 
 .all-entries-button {
-	color: #FF8E8E;
 	width: 125px;
 }
 
@@ -186,6 +217,22 @@ body {
 	justify-content: flex-end;
 }
 
+.search-bar {
+	color: #D4D4D4;
+}
+
+.search-log-out {
+	color: #EB8D8D;
+}
+
+.search-log-out:hover {
+	color: #CD6F6F;
+}
+
+.search-log-out:active {
+	color: #946666;
+}
+
 .show-text-container {
   margin-top: 150px;
   display: flex;
@@ -205,7 +252,9 @@ body {
 }
 
 .show-more-buttons {
-	margin-top: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 120px;
 	width: 400px;
 	display: flex;
 

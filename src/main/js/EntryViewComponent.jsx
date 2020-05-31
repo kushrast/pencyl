@@ -70,7 +70,7 @@ class EntryViewComponent extends Component {
 		  		<div>
 			  		<ThoughtCard history={this.props.history} location={this.props.location} thoughtId={this.props.reviewIds[this.props.active-1]} toggleSavedContent={this.props.toggleSavedContent} hasUnsavedContent={this.props.hasUnsavedContent}/>
 			  		<div className="nav-buttons">
-			  			<div className="back-button-container"><div className="nav-button all-entries-button nav-button-active" onClick={this.props.backToEntries}>Back to All entries</div></div>
+			  			<div className="back-button-container"><div className="inverted-button all-entries-button nav-button-active" onClick={this.props.backToEntries}>Back to All entries</div></div>
 			  			<div className="prev-button-container"><div className={this.props.active > 1 ? "nav-button prev-button nav-button-active" : "nav-button prev-button nav-button-disabled"} id="prevButton" onClick={this.switchActive.bind(this, this.props.active-1)}>Previous</div></div>
 			  			<div className="next-button-container"><div className={this.props.active < this.props.reviewIds.length ? "nav-button next-button nav-button-active" : "nav-button next-button nav-button-disabled"} id="nextButton" onClick={this.switchActive.bind(this, this.props.active+1)}>Next</div></div>
 			  		</div>
