@@ -1,6 +1,6 @@
 package com.kushrastogi.pencyl;
 
-import com.kushrastogi.pencyl.schema.User;
+import com.kushrastogi.pencyl.schema.PencylUser;
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -8,6 +8,6 @@ import org.springframework.data.repository.CrudRepository;
  *
  * TODO: Switch to MongoDB or Postgres
  */
-public interface UserRepository extends CrudRepository<User, Long> {
+public interface UserRepository extends CrudRepository<PencylUser, Long> {
 
 }

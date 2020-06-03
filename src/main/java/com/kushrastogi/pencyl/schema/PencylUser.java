@@ -1,36 +1,34 @@
 package com.kushrastogi.pencyl.schema;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.List;
 
 /**
  * Entity class for Users
  */
 @Entity
-public class User {
+public class PencylUser {
     private @Id
     @GeneratedValue
     long id;
 
+    @Column(columnDefinition = "TEXT")
     private String googleSSOId;
     private String email;
 
     @ElementCollection
     private List<Long> thoughtsInReview;
 
-    public User() {
+    public PencylUser() {
     }
 
-    public User(long id, String email, List<Long> thoughtsInReview) {
+    public PencylUser(long id, String email, List<Long> thoughtsInReview) {
         this.id = id;
         this.email = email;
         this.thoughtsInReview = thoughtsInReview;
     }
 
-    public User(String googleSSOId, String email) {
+    public PencylUser(String googleSSOId, String email) {
         this.googleSSOId = googleSSOId;
         this.email = email;
     }
