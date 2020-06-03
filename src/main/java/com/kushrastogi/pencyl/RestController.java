@@ -4,8 +4,8 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.kushrastogi.pencyl.schema.PencylUser;
 import com.kushrastogi.pencyl.schema.Thought;
-import com.kushrastogi.pencyl.schema.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -120,17 +120,17 @@ public class RestController {
 
         thoughtRepository.deleteById(id);
 
-        final Optional<User> optionalUser = userRepository.findById(Long.parseLong(userId));
+        final Optional<PencylUser> optionalUser = userRepository.findById(Long.parseLong(userId));
 
         if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
+            PencylUser pencylUser = optionalUser.get();
 
-            List<Long> thoughtsInReview = new ArrayList<>(user.getThoughtsInReview());
+            List<Long> thoughtsInReview = new ArrayList<>(pencylUser.getThoughtsInReview());
             thoughtsInReview.remove(id);
 
-            user.setThoughtsInReview(thoughtsInReview);
+            pencylUser.setThoughtsInReview(thoughtsInReview);
 
-            userRepository.save(user);
+            userRepository.save(pencylUser);
         }
         return ResponseEntity.ok(response);
     }
@@ -149,17 +149,17 @@ public class RestController {
 
         long userId = Long.parseLong(cookieUserId);
         long currentTime = new Date().getTime();
-        Optional<User> optionalUser = userRepository.findById(userId);
+        Optional<PencylUser> optionalUser = userRepository.findById(userId);
 
         System.out.println(optionalUser);
         if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
+            PencylUser pencylUser = optionalUser.get();
 
-            System.out.println(user);
+            System.out.println(pencylUser);
 
-            if (!user.getThoughtsInReview().isEmpty()) {
-                System.out.println(user.getThoughtsInReview());
-                response.put("thoughtsInReview", user.getThoughtsInReview());
+            if (!pencylUser.getThoughtsInReview().isEmpty()) {
+                System.out.println(pencylUser.getThoughtsInReview());
+                response.put("thoughtsInReview", pencylUser.getThoughtsInReview());
                 return ResponseEntity.ok(response);
             } else {
                 Iterable<Thought> allThoughts = thoughtRepository.findAll();
@@ -182,8 +182,8 @@ public class RestController {
                     thoughtsToReview.add(userThoughts.get(i));
                 }
 
-                user.setThoughtsInReview(thoughtsToReview);
-                userRepository.save(user);
+                pencylUser.setThoughtsInReview(thoughtsToReview);
+                userRepository.save(pencylUser);
 
                 response.put("thoughtsInReview", thoughtsToReview);
                 return ResponseEntity.ok(response);
@@ -207,11 +207,11 @@ public class RestController {
 
         long currentTimeMs = new Date().getTime();
 
-        Optional<User> optionalUser = userRepository.findById(userId);
+        Optional<PencylUser> optionalUser = userRepository.findById(userId);
         if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
+            PencylUser pencylUser = optionalUser.get();
 
-            for (long thoughtId : user.getThoughtsInReview()) {
+            for (long thoughtId : pencylUser.getThoughtsInReview()) {
                 Optional<Thought> optionalThought = thoughtRepository.findById(thoughtId);
 
                 if (optionalThought.isPresent()) {
@@ -226,8 +226,8 @@ public class RestController {
                 }
             }
 
-            user.setThoughtsInReview(new ArrayList<>());
-            userRepository.save(user);
+            pencylUser.setThoughtsInReview(new ArrayList<>());
+            userRepository.save(pencylUser);
 
             return ResponseEntity.ok(response);
         } else {
@@ -320,24 +320,24 @@ public class RestController {
 
             boolean newUser = true;
 
-            User currentUser = null;
+            PencylUser currentPencylUser = null;
 
-            for (User user : userRepository.findAll()) {
-                System.out.println(user);
-                if (user.getGoogleSSOId().equals(userId)) {
-                    System.out.println("Found user :" + user.toString());
-                    currentUser = user;
+            for (PencylUser pencylUser : userRepository.findAll()) {
+                System.out.println(pencylUser);
+                if (pencylUser.getGoogleSSOId().equals(userId)) {
+                    System.out.println("Found user :" + pencylUser.toString());
+                    currentPencylUser = pencylUser;
                     newUser = false;
                 }
             }
 
             if (newUser) {
                 System.out.println("Making new user");
-                currentUser = userRepository.save(new User(userId, email));
+                currentPencylUser = userRepository.save(new PencylUser(userId, email));
             }
 
 
-            Cookie cookie = new Cookie("userId", String.valueOf(currentUser.getId()));
+            Cookie cookie = new Cookie("userId", String.valueOf(currentPencylUser.getId()));
             cookie.setPath("/");
 //            cookie.setSecure(true);
             cookie.setHttpOnly(true);
