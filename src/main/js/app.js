@@ -5,12 +5,13 @@ import update from 'immutability-helper';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 const axios = require('axios').default;
 
-import Menu from './Menu.jsx';
+import TopBarMenu from './TopBarMenu.jsx';
 import Icon from './Icon.jsx';
 import Search from './Search.jsx';
 import HomeComponent from './HomeComponent.jsx';
 import ReviewComponent from './ReviewComponent.jsx';
 import AllComponent from "./AllComponent.jsx";
+import WelcomeComponent from "./WelcomeComponent.jsx";
 import client from './client';
 import "./css/app.css";
 import "./css/navigate.css";
@@ -27,6 +28,7 @@ class App extends Component {
 			newSearchQuery: false,
 			userEmail: "",
 			userId: "",
+			showWelcomeTutorial: showWelcomeTutorial
 		}
 	}
 
@@ -64,6 +66,23 @@ class App extends Component {
 		});
 	}
 
+	finishedSignOnTutorial = () => {
+		var component = this;
+		axios({
+		  method: 'post',
+		  url: '/v2/finishedSignOnTutorial',
+		})
+		.then(function(response) {
+			component.setState({
+				showWelcomeTutorial: false
+			});
+		}, function(err) {
+			component.setState({
+				showWelcomeTutorial: false
+			});		
+		});
+	}
+
 	getReviewComponent = (props) => {
 		return <ReviewComponent {...props} toggleSavedContent={this.toggleSavedContent}  hasUnsavedContent={this.state.hasUnsavedContent}/>;
 	}
@@ -73,6 +92,9 @@ class App extends Component {
 	}
 
 	getHomeComponent = (props) => {
+		if (this.state.showWelcomeTutorial) {
+			return <WelcomeComponent finishedSignOnTutorial={this.finishedSignOnTutorial}/>
+		}
 		return <HomeComponent {...props} toggleSavedContent={this.toggleSavedContent}/>;
 	}
 
@@ -81,8 +103,8 @@ class App extends Component {
 			<div className="container">
 				<BrowserRouter>
 					<div className="navbar">
-							<Menu />
-							<Icon page={this.state.page}/>
+							<TopBarMenu/>
+							<Icon/>
 							<Search updateSearch={this.updateSearch} userEmail={this.userEmail} logOut={this.logOut}/>
 						</div>
 					

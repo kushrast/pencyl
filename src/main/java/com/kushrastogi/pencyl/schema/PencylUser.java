@@ -16,21 +16,105 @@ public class PencylUser {
     private String googleSSOId;
     private String email;
 
-    @ElementCollection
-    private List<Long> thoughtsInReview;
+    private UserFlags userFlags;
 
-    public PencylUser() {
+    @Embeddable
+    public static class UserFlags {
+        long lastReviewTimestamp;
+        long suggestedReviewTimestamp;
+
+        boolean seenReflectMode = false;
+        boolean showMiniReflectButton = false;
+        boolean finishedSignOnTutorial = false;
+        boolean finishedReviewTutorial = false;
+
+        public UserFlags() {
+            this.lastReviewTimestamp = 0;
+            this.suggestedReviewTimestamp = 0;
+            this.seenReflectMode = false;
+            this.showMiniReflectButton = false;
+            this.finishedSignOnTutorial = false;
+            this.finishedReviewTutorial = false;
+        }
+
+        public UserFlags(long lastReviewTimestamp, long suggestedReviewTimestamp, boolean seenReflectMode, boolean showMiniReflectButton, boolean finishedSignOnTutorial, boolean finishedReviewTutorial) {
+            this.lastReviewTimestamp = lastReviewTimestamp;
+            this.suggestedReviewTimestamp = suggestedReviewTimestamp;
+            this.seenReflectMode = seenReflectMode;
+            this.showMiniReflectButton = showMiniReflectButton;
+            this.finishedSignOnTutorial = finishedSignOnTutorial;
+            this.finishedReviewTutorial = finishedReviewTutorial;
+        }
+
+        public long getLastReviewTimestamp() {
+            return lastReviewTimestamp;
+        }
+
+        public void setLastReviewTimestamp(long lastReviewTimestamp) {
+            this.lastReviewTimestamp = lastReviewTimestamp;
+        }
+
+        public long getSuggestedReviewTimestamp() {
+            return suggestedReviewTimestamp;
+        }
+
+        public void setSuggestedReviewTimestamp(long suggestedReviewTimestamp) {
+            this.suggestedReviewTimestamp = suggestedReviewTimestamp;
+        }
+
+        public boolean isFinishedSignOnTutorial() {
+            return finishedSignOnTutorial;
+        }
+
+        public void setFinishedSignOnTutorial(boolean finishedSignOnTutorial) {
+            this.finishedSignOnTutorial = finishedSignOnTutorial;
+        }
+
+        public boolean isFinishedReviewTutorial() {
+            return finishedReviewTutorial;
+        }
+
+        public void setFinishedReviewTutorial(boolean finishedReviewTutorial) {
+            this.finishedReviewTutorial = finishedReviewTutorial;
+        }
+
+        public boolean isSeenReflectMode() {
+            return seenReflectMode;
+        }
+
+        public void setSeenReflectMode(boolean seenReflectMode) {
+            this.seenReflectMode = seenReflectMode;
+        }
+
+        public boolean isShowMiniReflectButton() {
+            return showMiniReflectButton;
+        }
+
+        public void setShowMiniReflectButton(boolean showMiniReflectButton) {
+            this.showMiniReflectButton = showMiniReflectButton;
+        }
+
+        @Override
+        public String toString() {
+            return "UserFlags{" +
+                    "lastReviewTimestamp=" + lastReviewTimestamp +
+                    ", suggestedReviewTimestamp=" + suggestedReviewTimestamp +
+                    ", seenReflectMode=" + seenReflectMode +
+                    ", showMiniReflectButton=" + showMiniReflectButton +
+                    ", finishedSignOnTutorial=" + finishedSignOnTutorial +
+                    ", finishedReviewTutorial=" + finishedReviewTutorial +
+                    '}';
+        }
     }
 
-    public PencylUser(long id, String email, List<Long> thoughtsInReview) {
-        this.id = id;
-        this.email = email;
-        this.thoughtsInReview = thoughtsInReview;
+    public PencylUser() {
     }
 
     public PencylUser(String googleSSOId, String email) {
         this.googleSSOId = googleSSOId;
         this.email = email;
+
+        this.userFlags = new UserFlags();
     }
 
     public long getId() {
@@ -57,21 +141,21 @@ public class PencylUser {
         this.email = email;
     }
 
-    public List<Long> getThoughtsInReview() {
-        return thoughtsInReview;
+    public UserFlags getUserFlags() {
+        return userFlags;
     }
 
-    public void setThoughtsInReview(List<Long> thoughtsInReview) {
-        this.thoughtsInReview = thoughtsInReview;
+    public void setUserFlags(UserFlags userFlags) {
+        this.userFlags = userFlags;
     }
 
     @Override
     public String toString() {
-        return "User{" +
+        return "PencylUser{" +
                 "id=" + id +
                 ", googleSSOId='" + googleSSOId + '\'' +
                 ", email='" + email + '\'' +
-                ", thoughtsInReview=" + thoughtsInReview +
+                ", userFlags=" + userFlags +
                 '}';
     }
 }

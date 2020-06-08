@@ -90,3 +90,21 @@
 	margin-right: 8px;
 	color: #FF8E8E;
 }
+
+.review-tutorial-card {
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 25px;
+	max-width: 1050px;
+	border: 1px solid #E0E0E0;
+	box-sizing: border-box;
+	border-radius: 8px;
+	padding: 20px 20px 20px 20px;
+
+	font-family: Roboto;
+	font-weight: 300;
+	font-size: 18px;
+	color: #8C8C8C;
+
+	justify-content: center
+}

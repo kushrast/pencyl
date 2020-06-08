@@ -94,6 +94,7 @@ public class Thought {
     private int plusOnes;
     private long last_edited_timestamp_ms;
     private long last_reviewed_timestamp_ms;
+    private long last_seen_timestamp_ms;
     private boolean completed;
 
     private @Version
@@ -114,6 +115,7 @@ public class Thought {
         this.completed = false;
         this.last_edited_timestamp_ms = creation_timestamp_ms;
         this.last_reviewed_timestamp_ms = creation_timestamp_ms;
+        this.last_seen_timestamp_ms = creation_timestamp_ms;
     }
 
     public Long getId() {
@@ -154,6 +156,14 @@ public class Thought {
 
     public void setCreation_timestamp_ms(long creation_timestamp_ms) {
         this.creation_timestamp_ms = creation_timestamp_ms;
+    }
+
+    public long getLast_seen_timestamp_ms() {
+        return last_seen_timestamp_ms;
+    }
+
+    public void setLast_seen_timestamp_ms(long last_seen_timestamp_ms) {
+        this.last_seen_timestamp_ms = last_seen_timestamp_ms;
     }
 
     public List<Tag> getTags() {
@@ -244,6 +254,7 @@ public class Thought {
                 ", plusOnes=" + plusOnes +
                 ", last_edited_timestamp_ms=" + last_edited_timestamp_ms +
                 ", last_reviewed_timestamp_ms=" + last_reviewed_timestamp_ms +
+                ", last_seen_timestamp_ms=" + last_seen_timestamp_ms +
                 ", completed=" + completed +
                 ", version=" + version +
                 '}';
@@ -259,6 +270,6 @@ public class Thought {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user_id, title, content, creation_timestamp_ms, tags, replies, plusOnes, last_edited_timestamp_ms, last_reviewed_timestamp_ms, completed, version);
+        return Objects.hash(id, user_id, title, content, creation_timestamp_ms, tags, replies, plusOnes, last_edited_timestamp_ms, last_reviewed_timestamp_ms, last_seen_timestamp_ms, completed, version);
     }
 }

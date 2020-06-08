@@ -4,6 +4,8 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableList;
 import com.kushrastogi.pencyl.schema.PencylUser;
 import com.kushrastogi.pencyl.schema.Thought;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ public class RestController {
     private static final JacksonFactory jacksonFactory = new JacksonFactory();
     //    final long oneDayMs = 1000 * 60 * 60 * 24;
     final long oneDayMs = 1000 * 20;
+
+    final long halfDayMs = 1000 * 60 * 10;
 
     @Autowired
     private ThoughtRepository thoughtRepository;
@@ -48,10 +52,26 @@ public class RestController {
         thoughtRepository.save(newThought);
         Iterable<Thought> allThoughts = thoughtRepository.findAll();
 
-        for (Thought thought : allThoughts) {
-            if (thought.getUser_id() == Long.parseLong(userId) && thought.getCreation_timestamp_ms() + oneDayMs < currentTime && thought.getLast_reviewed_timestamp_ms() + oneDayMs < currentTime) {
-                response.put("showSuggestReviewScreen", true);
+        final Long id = Long.parseLong(userId);
+        final Optional<PencylUser> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            PencylUser user = optionalUser.get();
+
+            if (!user.getUserFlags().isSeenReflectMode()) {
+                response.put("showReviewTutorial", true);
                 return ResponseEntity.ok(response);
+            }
+
+            if (currentTime - user.getUserFlags().getSuggestedReviewTimestamp() > halfDayMs) {
+                for (Thought thought : allThoughts) {
+                    if (thought.getUser_id() == Long.parseLong(userId) && thought.getCreation_timestamp_ms() + oneDayMs < currentTime && thought.getLast_reviewed_timestamp_ms() + oneDayMs < currentTime) {
+
+                        user.getUserFlags().setSuggestedReviewTimestamp(currentTime);
+                        userRepository.save(user);
+                        response.put("showSuggestReviewScreen", true);
+                        return ResponseEntity.ok(response);
+                    }
+                }
             }
         }
 
@@ -97,6 +117,14 @@ public class RestController {
             return ResponseEntity.ok(response);
         }
 
+        long currentTime = new Date().getTime();
+        if (id == -100) {
+            Thought sampleThought = new Thought(Long.parseLong(userId), "Sample Note", "Review me!", currentTime, ImmutableList.of(), ImmutableList.of(), 4);
+            sampleThought.setId(-100L);
+            response.put("thought", sampleThought);
+            return ResponseEntity.ok(response);
+        }
+
         Optional<Thought> thought = thoughtRepository.findById(id);
 
         if (thought.isPresent()) {
@@ -120,23 +148,11 @@ public class RestController {
 
         thoughtRepository.deleteById(id);
 
-        final Optional<PencylUser> optionalUser = userRepository.findById(Long.parseLong(userId));
-
-        if (optionalUser.isPresent()) {
-            PencylUser pencylUser = optionalUser.get();
-
-            List<Long> thoughtsInReview = new ArrayList<>(pencylUser.getThoughtsInReview());
-            thoughtsInReview.remove(id);
-
-            pencylUser.setThoughtsInReview(thoughtsInReview);
-
-            userRepository.save(pencylUser);
-        }
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping(value = "/v2/review", produces = "application/json")
-    public ResponseEntity<Map<String, Object>> review(@CookieValue(name = "userId", defaultValue = "") String cookieUserId, @CookieValue(name = "userEmail", defaultValue = "") String userEmail) {
+    @PostMapping(value = "/v2/review", produces = "application/json")
+    public ResponseEntity<Map<String, Object>> review(@CookieValue(name = "userId", defaultValue = "") String cookieUserId, @CookieValue(name = "userEmail", defaultValue = "") String userEmail, @RequestParam(value = "reviewedThoughtId", required = false) String reviewedThoughtId) {
         Map<String, Object> response = new HashMap<>();
         response.put("error", "");
 
@@ -144,91 +160,64 @@ public class RestController {
             response.put("error", "Not logged in.");
             return ResponseEntity.ok(response);
         }
-
-        System.out.println("Review for: " + cookieUserId);
 
         long userId = Long.parseLong(cookieUserId);
         long currentTime = new Date().getTime();
         Optional<PencylUser> optionalUser = userRepository.findById(userId);
 
-        System.out.println(optionalUser);
+        System.out.println("review thought: " + reviewedThoughtId);
         if (optionalUser.isPresent()) {
             PencylUser pencylUser = optionalUser.get();
 
-            System.out.println(pencylUser);
+            if (!Strings.isNullOrEmpty(reviewedThoughtId)) {
+                Long reviewedThoughtIdL = Long.parseLong(reviewedThoughtId);
+                Optional<Thought> reviewedThought = thoughtRepository.findById(reviewedThoughtIdL);
+                if (reviewedThought.isPresent()) {
+                    Thought thought = reviewedThought.get();
 
-            if (!pencylUser.getThoughtsInReview().isEmpty()) {
-                System.out.println(pencylUser.getThoughtsInReview());
-                response.put("thoughtsInReview", pencylUser.getThoughtsInReview());
-                return ResponseEntity.ok(response);
-            } else {
-                Iterable<Thought> allThoughts = thoughtRepository.findAll();
-                List<Long> userThoughts = new ArrayList<>();
-                List<Long> thoughtsToReview = new ArrayList<>();
+                    thought.setLast_reviewed_timestamp_ms(currentTime);
 
-                for (Thought thought : allThoughts) {
                     System.out.println(thought);
-                    System.out.println(userId);
-                    if (thought.getUser_id() == userId) {
-                        if (thought.getCreation_timestamp_ms() + oneDayMs < currentTime && thought.getLast_reviewed_timestamp_ms() + oneDayMs < currentTime) {
-                            userThoughts.add(thought.getId());
-                        }
+                    thoughtRepository.save(thought);
+                }
+            }
+
+
+            if (!pencylUser.getUserFlags().isFinishedReviewTutorial()) {
+                pencylUser.getUserFlags().setSeenReflectMode(true);
+
+                userRepository.save(pencylUser);
+                response.put("tutorial", true);
+                response.put("thoughtId", ImmutableList.of(-100));
+                return ResponseEntity.ok(response);
+            }
+
+            Iterable<Thought> allThoughts = thoughtRepository.findAll();
+            List<Thought> userThoughts = new ArrayList<>();
+            for (Thought thought : allThoughts) {
+                if (thought.getUser_id() == userId) {
+                    if (thought.getCreation_timestamp_ms() + oneDayMs < currentTime && thought.getLast_reviewed_timestamp_ms() + oneDayMs < currentTime) {
+                        userThoughts.add(thought);
                     }
                 }
+            }
 
-                Collections.shuffle(userThoughts);
-
-                for (int i = 0; i < 3 && i < userThoughts.size(); i++) {
-                    thoughtsToReview.add(userThoughts.get(i));
-                }
-
-                pencylUser.setThoughtsInReview(thoughtsToReview);
-                userRepository.save(pencylUser);
-
-                response.put("thoughtsInReview", thoughtsToReview);
+            if (userThoughts.size() == 0) {
+                response.put("thoughtId", null);
                 return ResponseEntity.ok(response);
             }
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
 
-    @PostMapping(value = "/v2/finishReview")
-    public ResponseEntity<Map<String, Object>> finishReview(@CookieValue(name = "userId", defaultValue = "") String cookieUserId, @CookieValue(name = "userEmail", defaultValue = "") String userEmail) {
-        Map<String, Object> response = new HashMap<>();
-        response.put("error", "");
+            Collections.shuffle(userThoughts);
 
-        if (cookieUserId.equals("") || userEmail.equals("")) {
-            response.put("error", "Not logged in.");
-            return ResponseEntity.ok(response);
-        }
-
-        long userId = Long.parseLong(cookieUserId);
-
-        long currentTimeMs = new Date().getTime();
-
-        Optional<PencylUser> optionalUser = userRepository.findById(userId);
-        if (optionalUser.isPresent()) {
-            PencylUser pencylUser = optionalUser.get();
-
-            for (long thoughtId : pencylUser.getThoughtsInReview()) {
-                Optional<Thought> optionalThought = thoughtRepository.findById(thoughtId);
-
-                if (optionalThought.isPresent()) {
-                    Thought thought = optionalThought.get();
-
-                    thought.setLast_reviewed_timestamp_ms(currentTimeMs);
-
-                    thoughtRepository.save(thought);
-                } else {
-                    //TODO: Do something else about this
-                    System.out.println("Thought no longer exists");
-                }
-            }
-
-            pencylUser.setThoughtsInReview(new ArrayList<>());
+            pencylUser.getUserFlags().setSeenReflectMode(true);
             userRepository.save(pencylUser);
 
+            Thought thought = userThoughts.get(0);
+
+            thought.setLast_seen_timestamp_ms(currentTime);
+            thoughtRepository.save(thought);
+
+            response.put("thoughtId", thought.getId());
             return ResponseEntity.ok(response);
         } else {
             return ResponseEntity.notFound().build();
@@ -250,16 +239,12 @@ public class RestController {
 
         if (tagCriteria.isEmpty() && regularCriteria.isEmpty()) {
             for (Thought thought : allThoughts) {
-                System.out.println(thought);
-                System.out.println(cookieUserId);
                 if (thought.getUser_id() == Long.parseLong(cookieUserId)) {
                     matchingThoughts.add(thought.getId());
                 }
             }
         } else {
             for (Thought thought : allThoughts) {
-                System.out.println(thought);
-                System.out.println(cookieUserId);
                 if (thought.getUser_id() != Long.parseLong(cookieUserId)) {
                     continue;
                 }
@@ -305,14 +290,12 @@ public class RestController {
                 .build();
 
 //        System.out.println(System.getenv("GCS_CLIENT_ID"));
-        System.out.println(idToken);
         GoogleIdToken token = verifier.verify(idToken);
         if (token != null) {
             GoogleIdToken.Payload payload = token.getPayload();
 
             String userId = payload.getSubject();
             String email = payload.getEmail();
-            System.out.println(userId + " " + email);
 
             response.put("userId", userId);
             response.put("userEmail", email);
@@ -323,16 +306,13 @@ public class RestController {
             PencylUser currentPencylUser = null;
 
             for (PencylUser pencylUser : userRepository.findAll()) {
-                System.out.println(pencylUser);
                 if (pencylUser.getGoogleSSOId().equals(userId)) {
-                    System.out.println("Found user :" + pencylUser.toString());
                     currentPencylUser = pencylUser;
                     newUser = false;
                 }
             }
 
             if (newUser) {
-                System.out.println("Making new user");
                 currentPencylUser = userRepository.save(new PencylUser(userId, email));
             }
 
@@ -351,7 +331,6 @@ public class RestController {
 
             httpServlet.addCookie(cookie);
         } else {
-            System.out.println("Invalid ID token");
             response.put("error", "Invalid ID token.");
         }
         return response;
@@ -362,20 +341,70 @@ public class RestController {
      */
     @PostMapping(value = "/v2/logout", produces = "application/json")
     public ResponseEntity logout(HttpServletResponse httpServletResponse) {
-        System.out.println("yo");
-        Cookie cookie = new Cookie("userId", null);
-        cookie.setPath("/");
-        cookie.setHttpOnly(true);
-        cookie.setMaxAge(0);
+        CookieUtils.clearUserCookies(httpServletResponse);
+        return ResponseEntity.ok().build();
+    }
 
-        httpServletResponse.addCookie(cookie);
+    /**
+     * Set user flag for finished sign on tutorial to true
+     */
+    @PostMapping(value = "/v2/finishedSignOnTutorial", produces = "application/json")
+    public ResponseEntity finishSignOnTutorial(@CookieValue(name = "userId", defaultValue = "") String cookieUserId, @CookieValue(name = "userEmail", defaultValue = "") String userEmail) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("error", "");
 
-        cookie = new Cookie("userEmail", null);
-        cookie.setPath("/");
-        cookie.setHttpOnly(true);
-        cookie.setMaxAge(0);
+        if (cookieUserId.equals("") || userEmail.equals("")) {
+            response.put("error", "Not logged in.");
+            return ResponseEntity.ok(response);
+        }
 
-        httpServletResponse.addCookie(cookie);
+        long userId = Long.parseLong(cookieUserId);
+
+        final Optional<PencylUser> currentUser = userRepository.findById(userId);
+
+        if (currentUser.isPresent()) {
+            PencylUser user = currentUser.get();
+
+            PencylUser.UserFlags flags = user.getUserFlags();
+            flags.setFinishedSignOnTutorial(true);
+            user.setUserFlags(flags);
+
+            userRepository.save(user);
+        } else {
+            response.put("error", "noUser");
+        }
+
+        return ResponseEntity.ok().build();
+    }
+
+    /**
+     * Set user flag for finished review tutorial to true
+     */
+    @PostMapping(value = "/v2/finishReviewTutorial", produces = "application/json")
+    public ResponseEntity finishReviewTutorial(@CookieValue(name = "userId", defaultValue = "") String cookieUserId, @CookieValue(name = "userEmail", defaultValue = "") String userEmail) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("error", "");
+
+        if (cookieUserId.equals("") || userEmail.equals("")) {
+            response.put("error", "Not logged in.");
+            return ResponseEntity.ok(response);
+        }
+
+        long userId = Long.parseLong(cookieUserId);
+
+        final Optional<PencylUser> currentUser = userRepository.findById(userId);
+
+        if (currentUser.isPresent()) {
+            PencylUser user = currentUser.get();
+
+            PencylUser.UserFlags flags = user.getUserFlags();
+            flags.setFinishedReviewTutorial(true);
+            user.setUserFlags(flags);
+
+            userRepository.save(user);
+        } else {
+            response.put("error", "noUser");
+        }
 
         return ResponseEntity.ok().build();
     }
