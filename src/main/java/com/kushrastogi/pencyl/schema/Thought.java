@@ -97,6 +97,18 @@ public class Thought {
     @Column(columnDefinition = "int default 0")
     private int plusOnes;
 
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
+    //Deprecated
+    @Column(columnDefinition = "boolean default false")
+    private boolean completed;
+
     @Column(columnDefinition = "bigint default 0")
     private long last_edited_timestamp_ms;
 
