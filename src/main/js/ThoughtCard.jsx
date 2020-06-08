@@ -21,7 +21,6 @@ class ThoughtCard extends Component {
 				tags: new Map(),
 				replies: new Map(),
 				plusOnes: 1,
-				completed: false,
 				lastEditedTimestampMs: null,
 				lastReviewedTimestampMs: null,
 				deleted: false,
@@ -71,25 +70,18 @@ class ThoughtCard extends Component {
 		getThought(this.props.thoughtId).then(
 			function(thought) {
 
-				setTimeout(
-					() => {
-						console.log("prutu");
-						component.setState({
-							currentThought: thought,
-							hasTitle: thought.title != "",
-							hasContent: thought.content != "",
-							hasTagContent: false,
-							hasTypedInfo: true,
-							minRows: 4,
-							dataFinishedLoading: true
-						}, () => {
-							document.getElementById("thought-title-area").value = thought.title;
-							document.getElementById("thought-content-area").value = thought.content;
-						});
-					},
-					750
-				);
-
+				component.setState({
+					currentThought: thought,
+					hasTitle: thought.title != "",
+					hasContent: thought.content != "",
+					hasTagContent: false,
+					hasTypedInfo: true,
+					minRows: 4,
+					dataFinishedLoading: true
+				}, () => {
+					document.getElementById("thought-title-area").value = thought.title;
+					document.getElementById("thought-content-area").value = thought.content;
+				});
 				console.log(document.getElementById("thought-content-area").value);
 			}, function(err) {
 				console.log(err);
@@ -381,23 +373,11 @@ class ThoughtCard extends Component {
 			}
 		}
 	}
-
-	toggleThoughtComplete = () => {
-		this.setState({
-			currentThought: update(this.state.currentThought, 
-				{
-					completed: {$set: !this.state.currentThought.completed},
-				}),
-		},
-		() => {
-				this.props.toggleSavedContent(true);
-				if (this.props.location.pathname !== "/"){
-					this.updateThought();
-				}
-		});
-	}
-
+	
 	getFinishOrUpdateButton = () => {
+		if (this.state.currentThought.id == -100) {
+			return <div className="thought-update-disabled pointer">Update Thought</div>;
+		}
 		if (this.state.currentlySaving) {
 			return <div className="thought-saving-loader"></div>;
 		} else if (this.state.saveSuccess) {
@@ -407,7 +387,7 @@ class ThoughtCard extends Component {
 				if (this.props.hasUnsavedContent) {
 					return <div className="thought-update pointer" onClick={this.updateThought.bind(this, true)}>Update Thought</div>;
 				} else {
-					return <div className="thought-update-disabled pointer" onClick={this.updateThought.bind(this, true)}>Update Thought</div>;
+					return <div className="thought-update-disabled pointer">Update Thought</div>;
 				}
 			} else if (this.state.hasTypedInfo) {
 				return <div className="thought-update pointer" onClick={this.saveNewThought}>Finish Thought</div>;
@@ -419,6 +399,9 @@ class ThoughtCard extends Component {
 
 	updateThought = (forceUpdate = false) => {
 		var currTime = new Date().getTime();
+		if (this.state.currentThought.id == null || this.state.currentThought.id == -100) {
+			return;
+		}
 		if (forceUpdate || ((this.state.reviewLastUpdated == null || currTime > this.state.reviewLastUpdated + 5000) && this.props.hasUnsavedContent && !this.state.currentlySaving)) {
 			console.log(currTime);
 			console.log(this.state.reviewLastUpdated);
@@ -482,9 +465,38 @@ class ThoughtCard extends Component {
 						component.clearThought();
 						component.setState({
 							currentlySaving: false,
-							saveSuccess: false,
-						}, () => {component.props.showSuggestReviewScreen()});
-					} else {
+							saveSuccess: true,
+						}, () => {
+
+							const thoughtContainer = document.getElementById("thought-container");
+
+							thoughtContainer.classList.add("thought-card-animated");
+							thoughtContainer.classList.add("animated");
+							thoughtContainer.classList.add("fadeOutDown");
+							setTimeout(() => {
+								component.props.showSuggestReviewScreen()
+							}, 1000);
+							
+						});
+					} else if (result.showReviewTutorial) {
+						component.clearThought();
+						component.setState({
+							currentlySaving: false,
+							saveSuccess: true,
+						}, () => {
+
+							const thoughtContainer = document.getElementById("thought-container");
+
+							thoughtContainer.classList.add("thought-card-animated");
+							thoughtContainer.classList.add("animated");
+							thoughtContainer.classList.add("fadeOutDown");
+							setTimeout(() => {
+								component.props.showReviewTutorial()
+							}, 1000);
+							
+						});
+					} 
+					else {
 						//TODO: Should take into account success or failure
 						component.setState({
 							currentlySaving: false,

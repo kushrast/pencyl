@@ -11,6 +11,10 @@
   animation-duration: 1.0s;
  }
 
+ .thought-card-animated-slow {
+  animation-duration: 2.0s;
+ }
+
 .thought-card {
 	background-color: white;
 	max-width: 700px;

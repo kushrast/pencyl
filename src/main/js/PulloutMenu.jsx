@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {slide as SlideMenu} from 'react-burger-menu';
 import { NavLink } from 'react-router-dom';
 
-class Menu extends Component {
+class PulloutMenu extends Component {
 	constructor(props) {
 		super(props);
 
@@ -45,4 +45,4 @@ class Menu extends Component {
   	);
   }
 }
-export default Menu;
+export default PulloutMenu;

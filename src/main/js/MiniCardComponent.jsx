@@ -17,7 +17,6 @@ class MiniCardComponent extends Component {
 				tags: new Map(),
 				replies: new Map(),
 				plusOnes: 1,
-				completed: false,
 				lastEditedTimestampMs: null,
 				lastReviewedTimestampMs: null,
 				deleted: false,
