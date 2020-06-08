@@ -22,6 +22,8 @@ public class Thought {
 
     @Column(columnDefinition = "TEXT")
     private String content;
+
+    @Column(columnDefinition = "bigint default 0")
     private long creation_timestamp_ms;
 
     @Embeddable
@@ -91,11 +93,18 @@ public class Thought {
 
     @ElementCollection
     private List<Reply> replies = new ArrayList<>();
+
+    @Column(columnDefinition = "int default 0")
     private int plusOnes;
+
+    @Column(columnDefinition = "bigint default 0")
     private long last_edited_timestamp_ms;
+
+    @Column(columnDefinition = "bigint default 0")
     private long last_reviewed_timestamp_ms;
+
+    @Column(columnDefinition = "bigint default 0")
     private long last_seen_timestamp_ms;
-    private boolean completed;
 
     private @Version
     @JsonIgnore
@@ -112,7 +121,6 @@ public class Thought {
         this.tags = tags;
         this.replies = replies;
         this.plusOnes = plusOnes;
-        this.completed = false;
         this.last_edited_timestamp_ms = creation_timestamp_ms;
         this.last_reviewed_timestamp_ms = creation_timestamp_ms;
         this.last_seen_timestamp_ms = creation_timestamp_ms;
@@ -206,14 +214,6 @@ public class Thought {
         this.last_reviewed_timestamp_ms = last_reviewed_timestamp_ms;
     }
 
-    public boolean isCompleted() {
-        return completed;
-    }
-
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
-    }
-
     public Long getVersion() {
         return version;
     }
@@ -232,7 +232,6 @@ public class Thought {
                 plusOnes == thought.plusOnes &&
                 last_edited_timestamp_ms == thought.last_edited_timestamp_ms &&
                 last_reviewed_timestamp_ms == thought.last_reviewed_timestamp_ms &&
-                completed == thought.completed &&
                 id.equals(thought.id) &&
                 Objects.equals(title, thought.title) &&
                 Objects.equals(content, thought.content) &&
@@ -255,7 +254,6 @@ public class Thought {
                 ", last_edited_timestamp_ms=" + last_edited_timestamp_ms +
                 ", last_reviewed_timestamp_ms=" + last_reviewed_timestamp_ms +
                 ", last_seen_timestamp_ms=" + last_seen_timestamp_ms +
-                ", completed=" + completed +
                 ", version=" + version +
                 '}';
     }
@@ -270,6 +268,6 @@ public class Thought {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user_id, title, content, creation_timestamp_ms, tags, replies, plusOnes, last_edited_timestamp_ms, last_reviewed_timestamp_ms, last_seen_timestamp_ms, completed, version);
+        return Objects.hash(id, user_id, title, content, creation_timestamp_ms, tags, replies, plusOnes, last_edited_timestamp_ms, last_reviewed_timestamp_ms, last_seen_timestamp_ms, version);
     }
 }

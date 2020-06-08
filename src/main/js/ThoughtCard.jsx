@@ -21,7 +21,6 @@ class ThoughtCard extends Component {
 				tags: new Map(),
 				replies: new Map(),
 				plusOnes: 1,
-				completed: false,
 				lastEditedTimestampMs: null,
 				lastReviewedTimestampMs: null,
 				deleted: false,
@@ -374,22 +373,7 @@ class ThoughtCard extends Component {
 			}
 		}
 	}
-
-	toggleThoughtComplete = () => {
-		this.setState({
-			currentThought: update(this.state.currentThought, 
-				{
-					completed: {$set: !this.state.currentThought.completed},
-				}),
-		},
-		() => {
-				this.props.toggleSavedContent(true);
-				if (this.props.location.pathname !== "/"){
-					this.updateThought();
-				}
-		});
-	}
-
+	
 	getFinishOrUpdateButton = () => {
 		if (this.state.currentThought.id == -100) {
 			return <div className="thought-update-disabled pointer">Update Thought</div>;

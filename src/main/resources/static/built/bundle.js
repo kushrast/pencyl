@@ -52489,7 +52489,6 @@ var MiniCardComponent = /*#__PURE__*/function (_Component) {
         tags: new Map(),
         replies: new Map(),
         plusOnes: 1,
-        completed: false,
         lastEditedTimestampMs: null,
         lastReviewedTimestampMs: null,
         deleted: false
@@ -53081,7 +53080,6 @@ var BackendStorageClient = /*#__PURE__*/function (_StorageClient) {
         tags: new Map(),
         replies: new Map(),
         plusOnes: 1,
-        completed: false,
         lastEditedTimestampMs: null,
         lastReviewedTimestampMs: null,
         deleted: false
@@ -53100,7 +53098,6 @@ var BackendStorageClient = /*#__PURE__*/function (_StorageClient) {
       }
 
       thought.plusOnes = entity.plusOnes;
-      thought.completed = entity.completed;
       thought.lastReviewedTimestampMs = entity.last_reviewed_timestamp_ms;
       thought.lastEditedTimestampMs = entity.last_edited_timestamp_ms;
       return thought;
@@ -53163,7 +53160,6 @@ var BackendStorageClient = /*#__PURE__*/function (_StorageClient) {
       }
 
       entity.plusOnes = thought.plusOnes;
-      entity.completed = thought.completed;
       console.log(entity);
       return entity;
     });
@@ -53845,22 +53841,6 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
       }
     });
 
-    _defineProperty(_assertThisInitialized(_this), "toggleThoughtComplete", function () {
-      _this.setState({
-        currentThought: immutability_helper__WEBPACK_IMPORTED_MODULE_3___default()(_this.state.currentThought, {
-          completed: {
-            $set: !_this.state.currentThought.completed
-          }
-        })
-      }, function () {
-        _this.props.toggleSavedContent(true);
-
-        if (_this.props.location.pathname !== "/") {
-          _this.updateThought();
-        }
-      });
-    });
-
     _defineProperty(_assertThisInitialized(_this), "getFinishOrUpdateButton", function () {
       if (_this.state.currentThought.id == -100) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -54126,7 +54106,6 @@ var ThoughtCard = /*#__PURE__*/function (_Component) {
         tags: new Map(),
         replies: new Map(),
         plusOnes: 1,
-        completed: false,
         lastEditedTimestampMs: null,
         lastReviewedTimestampMs: null,
         deleted: false

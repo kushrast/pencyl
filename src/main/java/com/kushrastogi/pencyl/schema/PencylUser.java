@@ -14,18 +14,27 @@ public class PencylUser {
 
     @Column(columnDefinition = "TEXT")
     private String googleSSOId;
+
+    @Column(columnDefinition = "varchar(255) default ''")
     private String email;
 
     private UserFlags userFlags;
 
     @Embeddable
     public static class UserFlags {
+        @Column(columnDefinition = "bigint default 0")
         long lastReviewTimestamp;
+
+        @Column(columnDefinition = "bigint default 0")
         long suggestedReviewTimestamp;
 
+        @Column(columnDefinition = "boolean default false")
         boolean seenReflectMode = false;
+        @Column(columnDefinition = "boolean default false")
         boolean showMiniReflectButton = false;
+        @Column(columnDefinition = "boolean default false")
         boolean finishedSignOnTutorial = false;
+        @Column(columnDefinition = "boolean default false")
         boolean finishedReviewTutorial = false;
 
         public UserFlags() {

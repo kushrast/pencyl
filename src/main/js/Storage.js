@@ -28,7 +28,6 @@ class BackendStorageClient extends StorageClient{
 			tags: new Map(),
 			replies: new Map(),
 			plusOnes: 1,
-			completed: false,
 			lastEditedTimestampMs: null,
 			lastReviewedTimestampMs: null,
 			deleted: false,
@@ -48,7 +47,6 @@ class BackendStorageClient extends StorageClient{
 		}
 
 		thought.plusOnes = entity.plusOnes;
-		thought.completed = entity.completed;
 		thought.lastReviewedTimestampMs = entity.last_reviewed_timestamp_ms;
 		thought.lastEditedTimestampMs = entity.last_edited_timestamp_ms;
 
@@ -81,8 +79,6 @@ class BackendStorageClient extends StorageClient{
 		}
 
 		entity.plusOnes = thought.plusOnes;
-		entity.completed = thought.completed;
-
 		console.log(entity);	
 		return entity;
 	}
